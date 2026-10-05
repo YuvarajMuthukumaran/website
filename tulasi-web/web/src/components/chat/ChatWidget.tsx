@@ -93,6 +93,15 @@ export function ChatWidget({ onClose, phone, doctorSlugs = {}, doctorPhotos = {}
   }, [consented]);
 
   useEffect(() => {
+    if (!matchMedia("(max-width: 639px)").matches) return;
+    const prev = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      document.documentElement.style.overflow = prev;
+    };
+  }, []);
+
+  useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -267,10 +276,10 @@ export function ChatWidget({ onClose, phone, doctorSlugs = {}, doctorPhotos = {}
       initial={{ opacity: 0, y: 24, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-0 z-[65] flex flex-col bg-white sm:inset-auto sm:right-6 sm:bottom-28 sm:h-[min(640px,calc(100dvh-9rem))] sm:w-[400px] sm:overflow-hidden sm:rounded-[1.75rem] sm:shadow-[var(--shadow-lift)] sm:ring-1 sm:ring-line"
+      className="fixed inset-0 z-[65] flex max-sm:h-dvh flex-col bg-white sm:inset-auto sm:right-6 sm:bottom-28 sm:h-[min(640px,calc(100dvh-9rem))] sm:w-[400px] sm:overflow-hidden sm:rounded-[1.75rem] sm:shadow-[var(--shadow-lift)] sm:ring-1 sm:ring-line"
     >
       {/* Header */}
-      <div className="bg-hero on-dark flex items-center gap-3 px-5 py-3.5 text-white">
+      <div className="bg-hero on-dark flex items-center gap-3 px-5 py-3.5 pt-[max(0.875rem,env(safe-area-inset-top))] text-white">
         <span className="relative grid size-12 shrink-0 place-items-center rounded-full bg-white/95 p-1 shadow-[0_6px_16px_-8px_rgb(0_0_0/0.5)]">
           <TulasiMascot mood={mood} streaming={busy} doctorMode={doctorMode} className="size-full" />
           <span className="absolute right-0 bottom-0 size-3 rounded-full bg-emerald-400 ring-2 ring-brand-700" aria-hidden="true" />
@@ -397,7 +406,7 @@ export function ChatWidget({ onClose, phone, doctorSlugs = {}, doctorPhotos = {}
           {/* One announcement per finished reply, not every revealed character. */}
           <p className="sr-only" aria-live="polite" aria-atomic="true">{announcement}</p>
           <form
-            className="border-t border-line bg-white p-3"
+            className="border-t border-line bg-white p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]"
             onSubmit={(e) => {
               e.preventDefault();
               send(input);
@@ -420,7 +429,7 @@ export function ChatWidget({ onClose, phone, doctorSlugs = {}, doctorPhotos = {}
                   }
                 }}
                 placeholder="Share what’s on your mind…"
-                className="max-h-32 min-h-12 flex-1 resize-none rounded-3xl bg-mist px-4 py-3 text-[0.9375rem] text-ink placeholder:text-ink-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+                className="max-h-32 min-h-12 flex-1 resize-none rounded-3xl bg-mist px-4 py-3 text-base sm:text-[0.9375rem] text-ink placeholder:text-ink-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
               />
               <motion.button
                 type="submit"

@@ -36,7 +36,8 @@ export function ServicesShowcase({ intro }: { intro: ReactNode }) {
   const running = inView && !paused && !reduce;
 
   useEffect(() => {
-    if (!running) return;
+    // Auto-advance is a desktop effect: below lg there is no preview card, every row shows its own text.
+    if (!running || !matchMedia("(min-width: 1024px)").matches) return;
     const t = setTimeout(() => setActive((a) => (a + 1) % PATHWAYS.length), STEP_MS);
     return () => clearTimeout(t);
   }, [running, active]);
@@ -116,15 +117,15 @@ export function ServicesShowcase({ intro }: { intro: ReactNode }) {
                   onFocus={() => setActive(i)}
                   className="group relative flex items-start gap-4 rounded-2xl px-4 py-3.5 sm:gap-5 sm:px-5 max-lg:bg-white max-lg:ring-1 max-lg:ring-line lg:min-h-[4.5rem] lg:items-center"
                 >
-                  <span className={clsx("hidden w-6 shrink-0 text-xs font-semibold tabular-nums transition-colors duration-500 sm:block", on ? "text-brand-600" : "text-ink-soft/60")}>{String(i + 1).padStart(2, "0")}</span>
+                  <span className={clsx("hidden w-6 shrink-0 text-xs font-semibold tabular-nums transition-colors duration-500 sm:block", on ? "lg:text-brand-600" : "text-ink-soft/60")}>{String(i + 1).padStart(2, "0")}</span>
                   <span className={clsx("icon-tile size-11 shrink-0 transition-[background-color,color,transform] duration-500 ease-[var(--ease-calm)]", on && "lg:!bg-brand-50 lg:scale-105")}>
                     <BrandIcon name={ICON[p.icon]} className="size-5" />
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className={clsx("block font-display text-[1.0625rem] leading-snug font-bold tracking-[-0.02em] transition-[color,transform] duration-500 ease-[var(--ease-calm)]", on ? "text-brand-800 lg:translate-x-1" : "text-ink")}>{p.title}</span>
+                    <span className={clsx("block font-display text-[1.0625rem] leading-snug font-bold tracking-[-0.02em] transition-[color,transform] duration-500 ease-[var(--ease-calm)]", on ? "text-ink lg:translate-x-1 lg:text-brand-800" : "text-ink")}>{p.title}</span>
                     <span className="block max-w-[52ch] pt-1 text-[0.95rem] leading-relaxed text-ink-soft lg:hidden">{p.text}</span>
                   </span>
-                  <span className={clsx("grid size-8 shrink-0 place-items-center rounded-full transition-[background-color,color,transform,opacity] duration-500 ease-[var(--ease-calm)]", on ? "bg-brand-600 text-white lg:translate-x-0 lg:opacity-100" : "text-ink-soft lg:-translate-x-2 lg:opacity-0")}>
+                  <span className={clsx("grid size-8 shrink-0 place-items-center rounded-full transition-[background-color,color,transform,opacity] duration-500 ease-[var(--ease-calm)]", on ? "text-ink-soft lg:translate-x-0 lg:bg-brand-600 lg:text-white lg:opacity-100" : "text-ink-soft lg:-translate-x-2 lg:opacity-0")}>
                     <Arrow className="size-4" />
                     <span className="sr-only">Learn more about {p.title}</span>
                   </span>

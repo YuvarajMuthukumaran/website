@@ -26,7 +26,7 @@ export function CareFinder({ phone }: { phone: { display: string; href: string }
         </h2>
         <p className="mt-5 max-w-[44ch] text-[length:var(--text-lead)] leading-relaxed text-ink-soft">Choose who the care is for, then what feels closest. Each one opens how we treat it.</p>
         <LayoutGroup id="care-who">
-          <div role="group" aria-label="Who is the care for?" className="mt-8 inline-flex max-w-full flex-wrap gap-1 rounded-[var(--radius-card)] bg-mist p-1 shadow-[inset_0_0_0_1px_var(--color-line)]">
+          <div role="group" aria-label="Who is the care for?" className="mt-8 grid w-full grid-cols-2 gap-1 rounded-[var(--radius-card)] bg-mist p-1 shadow-[inset_0_0_0_1px_var(--color-line)] sm:inline-flex sm:w-auto sm:max-w-full sm:flex-wrap">
             {WHO.map((w) => {
               const on = who === w.id;
               return (
@@ -35,7 +35,7 @@ export function CareFinder({ phone }: { phone: { display: string; href: string }
                   type="button"
                   aria-pressed={on}
                   onClick={() => setWho(w.id)}
-                  className={clsx("relative min-h-11 rounded-[var(--radius-tile)] px-4 text-sm font-semibold transition-colors duration-300", on ? "text-white" : "text-ink-soft hover:text-ink")}
+                  className={clsx("relative min-h-11 rounded-[var(--radius-tile)] px-3 text-center text-sm leading-tight font-semibold transition-colors duration-300 sm:px-4", on ? "text-white" : "text-ink-soft hover:text-ink")}
                 >
                   {on && (
                     <motion.span

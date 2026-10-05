@@ -14,15 +14,15 @@ const redirectMap: Redirect[] = existsSync(redirectFile)
   : [];
 
 // Security headers the live site is missing today. CSP allows only what the
-// site actually loads: itself, the chat/booking API, and Google Analytics/Ads.
-const API_ORIGIN = process.env.NEXT_PUBLIC_API_URL ?? "https://api.tulasihealthcare.com";
+// site actually loads: itself (the chat/booking API is proxied through it, see
+// rewrites below) and Google Analytics/Ads.
 const csp = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://googleads.g.doubleclick.net",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://www.google-analytics.com https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.google.com https://www.google.co.in https://i.ytimg.com",
   "font-src 'self'",
-  `connect-src 'self' ${API_ORIGIN} https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com https://googleads.g.doubleclick.net`,
+  "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com https://googleads.g.doubleclick.net",
   "frame-src https://www.youtube.com https://www.youtube-nocookie.com https://www.google.com https://maps.google.com https://td.doubleclick.net",
   "media-src 'self'",
   "object-src 'none'",

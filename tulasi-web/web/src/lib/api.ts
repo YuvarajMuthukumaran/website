@@ -1,9 +1,9 @@
 // Browser-side client for the Express API (chat, booking, patient login).
 // The Groq key, database and HMS credentials live only on that server.
-// Empty = same origin: the browser calls /api/* on this site and next.config.ts
-// forwards it to the hosted server. Set NEXT_PUBLIC_API_URL only to call another
-// API directly (e.g. the local sandbox at http://localhost:8788).
-export const API_BASE = (process.env.NEXT_PUBLIC_API_URL ?? "").replace(/\/$/, "");
+// Always same origin: the browser calls /api/* on this site and next.config.ts
+// forwards it to the hosted chat server (so there is no CORS to configure and no
+// environment variable to forget on a new deployment).
+export const API_BASE = "";
 
 export class ApiError extends Error {
   constructor(message: string, public status: number) {

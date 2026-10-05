@@ -86,11 +86,13 @@ export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { displ
 
   return (
     // Negative bottom margin: the page (dark hero) flows underneath the floating pill.
-    <header className="sticky top-0 z-50 -mb-[78px] h-[78px] px-3 pt-3 sm:px-4">
+    {/* While the full-screen mobile menu is open the header rises above the floating buttons (z-55). */}
+    <header className={clsx("sticky top-0 -mb-[78px] h-[78px] px-3 pt-3 sm:px-4", mobile ? "z-[70]" : "z-50")}>
       <div
         className={clsx(
           "glass relative mx-auto flex items-center justify-between gap-3 rounded-full pr-2 pl-3 transition-[max-width,height,box-shadow] duration-[700ms] ease-[var(--ease-calm)] sm:pl-4",
-          scrolled ? "h-[58px] max-w-[1180px]" : "h-[66px] max-w-[1240px]"
+          // At 2xl the logo shows its name and tagline, so the pill must be wider or the button spills out.
+          scrolled ? "h-[58px] max-w-[1180px] 2xl:max-w-[1420px]" : "h-[66px] max-w-[1240px] 2xl:max-w-[1460px]"
         )}
       >
         <Link href="/" onClick={(e) => scrollTopIfCurrent(e, "/", pathname)} className="flex shrink-0 items-center gap-2.5 rounded-full" aria-label="Tulasi Healthcare home">
@@ -283,7 +285,7 @@ function MobileMenu({ open, onClose, items, phone, pathname }: { open: boolean; 
   const uid = useId();
   if (!open) return null;
   return (
-    <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu" className="menu-in on-dark stage fixed inset-0 z-[60] flex flex-col overflow-clip bg-hero text-white">
+    <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu" className="menu-in on-dark stage fixed! inset-0 z-[60] h-dvh flex flex-col overflow-clip bg-hero text-white">
       <div className="container-page flex h-20 items-center justify-between">
         <span className="font-display text-lg font-bold">Tulasi Healthcare</span>
         <button type="button" onClick={onClose} className="grid size-12 place-items-center rounded-full bg-white/[0.06] shadow-[inset_0_0_0_1px_rgb(255_255_255/0.12)] hover:bg-white/10" autoFocus>
