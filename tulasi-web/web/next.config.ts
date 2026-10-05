@@ -42,12 +42,12 @@ const nextConfig: NextConfig = {
     // Media keep their original /wp-content/uploads/... paths (public/).
     localPatterns: [{ pathname: "/**" }],
   },
-  // Optional same-origin proxy for the chat/booking API: set API_PROXY_TARGET
-  // (and leave NEXT_PUBLIC_API_URL empty) so the browser calls /api/* on this
-  // site and Next forwards it. No CORS setup needed on the API host.
+  // Same-origin proxy for the chat/booking API: the browser calls /api/* on this
+  // site and Next forwards it to the hosted server, so no CORS setup is needed
+  // there. Set API_PROXY_TARGET to override if the server moves.
   async rewrites() {
-    const target = process.env.API_PROXY_TARGET?.replace(/\/$/, "");
-    return target ? [{ source: "/api/:path*", destination: `${target}/api/:path*` }] : [];
+    const target = (process.env.API_PROXY_TARGET ?? "https://chatbot-6lzw.onrender.com").replace(/\/$/, "");
+    return [{ source: "/api/:path*", destination: `${target}/api/:path*` }];
   },
   async redirects() {
     return [

@@ -1,7 +1,9 @@
 // Browser-side client for the Express API (chat, booking, patient login).
 // The Groq key, database and HMS credentials live only on that server.
-// Same default as the CSP in next.config.ts; local development sets it in .env.local.
-export const API_BASE = (process.env.NEXT_PUBLIC_API_URL ?? "https://api.tulasihealthcare.com").replace(/\/$/, "");
+// Empty = same origin: the browser calls /api/* on this site and next.config.ts
+// forwards it to the hosted server. Set NEXT_PUBLIC_API_URL only to call another
+// API directly (e.g. the local sandbox at http://localhost:8788).
+export const API_BASE = (process.env.NEXT_PUBLIC_API_URL ?? "").replace(/\/$/, "");
 
 export class ApiError extends Error {
   constructor(message: string, public status: number) {
