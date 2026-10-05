@@ -1,0 +1,86 @@
+# Tulasi Healthcare website rebuild
+
+Next.js 16 rebuild of www.tulasihealthcare.com. Every existing URL, title, meta
+description, canonical, robots tag, H1 and sentence of content is preserved
+(verified page by page against the live site), with a new design, chat
+assistant, online booking and a patient portal.
+
+## Results
+
+| | Live site today | New build |
+|---|---|---|
+| URLs preserved | 688 | 688, plus 456 legacy redirects kept |
+| Titles / descriptions / canonicals / robots / H1 identical | – | 688 of 688 |
+| Content parity (live sentences found on new page) | – | **100.00%** |
+| Mobile Lighthouse, home (perf / a11y / best practices / SEO) | 42 / 87 / 96 / 85 | ~85 / 100 / 100 / 100 |
+| Mobile LCP, home / service page / blog post | 9.5 s / 13.3 s / 11.8 s | 3.7 s / 3.5 s / 3.2 s |
+| Desktop Lighthouse, home | – | 100 / 100 / 100 / 100 (LCP 0.8 s) |
+| Layout shift (CLS), home | 0.31 | 0 |
+
+Reports: [reports/parity-report.md](reports/parity-report.md), [reports/content-gap-report.md](reports/content-gap-report.md),
+[reports/inventory.csv](reports/inventory.csv), [reports/redirects.csv](reports/redirects.csv), [reports/lighthouse/](reports/lighthouse/).
+
+## Layout
+
+```
+tulasi-web/
+  scraper/              Phase 0 extraction + Phase 5 parity check (Node, cached, polite)
+    01..08-*.mjs          REST API, sitemaps, crawl, doctors, content, reports, media, site/home
+    09-compare.mjs        old vs new crawl comparison → reports/parity-report.md
+  data/content/         normalized content (source of truth for the build)
+  data/media/           all 829 media files at their original /wp-content/uploads/ paths
+  reports/              inventory, gap report, redirect map, parity report, Lighthouse JSON
+  scripts/api-sandbox.mjs  runs ../../chatbot/server on an in-memory DB for local testing
+  web/                  the Next.js site
+    scripts/sync-content.mjs  copies data/ into web/content + web/public
+    src/app/              routes (same URLs as WordPress)
+    src/components/       layout, home, cards, booking, portal, chat
+    src/lib/              content loader, SEO/JSON-LD, sitemaps, API client, analytics
+    src/proxy.ts          WordPress shortlinks (/?p=123) and portal guard
+```
+
+Backend: the existing `chatbot/server` (Express + MongoDB + Groq) was extended in place:
+`routes/auth.js`, `lib/authStore.js`, `lib/secure.js`, `lib/notify.js`, a website chat
+channel in `lib/turnRouter.js` / `routes/chat.js`, and `test/websiteAuth.test.mjs`
+(108 tests pass).
+
+## Run locally
+
+```bash
+# 1. API in sandbox mode (in-memory DB, stub HMS, login codes shown on screen)
+node tulasi-web/scripts/api-sandbox.mjs          # http://localhost:8788
+
+# 2. Website
+cd tulasi-web/web
+cp .env.example .env.local                       # set NEXT_PUBLIC_API_URL=http://localhost:8788
+npm install
+npm run dev                                       # http://localhost:3000
+```
+
+Sandbox test patient phone: `9999999999` (the login code appears on the login page).
+
+## Refresh content from the live site
+
+```bash
+cd tulasi-web/scraper && rm -rf ../data/raw/cache && npm run all && node 08-extract-site.mjs
+cd ../web && npm run sync-content && npm run build
+```
+
+Run this once more just before launch to pick up posts published during the build.
+
+## Deploy
+
+**Website (Vercel, or any Node host)**
+1. Project root `tulasi-web/web`; build `npm run build`; start `npm start` (Node 20.9+).
+2. Environment: see `web/.env.example` (`NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_API_URL`,
+   `NEXT_PUBLIC_GA4_ID`, Ads ID and conversion labels).
+3. `web/content/` and `web/public/wp-content/` are part of the build; commit them (≈ 60 MB).
+
+**API (`chatbot/server`, Render/Railway/VM)** at `api.tulasihealthcare.com`
+1. Environment: `server/.env.example`. Required in production: `GROQ_API_KEY` (a **new**
+   key; the old one is public on GitHub), `MONGODB_URI`, `CLIENT_ORIGIN=https://www.tulasihealthcare.com`,
+   `COOKIE_DOMAIN=.tulasihealthcare.com`, `DATA_ENCRYPTION_KEY`, `LOOKUP_HASH_KEY`, an SMS provider.
+2. Remove `TEST_GROQ_API_KEY` from `server/lib/llmClient.js` and rotate it.
+3. MongoDB Atlas: restrict network access to the API host's IPs (database not public).
+
+See [LAUNCH-CHECKLIST.md](LAUNCH-CHECKLIST.md) for the go-live sequence.

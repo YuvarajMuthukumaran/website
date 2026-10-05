@@ -1,0 +1,617 @@
+{
+  "name": "Tulasi Healthcare",
+  "logo": {
+    "src": "/wp-content/uploads/2023/01/tulasi-logowithout-background.webp",
+    "alt": "logo"
+  },
+  "footerAbout": "Tulasi Healthcare is a widely renowned group of psychiatric mental hospital & Rehabilitation Centers in Gurgaon, Delhi & India providing specialized treatment for substance abuse disorders and mental illnesses.",
+  "footerColumns": [
+    {
+      "heading": "Our Links",
+      "links": [
+        {
+          "label": "Home",
+          "href": "/"
+        },
+        {
+          "label": "Rehabilitation centre",
+          "href": "/rehabilitation-centre/"
+        },
+        {
+          "label": "About Us",
+          "href": "/about-us/"
+        },
+        {
+          "label": "Career",
+          "href": "/careers/"
+        },
+        {
+          "label": "FAQ'S",
+          "href": "/faqs"
+        },
+        {
+          "label": "Rehabilitation Centre Near me",
+          "href": "/rehabilitation-centre-near-me/"
+        },
+        {
+          "label": "Rehabilitation Centre in Chandigarh",
+          "href": "/rehabilitation-centre-in-chandigarh/"
+        },
+        {
+          "label": "Rehabilitation Centre in Delhi",
+          "href": "/rehabilitation-centre-in-delhi/"
+        },
+        {
+          "label": "Rehabilitation Centre in Lucknow",
+          "href": "/rehabilitation-centre-in-lucknow/"
+        },
+        {
+          "label": "Rehabilitation Centre in Panipat",
+          "href": "/rehabilitation-centre-in-panipat/"
+        },
+        {
+          "label": "Rehabilitation Centre in Meerut",
+          "href": "/rehabilitation-centre-in-meerut/"
+        },
+        {
+          "label": "Rehabilitation Centre in Sirsa",
+          "href": "/rehabilitation-centre-in-sirsa/"
+        },
+        {
+          "label": "Rehabilitation Centre in Kanpur",
+          "href": "/rehabilitation-center-in-kanpur/"
+        },
+        {
+          "label": "Rehabilitation Centre in Dehradun",
+          "href": "/rehabilitation-center-in-dehradun/"
+        },
+        {
+          "label": "Contact Us",
+          "href": "/contact-us/"
+        },
+        {
+          "label": "Blogs",
+          "href": "/blog/"
+        }
+      ]
+    },
+    {
+      "heading": "Services",
+      "links": [
+        {
+          "label": "Personality Disorders",
+          "href": "/treatment-of-personality-disorders/"
+        },
+        {
+          "label": "Bipolar Disorder",
+          "href": "/bipolar-disorder-treatment/"
+        },
+        {
+          "label": "Schizophrenia",
+          "href": "/schizophrenia-treatment-delhi/"
+        },
+        {
+          "label": "OCD",
+          "href": "/obsessive-compulsive-disorder-treatment/"
+        },
+        {
+          "label": "De Addiction",
+          "href": "/de-addiction-treatment/"
+        },
+        {
+          "label": "Depression",
+          "href": "/depression/"
+        },
+        {
+          "label": "Mental Hospital",
+          "href": "/psychiatric-mental-hospital-in-delhi/"
+        },
+        {
+          "label": "International Patient",
+          "href": "/international-patient-services/"
+        },
+        {
+          "label": "Internship",
+          "href": "/internship/"
+        },
+        {
+          "label": "Site Map",
+          "href": "/sitemap/"
+        },
+        {
+          "label": "Rehabilitation Centre in Jaipur",
+          "href": "/rehabilitation-centre-in-jaipur/"
+        },
+        {
+          "label": "Rehabilitation Centre in Lucknow",
+          "href": "/rehabilitation-centre-in-lucknow/"
+        },
+        {
+          "label": "Rehabilitation Centre in Chandigarh",
+          "href": "/rehabilitation-centre-in-chandigarh/"
+        },
+        {
+          "label": "Rehabilitation Centre in Haryana",
+          "href": "/rehabilitation-centre-in-haryana/"
+        },
+        {
+          "label": "Rehabilitation Centre in Meerut",
+          "href": "/rehabilitation-centre-in-meerut/"
+        },
+        {
+          "label": "Rehabilitation Centre in Rohtak",
+          "href": "/rehabilitation-centre-in-rohtak/"
+        },
+        {
+          "label": "Rehabilitation Centre in Kanpur",
+          "href": "/rehabilitation-center-in-kanpur/"
+        },
+        {
+          "label": "Rehabilitation Centre in Jammu",
+          "href": "/rehabilitation-centre-in-jammu/"
+        }
+      ]
+    },
+    {
+      "heading": "Contact Us",
+      "links": [
+        {
+          "label": "+91 8800000255",
+          "href": "tel:8800000255"
+        },
+        {
+          "label": "info@tulasihealthcare.com",
+          "href": "mailto:info@tulasihealthcare.com"
+        }
+      ]
+    }
+  ],
+  "contact": {
+    "phoneDisplay": "+91 8800000255",
+    "phoneHref": "tel:8800000255",
+    "email": "info@tulasihealthcare.com",
+    "address": "Sector 64, Golf Course Extension Road,Gurugram, Haryana-122 102"
+  },
+  "social": [
+    "https://www.facebook.com/Tulasihealthcare",
+    "https://www.linkedin.com/company/tulasihealthcare/",
+    "https://www.instagram.com/tulasihealthcare_insta/",
+    "https://www.youtube.com/@tulasihealthcare"
+  ],
+  "copyright": "Copyright © 2026 Tulasi Healthcare | Powered by Tulasi Healthcare.",
+  "menu": [
+    {
+      "label": "Home",
+      "href": "/",
+      "groups": []
+    },
+    {
+      "label": "About Us",
+      "href": "/about-us/",
+      "groups": [
+        {
+          "label": null,
+          "links": [
+            {
+              "label": "Gallery",
+              "href": "/gallery/"
+            },
+            {
+              "label": "Tulasi Healthcare Best Psychiatric Hospital – Videos",
+              "href": "/videos/"
+            },
+            {
+              "label": "Mission & Vision",
+              "href": "/mission-vision/"
+            },
+            {
+              "label": "Admission",
+              "href": "/admission/"
+            },
+            {
+              "label": "International Patient Services",
+              "href": "/international-patient-services/"
+            },
+            {
+              "label": "Publications",
+              "href": "/publications/"
+            },
+            {
+              "label": "Internship Opportunities At Tulasi Healthcare",
+              "href": "/internship/"
+            },
+            {
+              "label": "Terms",
+              "href": "/terms-of-use/"
+            },
+            {
+              "label": "Privacy",
+              "href": "/privacy-policy/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Services",
+      "href": "/services-2/",
+      "groups": [
+        {
+          "label": "Treatment",
+          "links": [
+            {
+              "label": "Schizophrenia",
+              "href": "/schizophrenia-treatment-delhi-gurgaon-ncr/"
+            },
+            {
+              "label": "OCD Treatment in Gurgaon",
+              "href": "/obsessive-compulsive-disorder-treatment/"
+            },
+            {
+              "label": "OCD Treatment in Delhi",
+              "href": "/ocd-treatment-in-delhi/"
+            },
+            {
+              "label": "OCD Treatment in India",
+              "href": "/ocd-treatment-in-india/"
+            },
+            {
+              "label": "Bipolar",
+              "href": "/bipolar-disorder-treatment-delhi-gurgaon/"
+            },
+            {
+              "label": "Depression",
+              "href": "/depression/"
+            },
+            {
+              "label": "Dementia",
+              "href": "/treatment-of-dementia/"
+            },
+            {
+              "label": "Dementia Treatment Clinic in Gurgaon",
+              "href": "/dementia-treatment-clinic-in-gurgaon/"
+            },
+            {
+              "label": "Dementia treatment in India",
+              "href": "/dementia-treatment-in-india/"
+            },
+            {
+              "label": "Palliative Care for Dementia",
+              "href": "/palliative-care-for-dementia/"
+            },
+            {
+              "label": "Anxiety",
+              "href": "/anxiety/"
+            },
+            {
+              "label": "Dual Diagnosis",
+              "href": "/dual-diagnosis/"
+            },
+            {
+              "label": "Personality Disorders",
+              "href": "/treatment-of-personality-disorders/"
+            },
+            {
+              "label": "Cluster A",
+              "href": "/cluster-a-personality-disorders/"
+            },
+            {
+              "label": "Cluster B",
+              "href": "/cluster-b-personality-disorders/"
+            },
+            {
+              "label": "Cluster C",
+              "href": "/cluster-c-personality-disorders/"
+            }
+          ]
+        },
+        {
+          "label": "Sexual Disorder Treatment",
+          "links": [
+            {
+              "label": "Sexologist in Delhi NCR",
+              "href": "/sexologist-in-delhi/"
+            },
+            {
+              "label": "Sexologist in Gurgaon",
+              "href": "/sexologist-in-gurgaon/"
+            }
+          ]
+        },
+        {
+          "label": "Mental Hospital",
+          "links": [
+            {
+              "label": "Mental Hospital In India",
+              "href": "/mental-hospital-in-india/"
+            },
+            {
+              "label": "Psychiatric Mental Hospital",
+              "href": "/psychiatric-mental-hospital-in-delhi/"
+            },
+            {
+              "label": "Best Mental Hospital in Gurgaon",
+              "href": "/mental-hospital-in-gurgaon/"
+            },
+            {
+              "label": "Mental Hospital in Faridabad",
+              "href": "/mental-hospital-in-faridabad/"
+            },
+            {
+              "label": "Mental Hospital Near Me",
+              "href": "/mental-hospital-near-me/"
+            },
+            {
+              "label": "Mental Hospital in Noida – Psychiatric & Mental Health Care",
+              "href": "/mental-hospital-in-noida/"
+            }
+          ]
+        },
+        {
+          "label": "Rehabilitation Services",
+          "links": [
+            {
+              "label": "Rehabilitation Centre",
+              "href": "/rehabilitation-centre/"
+            },
+            {
+              "label": "Rehabilitation Centre in India",
+              "href": "/rehabilitation-centre-in-india/"
+            },
+            {
+              "label": "Rehabilitation Centre in Delhi",
+              "href": "/rehabilitation-centre-in-delhi/"
+            },
+            {
+              "label": "Rehab Centre in Gurgaon",
+              "href": "/rehab-centre-in-gurgaon/"
+            },
+            {
+              "label": "Rehabilitation centre in Faridabad",
+              "href": "/rehabilitation-centre-in-faridabad/"
+            },
+            {
+              "label": "Rehabilitation Centre in Noida",
+              "href": "/rehabilitation-centre-in-noida/"
+            },
+            {
+              "label": "Stroke Rehabilitation",
+              "href": "/stroke-rehabilitation/"
+            },
+            {
+              "label": "Rehabilitation Centre for Chronic Mental Illnesses",
+              "href": "/rehabilitation-centres-for-chronic-mental-illnesses/"
+            }
+          ]
+        },
+        {
+          "label": "Addiction Treatment",
+          "links": [
+            {
+              "label": "Best De-addiction Centre in Delhi, Gurgaon",
+              "href": "/deaddiction-centre/"
+            },
+            {
+              "label": "Alcohol Addiction",
+              "href": "/deaddiction-centre/alcohol-addiction/"
+            },
+            {
+              "label": "Fatty Liver Disease",
+              "href": "/fatty-liver-disease/"
+            },
+            {
+              "label": "Alcoholic Hepatitis",
+              "href": "/alcoholic-hepatitis-treatment/"
+            },
+            {
+              "label": "Liver Cirrhosis",
+              "href": "/liver-cirrhosis/"
+            },
+            {
+              "label": "Alcohol Use Disorder",
+              "href": "/alcohol-use-disorder-treatment/"
+            },
+            {
+              "label": "Relapse Prevention",
+              "href": "/relapse-prevention/"
+            },
+            {
+              "label": "Marijuana Addiction",
+              "href": "/deaddiction-centre/marijuana-treatment/"
+            },
+            {
+              "label": "Drug Addiction",
+              "href": "/drug-addiction-treatment-in-delhi-gurgaon-and-ncr/"
+            },
+            {
+              "label": "Smoking Cessation Hospital in Gurgaon, Delhi NCR",
+              "href": "/smoking-cessation/"
+            },
+            {
+              "label": "Cocaine Addiction",
+              "href": "/deaddiction-centre/cocaine-addiction/"
+            },
+            {
+              "label": "Heroin Addiction",
+              "href": "/deaddiction-centre/heroin-addiction/"
+            },
+            {
+              "label": "Problem Drinking",
+              "href": "/treatment-of-problem-drinking/"
+            },
+            {
+              "label": "Digital and Gaming Addiction",
+              "href": "/digital-and-gaming-addiction/"
+            },
+            {
+              "label": "Nasha Mukti Kendra in Ludhiana",
+              "href": "/nasha-mukti-kendra-in-ludhiana/"
+            }
+          ]
+        },
+        {
+          "label": "Therapies",
+          "links": [
+            {
+              "label": "Cognitive Behavioural Therapy",
+              "href": "/cbt-behavioural-therapy/"
+            },
+            {
+              "label": "Family Therapy",
+              "href": "/family-therapy/"
+            },
+            {
+              "label": "Deep TMS",
+              "href": "/deep-tms-treatment/"
+            },
+            {
+              "label": "deepTMS for OCD",
+              "href": "/deeptms-ocd-treatment/"
+            },
+            {
+              "label": "dTMS for T R Depression",
+              "href": "/dtms-for-treatment-resistance-depression/"
+            },
+            {
+              "label": "Modified Electroconvulsive Therapy",
+              "href": "/modified-electroconvulsive-therapy/"
+            },
+            {
+              "label": "Heal Our Mind",
+              "href": "/healourmind/"
+            },
+            {
+              "label": "Virtual Reality Therapy",
+              "href": "/virtual-reality-therapy/"
+            },
+            {
+              "label": "Child & Adolescent Services",
+              "href": "/child-psychiatry-hospital-services/"
+            },
+            {
+              "label": "Autism Treatment in Gurgaon & Delhi NCR",
+              "href": "/autism-spectrum-disorder/"
+            },
+            {
+              "label": "ADHD Treatment in Gurgaon & Delhi NCR",
+              "href": "/adhd-treatment/"
+            },
+            {
+              "label": "IQ Testing in Gurgaon | Expert IQ Test for Children & Adults​",
+              "href": "/iq-testing/"
+            },
+            {
+              "label": "Autism Care Centre in Gurgaon",
+              "href": "/autism-care-centre/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Employee Assistance Program",
+      "href": "/employee-assistance-program/",
+      "groups": []
+    },
+    {
+      "label": "Blog",
+      "href": "/blog/",
+      "groups": []
+    },
+    {
+      "label": "Our Team",
+      "href": "/our-team/",
+      "groups": [
+        {
+          "label": "Psychiatrist",
+          "links": [
+            {
+              "label": "Psychiatrist in Gurgaon",
+              "href": "/psychiatrist-in-gurgaon/"
+            },
+            {
+              "label": "Best Psychiatrist in Delhi",
+              "href": "/best-psychiatrist-in-delhi/"
+            },
+            {
+              "label": "Best Psychiatrist in India for Mental Health Treatment",
+              "href": "/psychiatrist-in-india/"
+            },
+            {
+              "label": "Psychiatrist in Mumbai – Expert Psychiatric Services",
+              "href": "/psychiatrist-in-mumbai/"
+            },
+            {
+              "label": "Psychiatrist in Noida",
+              "href": "/psychiatrist-in-noida/"
+            },
+            {
+              "label": "Psychiatrist in Bangalore – Expert Mental Health Care",
+              "href": "/psychiatrist-in-bangalore/"
+            },
+            {
+              "label": "Best Psychiatrist in Chandigarh",
+              "href": "/psychiatrist-in-chandigarh/"
+            }
+          ]
+        },
+        {
+          "label": "Psychologist",
+          "links": [
+            {
+              "label": "Psychologist in Gurgaon – Expert Mental Health Care",
+              "href": "/psychologist-in-gurgaon/"
+            },
+            {
+              "label": "Best Psychologist in Delhi for Therapy & Mental Health Support",
+              "href": "/psychologist-in-delhi/"
+            },
+            {
+              "label": "Best Psychologist in India",
+              "href": "/best-psychologist-in-india/"
+            },
+            {
+              "label": "Best Counsellor Near Me",
+              "href": "/counsellor-near-me/"
+            },
+            {
+              "label": "Psychologist in Chandigarh – Mental Health Experts",
+              "href": "/psychologist-in-chandigarh/"
+            },
+            {
+              "label": "Child Psychologist in Gurgaon & Delhi NCR",
+              "href": "/child-psychologist/"
+            },
+            {
+              "label": "Child Counsellor Near Me – Professional Counselling for Children",
+              "href": "/child-counsellor-near-me/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Contact Us",
+      "href": "/contact-us/",
+      "groups": [
+        {
+          "label": null,
+          "links": [
+            {
+              "label": "Map & Direction",
+              "href": "/map-direction/"
+            },
+            {
+              "label": "Delhi",
+              "href": "/map-direction/delhi/"
+            },
+            {
+              "label": "Gurgaon",
+              "href": "/map-direction/gurgaon/"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

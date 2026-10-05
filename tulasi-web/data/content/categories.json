@@ -1,0 +1,450 @@
+[
+  {
+    "id": 47,
+    "name": "Blog",
+    "slug": "blog",
+    "path": "/category/blog/",
+    "count": 318,
+    "description": null,
+    "seo": {
+      "title": "Blog Archives - Tulasi Healthcare",
+      "description": null,
+      "canonical": "https://www.tulasihealthcare.com/category/blog/",
+      "robots": {
+        "index": "index",
+        "follow": "follow",
+        "max-snippet": "max-snippet:-1",
+        "max-image-preview": "max-image-preview:large",
+        "max-video-preview": "max-video-preview:-1"
+      },
+      "og": {
+        "title": "Blog Archives - Tulasi Healthcare",
+        "description": null,
+        "type": "article",
+        "url": "https://www.tulasihealthcare.com/category/blog/",
+        "image": [],
+        "publishedTime": null,
+        "modifiedTime": null
+      },
+      "twitter": {
+        "card": "summary_large_image",
+        "misc": null
+      },
+      "schema": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "@id": "https://www.tulasihealthcare.com/category/blog/",
+            "url": "https://www.tulasihealthcare.com/category/blog/",
+            "name": "Blog Archives - Tulasi Healthcare",
+            "isPartOf": {
+              "@id": "https://www.tulasihealthcare.com/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://www.tulasihealthcare.com/category/blog/#breadcrumb"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.tulasihealthcare.com/category/blog/#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.tulasihealthcare.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Blog"
+              }
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.tulasihealthcare.com/#website",
+            "url": "https://www.tulasihealthcare.com/",
+            "name": "Tulasi Healthcare",
+            "description": "",
+            "publisher": {
+              "@id": "https://www.tulasihealthcare.com/#organization"
+            },
+            "potentialAction": [
+              {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://www.tulasihealthcare.com/?s={search_term_string}"
+                },
+                "query-input": {
+                  "@type": "PropertyValueSpecification",
+                  "valueRequired": true,
+                  "valueName": "search_term_string"
+                }
+              }
+            ],
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://www.tulasihealthcare.com/#organization",
+            "name": "Tulasi Healthcare",
+            "url": "https://www.tulasihealthcare.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "inLanguage": "en-US",
+              "@id": "https://www.tulasihealthcare.com/#/schema/logo/image/",
+              "url": "https://www.tulasihealthcare.com/wp-content/uploads/2023/07/logo.png",
+              "contentUrl": "https://www.tulasihealthcare.com/wp-content/uploads/2023/07/logo.png",
+              "width": 113,
+              "height": 86,
+              "caption": "Tulasi Healthcare"
+            },
+            "image": {
+              "@id": "https://www.tulasihealthcare.com/#/schema/logo/image/"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": 45,
+    "name": "Rehab Centre",
+    "slug": "rehab-centre",
+    "path": "/category/rehab-centre/",
+    "count": 0,
+    "description": null,
+    "seo": {
+      "title": "Rehab Centre Archives - Tulasi Healthcare",
+      "description": null,
+      "canonical": "https://www.tulasihealthcare.com/category/rehab-centre/",
+      "robots": {
+        "index": "index",
+        "follow": "follow",
+        "max-snippet": "max-snippet:-1",
+        "max-image-preview": "max-image-preview:large",
+        "max-video-preview": "max-video-preview:-1"
+      },
+      "og": {
+        "title": "Rehab Centre Archives - Tulasi Healthcare",
+        "description": null,
+        "type": "article",
+        "url": "https://www.tulasihealthcare.com/category/rehab-centre/",
+        "image": [],
+        "publishedTime": null,
+        "modifiedTime": null
+      },
+      "twitter": {
+        "card": "summary_large_image",
+        "misc": null
+      },
+      "schema": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "@id": "https://www.tulasihealthcare.com/category/rehab-centre/",
+            "url": "https://www.tulasihealthcare.com/category/rehab-centre/",
+            "name": "Rehab Centre Archives - Tulasi Healthcare",
+            "isPartOf": {
+              "@id": "https://www.tulasihealthcare.com/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://www.tulasihealthcare.com/category/rehab-centre/#breadcrumb"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.tulasihealthcare.com/category/rehab-centre/#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.tulasihealthcare.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Rehab Centre"
+              }
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.tulasihealthcare.com/#website",
+            "url": "https://www.tulasihealthcare.com/",
+            "name": "Tulasi Healthcare",
+            "description": "",
+            "publisher": {
+              "@id": "https://www.tulasihealthcare.com/#organization"
+            },
+            "potentialAction": [
+              {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://www.tulasihealthcare.com/?s={search_term_string}"
+                },
+                "query-input": {
+                  "@type": "PropertyValueSpecification",
+                  "valueRequired": true,
+                  "valueName": "search_term_string"
+                }
+              }
+            ],
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://www.tulasihealthcare.com/#organization",
+            "name": "Tulasi Healthcare",
+            "url": "https://www.tulasihealthcare.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "inLanguage": "en-US",
+              "@id": "https://www.tulasihealthcare.com/#/schema/logo/image/",
+              "url": "https://www.tulasihealthcare.com/wp-content/uploads/2023/07/logo.png",
+              "contentUrl": "https://www.tulasihealthcare.com/wp-content/uploads/2023/07/logo.png",
+              "width": 113,
+              "height": 86,
+              "caption": "Tulasi Healthcare"
+            },
+            "image": {
+              "@id": "https://www.tulasihealthcare.com/#/schema/logo/image/"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": 31,
+    "name": "Schizophrenia",
+    "slug": "schizophrenia",
+    "path": "/category/schizophrenia/",
+    "count": 0,
+    "description": null,
+    "seo": {
+      "title": "Schizophrenia Archives - Tulasi Healthcare",
+      "description": null,
+      "canonical": "https://www.tulasihealthcare.com/category/schizophrenia/",
+      "robots": {
+        "index": "index",
+        "follow": "follow",
+        "max-snippet": "max-snippet:-1",
+        "max-image-preview": "max-image-preview:large",
+        "max-video-preview": "max-video-preview:-1"
+      },
+      "og": {
+        "title": "Schizophrenia Archives - Tulasi Healthcare",
+        "description": null,
+        "type": "article",
+        "url": "https://www.tulasihealthcare.com/category/schizophrenia/",
+        "image": [],
+        "publishedTime": null,
+        "modifiedTime": null
+      },
+      "twitter": {
+        "card": "summary_large_image",
+        "misc": null
+      },
+      "schema": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "@id": "https://www.tulasihealthcare.com/category/schizophrenia/",
+            "url": "https://www.tulasihealthcare.com/category/schizophrenia/",
+            "name": "Schizophrenia Archives - Tulasi Healthcare",
+            "isPartOf": {
+              "@id": "https://www.tulasihealthcare.com/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://www.tulasihealthcare.com/category/schizophrenia/#breadcrumb"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.tulasihealthcare.com/category/schizophrenia/#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.tulasihealthcare.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Schizophrenia"
+              }
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.tulasihealthcare.com/#website",
+            "url": "https://www.tulasihealthcare.com/",
+            "name": "Tulasi Healthcare",
+            "description": "",
+            "publisher": {
+              "@id": "https://www.tulasihealthcare.com/#organization"
+            },
+            "potentialAction": [
+              {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://www.tulasihealthcare.com/?s={search_term_string}"
+                },
+                "query-input": {
+                  "@type": "PropertyValueSpecification",
+                  "valueRequired": true,
+                  "valueName": "search_term_string"
+                }
+              }
+            ],
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://www.tulasihealthcare.com/#organization",
+            "name": "Tulasi Healthcare",
+            "url": "https://www.tulasihealthcare.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "inLanguage": "en-US",
+              "@id": "https://www.tulasihealthcare.com/#/schema/logo/image/",
+              "url": "https://www.tulasihealthcare.com/wp-content/uploads/2023/07/logo.png",
+              "contentUrl": "https://www.tulasihealthcare.com/wp-content/uploads/2023/07/logo.png",
+              "width": 113,
+              "height": 86,
+              "caption": "Tulasi Healthcare"
+            },
+            "image": {
+              "@id": "https://www.tulasihealthcare.com/#/schema/logo/image/"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": 1,
+    "name": "Uncategorized",
+    "slug": "uncategorized",
+    "path": "/category/uncategorized/",
+    "count": 0,
+    "description": null,
+    "seo": {
+      "title": "Uncategorized Archives - Tulasi Healthcare",
+      "description": null,
+      "canonical": "https://www.tulasihealthcare.com/category/uncategorized/",
+      "robots": {
+        "index": "index",
+        "follow": "follow",
+        "max-snippet": "max-snippet:-1",
+        "max-image-preview": "max-image-preview:large",
+        "max-video-preview": "max-video-preview:-1"
+      },
+      "og": {
+        "title": "Uncategorized Archives - Tulasi Healthcare",
+        "description": null,
+        "type": "article",
+        "url": "https://www.tulasihealthcare.com/category/uncategorized/",
+        "image": [],
+        "publishedTime": null,
+        "modifiedTime": null
+      },
+      "twitter": {
+        "card": "summary_large_image",
+        "misc": null
+      },
+      "schema": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "@id": "https://www.tulasihealthcare.com/category/uncategorized/",
+            "url": "https://www.tulasihealthcare.com/category/uncategorized/",
+            "name": "Uncategorized Archives - Tulasi Healthcare",
+            "isPartOf": {
+              "@id": "https://www.tulasihealthcare.com/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://www.tulasihealthcare.com/category/uncategorized/#breadcrumb"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.tulasihealthcare.com/category/uncategorized/#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.tulasihealthcare.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Uncategorized"
+              }
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.tulasihealthcare.com/#website",
+            "url": "https://www.tulasihealthcare.com/",
+            "name": "Tulasi Healthcare",
+            "description": "",
+            "publisher": {
+              "@id": "https://www.tulasihealthcare.com/#organization"
+            },
+            "potentialAction": [
+              {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://www.tulasihealthcare.com/?s={search_term_string}"
+                },
+                "query-input": {
+                  "@type": "PropertyValueSpecification",
+                  "valueRequired": true,
+                  "valueName": "search_term_string"
+                }
+              }
+            ],
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://www.tulasihealthcare.com/#organization",
+            "name": "Tulasi Healthcare",
+            "url": "https://www.tulasihealthcare.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "inLanguage": "en-US",
+              "@id": "https://www.tulasihealthcare.com/#/schema/logo/image/",
+              "url": "https://www.tulasihealthcare.com/wp-content/uploads/2023/07/logo.png",
+              "contentUrl": "https://www.tulasihealthcare.com/wp-content/uploads/2023/07/logo.png",
+              "width": 113,
+              "height": 86,
+              "caption": "Tulasi Healthcare"
+            },
+            "image": {
+              "@id": "https://www.tulasihealthcare.com/#/schema/logo/image/"
+            }
+          }
+        ]
+      }
+    }
+  }
+]

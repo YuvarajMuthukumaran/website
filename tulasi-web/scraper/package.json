@@ -1,0 +1,22 @@
+{
+  "name": "tulasi-scraper",
+  "private": true,
+  "type": "module",
+  "description": "Phase 0: one-time, cached, polite content extraction from the live tulasihealthcare.com WordPress site",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "api": "node 01-fetch-api.mjs",
+    "sitemaps": "node 02-fetch-sitemaps.mjs",
+    "crawl": "node 03-crawl-html.mjs",
+    "doctors": "node 04-extract-doctors.mjs",
+    "content": "node 05-normalize-content.mjs",
+    "reports": "node 06-build-reports.mjs",
+    "media": "node 07-download-media.mjs",
+    "all": "npm run api && npm run sitemaps && npm run crawl && npm run doctors && npm run content && npm run reports && npm run media"
+  },
+  "dependencies": {
+    "cheerio": "^1.2.0"
+  }
+}

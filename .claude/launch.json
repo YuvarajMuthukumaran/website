@@ -1,0 +1,27 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "tulasi-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "tulasi-web/web",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "3000"
+      ],
+      "port": 3000
+    },
+    {
+      "name": "tulasi-api-sandbox",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "tulasi-web/scripts/api-sandbox.mjs"
+      ],
+      "port": 8788
+    }
+  ]
+}

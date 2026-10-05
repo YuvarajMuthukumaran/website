@@ -1,0 +1,590 @@
+[
+  {
+    "id": "1791182655537",
+    "timestamp": 1791182655537,
+    "request": {
+      "id": "1791182654905",
+      "name": "New Request",
+      "method": "POST",
+      "url": "https://gaurav.tirupatihms.in/hms/Api/admissionStatusPush",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/json",
+          "enabled": true
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "Content-Type: application/json\napi-key: Tulsi000111\n\n{\n  \"uhid\": \"2025-26RG5918\"\n}"
+      },
+      "auth": {
+        "type": "none"
+      },
+      "inheritAuth": true
+    },
+    "response": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "connection": "Keep-Alive",
+        "content-type": "text/html",
+        "date": "Mon, 05 Oct 2026 06:44:17 GMT",
+        "keep-alive": "timeout=5",
+        "server": "Apache",
+        "set-cookie": "CAKEPHP=4rdn66jk2e13k950ikvi9bpfe5; expires=Thu, 11-Feb-2027 17:24:18 GMT; path=/; secure; HttpOnly",
+        "transfer-encoding": "chunked",
+        "x-powered-by": "PHP/5.3.29"
+      },
+      "body": "{\"status\":\"Fail\",\"statusCode\":\"401\",\"error\":\"Unauthorized\",\"message\":\"Invalid API key\",\"data\":[]}",
+      "time": 366,
+      "size": 97,
+      "cookies": [
+        {
+          "name": "CAKEPHP",
+          "value": "4rdn66jk2e13k950ikvi9bpfe5",
+          "domain": "gaurav.tirupatihms.in",
+          "path": "/",
+          "expires": "2027-02-11T17:24:18.000Z",
+          "httpOnly": true,
+          "secure": true,
+          "sameSite": null,
+          "createdAt": "2026-10-05T06:44:15.536Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "1791182666112",
+    "timestamp": 1791182666112,
+    "request": {
+      "id": "1791182665472",
+      "name": "New Request",
+      "method": "POST",
+      "url": "https://gaurav.tirupatihms.in/hms/Api/admissionStatusPush",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "Cookie",
+          "value": "CAKEPHP=4rdn66jk2e13k950ikvi9bpfe5",
+          "enabled": true
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "Content-Type: application/json\napi-key: \"Tulsi000111\"\n\n{\n  \"uhid\": \"2025-26RG5918\"\n}"
+      },
+      "auth": {
+        "type": "none"
+      },
+      "inheritAuth": true
+    },
+    "response": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "connection": "Keep-Alive",
+        "content-type": "text/html",
+        "date": "Mon, 05 Oct 2026 06:44:28 GMT",
+        "keep-alive": "timeout=5",
+        "server": "Apache",
+        "transfer-encoding": "chunked",
+        "x-powered-by": "PHP/5.3.29"
+      },
+      "body": "{\"status\":\"Fail\",\"statusCode\":\"401\",\"error\":\"Unauthorized\",\"message\":\"Invalid API key\",\"data\":[]}",
+      "time": 638,
+      "size": 97,
+      "cookies": []
+    }
+  },
+  {
+    "id": "1791182734045",
+    "timestamp": 1791182734045,
+    "request": {
+      "id": "1791182733602",
+      "name": "New Request",
+      "method": "POST",
+      "url": "https://gaurav.tirupatihms.in/hms/Api/admissionStatusPush",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "Cookie",
+          "value": "CAKEPHP=4rdn66jk2e13k950ikvi9bpfe5",
+          "enabled": true
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "Content-Type: application/json\napi-key: Tulsi000111\n\n{\n  \"uhid\": \"2025-26RG5918\"\n}"
+      },
+      "auth": {
+        "type": "none"
+      },
+      "inheritAuth": true
+    },
+    "response": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "connection": "Keep-Alive",
+        "content-type": "text/html",
+        "date": "Mon, 05 Oct 2026 06:45:36 GMT",
+        "keep-alive": "timeout=5",
+        "server": "Apache",
+        "transfer-encoding": "chunked",
+        "x-powered-by": "PHP/5.3.29"
+      },
+      "body": "{\"status\":\"Fail\",\"statusCode\":\"401\",\"error\":\"Unauthorized\",\"message\":\"Invalid API key\",\"data\":[]}",
+      "time": 441,
+      "size": 97,
+      "cookies": []
+    }
+  },
+  {
+    "id": "1791182801092",
+    "timestamp": 1791182801092,
+    "request": {
+      "id": "1791182799365",
+      "name": "New Request",
+      "method": "POST",
+      "url": "https://gaurav.tirupatihms.in/hms/Api/admissionStatusPush",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "X-API-Key",
+          "value": "Tulsi000111",
+          "enabled": true
+        },
+        {
+          "key": "Cookie",
+          "value": "CAKEPHP=4rdn66jk2e13k950ikvi9bpfe5",
+          "enabled": true
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "\n{\n  \"uhid\": \"2025-26RG5918\"\n}"
+      },
+      "auth": {
+        "type": "none"
+      },
+      "inheritAuth": true
+    },
+    "response": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "connection": "Keep-Alive",
+        "content-type": "text/html",
+        "date": "Mon, 05 Oct 2026 06:46:43 GMT",
+        "keep-alive": "timeout=5",
+        "server": "Apache",
+        "transfer-encoding": "chunked",
+        "x-powered-by": "PHP/5.3.29"
+      },
+      "body": "{\"status\":\"Fail\",\"statusCode\":\"401\",\"error\":\"Unauthorized\",\"message\":\"Invalid API key\",\"data\":[]}",
+      "time": 1707,
+      "size": 97,
+      "cookies": []
+    }
+  },
+  {
+    "id": "1791182825752",
+    "timestamp": 1791182825752,
+    "request": {
+      "id": "1791182825108",
+      "name": "New Request",
+      "method": "POST",
+      "url": "https://gaurav.tirupatihms.in/hms/Api/admissionStatusPush",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "X-API-Key",
+          "value": "Tulsi000111",
+          "enabled": true
+        },
+        {
+          "key": "api-key",
+          "value": "Tulsi000111",
+          "enabled": true
+        },
+        {
+          "key": "Cookie",
+          "value": "CAKEPHP=4rdn66jk2e13k950ikvi9bpfe5",
+          "enabled": true
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "\n{\n  \"uhid\": \"2025-26RG5918\"\n}"
+      },
+      "auth": {
+        "type": "none"
+      },
+      "inheritAuth": true
+    },
+    "response": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "connection": "Keep-Alive",
+        "content-type": "text/html",
+        "date": "Mon, 05 Oct 2026 06:47:08 GMT",
+        "keep-alive": "timeout=5",
+        "server": "Apache",
+        "transfer-encoding": "chunked",
+        "x-powered-by": "PHP/5.3.29"
+      },
+      "body": "{\"status\":\"ok\",\"statusCode\":\"200\",\"error\":\"\",\"message\":\"Patient admission data found\",\"data\":{\"uhid\":\"2025-26RG5918\",\"patient_id\":\"7060\",\"name\":\"ROCHAK\",\"middle_name\":\"Data is not available\",\"l_name\":\"NIGAM\",\"dob\":\"45 Yrs\",\"phone\":\"9971139930\",\"address\":\"H.NO-1229 B-1, VASANT KUNJ\",\"care_team\":\"ALISHA NAGAR\",\"admitting_complaint\":\"Data is not available\",\"ward\":\"Data is not available\",\"bed_no\":\"Data is not available\",\"admission_status\":\"IPD\",\"visit_date\":\"2026-02-09 19:47:01\"}}",
+      "time": 643,
+      "size": 481,
+      "cookies": []
+    }
+  },
+  {
+    "id": "1791182848592",
+    "timestamp": 1791182848592,
+    "request": {
+      "id": "1791182848006",
+      "name": "New Request",
+      "method": "POST",
+      "url": "https://gaurav.tirupatihms.in/hms/Api/admissionStatusPush",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "X-API-Key",
+          "value": "Tulsi000111",
+          "enabled": true
+        },
+        {
+          "key": "api-key",
+          "value": "Tulsi000110",
+          "enabled": true
+        },
+        {
+          "key": "Cookie",
+          "value": "CAKEPHP=4rdn66jk2e13k950ikvi9bpfe5",
+          "enabled": true
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "\n{\n  \"uhid\": \"2025-26RG5918\"\n}"
+      },
+      "auth": {
+        "type": "none"
+      },
+      "inheritAuth": true
+    },
+    "response": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "connection": "Keep-Alive",
+        "content-length": "97",
+        "content-type": "text/html",
+        "date": "Mon, 05 Oct 2026 06:47:30 GMT",
+        "keep-alive": "timeout=5",
+        "server": "Apache",
+        "x-powered-by": "PHP/5.3.29"
+      },
+      "body": "{\"status\":\"Fail\",\"statusCode\":\"401\",\"error\":\"Unauthorized\",\"message\":\"Invalid API key\",\"data\":[]}",
+      "time": 585,
+      "size": 97,
+      "cookies": []
+    }
+  },
+  {
+    "id": "1791182852137",
+    "timestamp": 1791182852137,
+    "request": {
+      "id": "1791182851695",
+      "name": "New Request",
+      "method": "POST",
+      "url": "https://gaurav.tirupatihms.in/hms/Api/admissionStatusPush",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "X-API-Key",
+          "value": "Tulsi000111",
+          "enabled": true
+        },
+        {
+          "key": "api-key",
+          "value": "Tulsi000111",
+          "enabled": true
+        },
+        {
+          "key": "Cookie",
+          "value": "CAKEPHP=4rdn66jk2e13k950ikvi9bpfe5",
+          "enabled": true
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "\n{\n  \"uhid\": \"2025-26RG5918\"\n}"
+      },
+      "auth": {
+        "type": "none"
+      },
+      "inheritAuth": true
+    },
+    "response": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "connection": "Keep-Alive",
+        "content-type": "text/html",
+        "date": "Mon, 05 Oct 2026 06:47:34 GMT",
+        "keep-alive": "timeout=5",
+        "server": "Apache",
+        "transfer-encoding": "chunked",
+        "x-powered-by": "PHP/5.3.29"
+      },
+      "body": "{\"status\":\"ok\",\"statusCode\":\"200\",\"error\":\"\",\"message\":\"Patient admission data found\",\"data\":{\"uhid\":\"2025-26RG5918\",\"patient_id\":\"7060\",\"name\":\"ROCHAK\",\"middle_name\":\"Data is not available\",\"l_name\":\"NIGAM\",\"dob\":\"45 Yrs\",\"phone\":\"9971139930\",\"address\":\"H.NO-1229 B-1, VASANT KUNJ\",\"care_team\":\"ALISHA NAGAR\",\"admitting_complaint\":\"Data is not available\",\"ward\":\"Data is not available\",\"bed_no\":\"Data is not available\",\"admission_status\":\"IPD\",\"visit_date\":\"2026-02-09 19:47:01\"}}",
+      "time": 403,
+      "size": 481,
+      "cookies": []
+    }
+  },
+  {
+    "id": "1791183021586",
+    "timestamp": 1791183021586,
+    "request": {
+      "id": "1791183020994",
+      "name": "New Request",
+      "method": "POST",
+      "url": "https://gaurav.tirupatihms.in/hms/Api/admissionStatusPush",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "api-key",
+          "value": "Tulsi000111",
+          "enabled": true
+        },
+        {
+          "key": "Cookie",
+          "value": "CAKEPHP=4rdn66jk2e13k950ikvi9bpfe5",
+          "enabled": true
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "\n{\n  \"uhid\": \"2025-26RG5918\"\n}"
+      },
+      "auth": {
+        "type": "none"
+      },
+      "inheritAuth": true
+    },
+    "response": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "connection": "Keep-Alive",
+        "content-type": "text/html",
+        "date": "Mon, 05 Oct 2026 06:50:23 GMT",
+        "keep-alive": "timeout=5",
+        "server": "Apache",
+        "transfer-encoding": "chunked",
+        "x-powered-by": "PHP/5.3.29"
+      },
+      "body": "{\"status\":\"ok\",\"statusCode\":\"200\",\"error\":\"\",\"message\":\"Patient admission data found\",\"data\":{\"uhid\":\"2025-26RG5918\",\"patient_id\":\"7060\",\"name\":\"ROCHAK\",\"middle_name\":\"Data is not available\",\"l_name\":\"NIGAM\",\"dob\":\"45 Yrs\",\"phone\":\"9971139930\",\"address\":\"H.NO-1229 B-1, VASANT KUNJ\",\"care_team\":\"ALISHA NAGAR\",\"admitting_complaint\":\"Data is not available\",\"ward\":\"Data is not available\",\"bed_no\":\"Data is not available\",\"admission_status\":\"IPD\",\"visit_date\":\"2026-02-09 19:47:01\"}}",
+      "time": 559,
+      "size": 481,
+      "cookies": []
+    }
+  },
+  {
+    "id": "1791183028990",
+    "timestamp": 1791183028990,
+    "request": {
+      "id": "1791183027546",
+      "name": "New Request",
+      "method": "POST",
+      "url": "https://gaurav.tirupatihms.in/hms/Api/admissionStatusPush",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "api-key",
+          "value": "Tulsi00011",
+          "enabled": true
+        },
+        {
+          "key": "Cookie",
+          "value": "CAKEPHP=4rdn66jk2e13k950ikvi9bpfe5",
+          "enabled": true
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "\n{\n  \"uhid\": \"2025-26RG5918\"\n}"
+      },
+      "auth": {
+        "type": "none"
+      },
+      "inheritAuth": true
+    },
+    "response": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "connection": "Keep-Alive",
+        "content-type": "text/html",
+        "date": "Mon, 05 Oct 2026 06:50:31 GMT",
+        "keep-alive": "timeout=5",
+        "server": "Apache",
+        "transfer-encoding": "chunked",
+        "x-powered-by": "PHP/5.3.29"
+      },
+      "body": "{\"status\":\"Fail\",\"statusCode\":\"401\",\"error\":\"Unauthorized\",\"message\":\"Invalid API key\",\"data\":[]}",
+      "time": 1442,
+      "size": 97,
+      "cookies": []
+    }
+  },
+  {
+    "id": "1791183032468",
+    "timestamp": 1791183032468,
+    "request": {
+      "id": "1791183031977",
+      "name": "New Request",
+      "method": "POST",
+      "url": "https://gaurav.tirupatihms.in/hms/Api/admissionStatusPush",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "api-key",
+          "value": "Tulsi000111",
+          "enabled": true
+        },
+        {
+          "key": "Cookie",
+          "value": "CAKEPHP=4rdn66jk2e13k950ikvi9bpfe5",
+          "enabled": true
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "\n{\n  \"uhid\": \"2025-26RG5918\"\n}"
+      },
+      "auth": {
+        "type": "none"
+      },
+      "inheritAuth": true
+    },
+    "response": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "connection": "Keep-Alive",
+        "content-type": "text/html",
+        "date": "Mon, 05 Oct 2026 06:50:34 GMT",
+        "keep-alive": "timeout=5",
+        "server": "Apache",
+        "transfer-encoding": "chunked",
+        "x-powered-by": "PHP/5.3.29"
+      },
+      "body": "{\"status\":\"ok\",\"statusCode\":\"200\",\"error\":\"\",\"message\":\"Patient admission data found\",\"data\":{\"uhid\":\"2025-26RG5918\",\"patient_id\":\"7060\",\"name\":\"ROCHAK\",\"middle_name\":\"Data is not available\",\"l_name\":\"NIGAM\",\"dob\":\"45 Yrs\",\"phone\":\"9971139930\",\"address\":\"H.NO-1229 B-1, VASANT KUNJ\",\"care_team\":\"ALISHA NAGAR\",\"admitting_complaint\":\"Data is not available\",\"ward\":\"Data is not available\",\"bed_no\":\"Data is not available\",\"admission_status\":\"IPD\",\"visit_date\":\"2026-02-09 19:47:01\"}}",
+      "time": 417,
+      "size": 481,
+      "cookies": []
+    }
+  }
+]

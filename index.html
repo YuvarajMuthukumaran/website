@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Latent — see how a machine reads</title>
+  <meta name="description" content="An interactive field guide to language models. Chop text into tokens, trace attention, and roll the dice on the next word.">
+  <meta name="theme-color" content="#07070c">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff7a59'/%3E%3Cstop offset='1' stop-color='%239b8cff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='14' fill='url(%23g)'/%3E%3C/svg%3E">
+  <script>
+    document.documentElement.classList.add('js');
+    try {
+      var t = localStorage.getItem('latent-theme') ||
+        (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+    } catch (e) { document.documentElement.dataset.theme = 'dark'; }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"><span></span></div>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="#top" aria-label="Latent — back to top"><span class="brand-mark"></span>latent</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#tokenize" data-spy>Tokenize</a>
+      <a href="#attend" data-spy>Attend</a>
+      <a href="#predict" data-spy>Predict</a>
+      <a href="#principles" data-spy>Principles</a>
+    </nav>
+    <div class="nav-end">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to light theme" title="Toggle theme">
+        <svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <a class="btn btn-small btn-primary magnetic" href="#tokenize">Try it</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <canvas id="field" aria-hidden="true"></canvas>
+      <div class="hero-inner container">
+        <p class="eyebrow reveal"><span class="dot"></span>An interactive field guide to language models</p>
+        <h1 class="display">
+          <span class="line"><span class="w" style="--i:0">See</span> <span class="w" style="--i:1">how</span> <span class="w" style="--i:2">a</span></span>
+          <span class="line"><span class="w" style="--i:3">machine</span> <span class="w" style="--i:4"><em class="grad">reads.</em></span></span>
+        </h1>
+        <p class="lede reveal" style="--d:5">Every sentence you type is chopped into pieces, weighed against its context, and answered one token at a time. Play with each step — no jargon required.</p>
+        <div class="cta-row reveal" style="--d:6">
+          <a class="btn btn-primary magnetic" href="#tokenize">Start exploring
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn-ghost magnetic" href="#principles">What you'll learn</a>
+        </div>
+      </div>
+      <div class="scroll-hint" aria-hidden="true"><span>Scroll</span><i></i></div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>tokens</span><span>embeddings</span><span>attention</span><span>context</span><span>logits</span><span>softmax</span><span>temperature</span><span>sampling</span><span>layers</span><span>weights</span>
+      </div>
+    </div>
+
+    <!-- 01 TOKENIZE -->
+    <section class="section" id="tokenize">
+      <div class="container">
+        <header class="sec-head reveal">
+          <p class="kicker"><span>01</span> Tokenize</p>
+          <h2 class="h2">Text isn't read.<br><em class="grad">It's chopped.</em></h2>
+          <p class="lede">Models never see letters or words. They see tokens — frequent fragments, each mapped to a number. Type anything and watch it split.</p>
+        </header>
+
+        <div class="panel reveal" style="--d:1">
+          <label class="label" for="tok-input">Your text</label>
+          <textarea id="tok-input" class="field-input" rows="2" spellcheck="false">Unbelievably, tokenization isn't magic — it's compression.</textarea>
+          <div class="presets" role="group" aria-label="Try an example">
+            <button class="chip-btn" type="button" data-text="The quick brown fox jumps over the lazy dog.">Everyday</button>
+            <button class="chip-btn" type="button" data-text="Antidisestablishmentarianism is rarely tokenized well.">Rare words</button>
+            <button class="chip-btn" type="button" data-text="const total = items.map(i => i.price * 1.18);">Code</button>
+            <button class="chip-btn" type="button" data-text="Hello world · 你好，世界 · வணக்கம் உலகம்">Other languages</button>
+            <button class="chip-btn" type="button" data-text="In 1969, 24,901 miles around — roughly 3,000,000 steps.">Numbers</button>
+          </div>
+
+          <div class="tok-out" id="tok-out"></div>
+
+          <div class="stats" aria-live="polite" aria-atomic="true">
+            <div class="stat"><b id="s-chars">0</b><span>characters</span></div>
+            <div class="stat"><b id="s-tokens">0</b><span>tokens</span></div>
+            <div class="stat"><b id="s-ratio">0</b><span>chars per token</span></div>
+            <label class="switch"><input type="checkbox" id="show-ids"><span class="track" aria-hidden="true"></span>Show token IDs</label>
+          </div>
+          <p class="note">An illustrative tokenizer, not a real vocabulary. The pattern is real, though: common pieces stay whole, rare ones break apart, and text outside English often costs more tokens. A <span class="sp">·</span> marks a leading space.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 ATTEND -->
+    <section class="section" id="attend">
+      <div class="container">
+        <header class="sec-head reveal">
+          <p class="kicker"><span>02</span> Attend</p>
+          <h2 class="h2">Meaning is a<br><em class="grad">weighted vote.</em></h2>
+          <p class="lede">To make sense of "it", a model looks back over everything before it and decides what matters. Hover, tap or tab through the words to see where each one looks.</p>
+        </header>
+
+        <div class="panel reveal" style="--d:1">
+          <div class="presets" role="group" aria-label="Choose a sentence" id="attn-sentences"></div>
+          <div class="attn-scroll">
+            <div class="attn-inner" id="attn-inner">
+              <svg class="attn-svg" id="attn-svg" aria-hidden="true"></svg>
+            </div>
+          </div>
+          <p class="readout" id="attn-readout" aria-live="polite"></p>
+          <p class="note" id="attn-note"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 PREDICT -->
+    <section class="section" id="predict">
+      <div class="container">
+        <header class="sec-head reveal">
+          <p class="kicker"><span>03</span> Predict</p>
+          <h2 class="h2">The answer is<br><em class="grad">a dice roll.</em></h2>
+          <p class="lede">A model never "decides" a word. It scores every token it knows, turns the scores into odds, and samples. Temperature decides how adventurous that roll is.</p>
+        </header>
+
+        <div class="panel reveal" style="--d:1">
+          <div class="pred-text" id="pred-text" aria-live="polite"></div>
+
+          <div class="controls">
+            <div class="temp">
+              <label for="temp" class="label">Temperature <output id="temp-out" for="temp">0.80</output> <small id="temp-word">balanced</small></label>
+              <input type="range" id="temp" min="0.1" max="2" step="0.05" value="0.8">
+              <div class="presets">
+                <button class="chip-btn" type="button" data-temp="0.2">Focused</button>
+                <button class="chip-btn" type="button" data-temp="0.8">Balanced</button>
+                <button class="chip-btn" type="button" data-temp="1.8">Wild</button>
+              </div>
+            </div>
+            <div class="actions">
+              <button class="btn btn-primary" id="sample" type="button">Sample next token</button>
+              <button class="btn btn-ghost" id="auto" type="button" aria-pressed="false">Auto-write</button>
+              <button class="btn btn-ghost" id="reset" type="button">Reset</button>
+            </div>
+          </div>
+
+          <ul class="bars" id="bars" aria-label="Next-token probabilities. Select one to choose it."></ul>
+
+          <div class="meta">
+            <div class="stat"><b id="m-top">—</b><span>top pick</span></div>
+            <div class="stat"><b id="m-ent">—</b><span>entropy (uncertainty)</span></div>
+            <p class="note">Click any bar to choose that token yourself. Low temperature piles the odds onto the favourite; high temperature lets long shots through. The odds here come from a tiny hand-written table, but the maths — softmax over scores — is the real thing.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRINCIPLES -->
+    <section class="section" id="principles">
+      <div class="container">
+        <header class="sec-head reveal">
+          <p class="kicker"><span>04</span> Principles</p>
+          <h2 class="h2">What you just <em class="grad">saw.</em></h2>
+        </header>
+        <div class="cards">
+          <article class="card reveal" style="--d:0">
+            <span class="card-n">i.</span>
+            <h3>Numbers, not words</h3>
+            <p>Tokens become vectors — long lists of numbers where similar meanings sit close together. Everything after that is arithmetic.</p>
+          </article>
+          <article class="card reveal" style="--d:1">
+            <span class="card-n">ii.</span>
+            <h3>Context is a vote</h3>
+            <p>Attention lets every token ask which earlier tokens matter. Each layer and each head asks a different question.</p>
+          </article>
+          <article class="card reveal" style="--d:2">
+            <span class="card-n">iii.</span>
+            <h3>Output is odds</h3>
+            <p>The model outputs probabilities for every token in its vocabulary. A sampler — and a temperature — turn those odds into a word.</p>
+          </article>
+        </div>
+
+        <div class="numbers reveal">
+          <div class="big"><b data-to="4" data-prefix="≈">≈4</b><span>characters per token in typical English text</span></div>
+          <div class="big"><b data-to="100" data-suffix="K+">100K+</b><span>distinct tokens in many modern vocabularies</span></div>
+          <div class="big"><b>1×</b><span>token generated at a time — each one fed back in as context</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section cta" id="cta">
+      <div class="orb orb-a" aria-hidden="true"></div>
+      <div class="orb orb-b" aria-hidden="true"></div>
+      <div class="container cta-inner reveal">
+        <h2 class="h2 big-h">Now go read<br>something <em class="grad">differently.</em></h2>
+        <a class="btn btn-primary btn-large magnetic" href="#tokenize">Try your own words
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <a class="brand" href="#top"><span class="brand-mark"></span>latent</a>
+      <p>© 2026 Latent. Made to be poked at.</p>
+      <a class="to-top" href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

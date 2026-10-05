@@ -1,0 +1,125 @@
+{
+  "tabs": [
+    {
+      "id": "1791182078361to9l",
+      "tabKind": "request",
+      "name": "New Request",
+      "method": "POST",
+      "url": "https://gaurav.tirupatihms.in/hms/Api/admissionStatusPush",
+      "params": [],
+      "headers": [
+        {
+          "key": "Accept",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/json",
+          "enabled": true
+        },
+        {
+          "key": "api-key",
+          "value": "Tulsi000111",
+          "enabled": true
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "\n{\n  \"uhid\": \"2025-26RG5918\"\n}"
+      },
+      "auth": {
+        "type": "none"
+      },
+      "inheritAuth": true,
+      "inheritScripts": false,
+      "preRequestScript": "",
+      "testScript": "",
+      "testRules": [],
+      "setVariables": [],
+      "activeTab": "headers",
+      "responseTab": "body",
+      "sourceRequestId": null,
+      "sourceCollectionId": null,
+      "sourceFolderPath": null,
+      "sourceScope": "local",
+      "proxyId": null,
+      "certificateConfig": null,
+      "inheritCertificate": false,
+      "response": {
+        "status": 200,
+        "statusText": "OK",
+        "headers": {
+          "connection": "Keep-Alive",
+          "content-type": "text/html",
+          "date": "Mon, 05 Oct 2026 06:50:34 GMT",
+          "keep-alive": "timeout=5",
+          "server": "Apache",
+          "transfer-encoding": "chunked",
+          "x-powered-by": "PHP/5.3.29"
+        },
+        "body": "{\"status\":\"ok\",\"statusCode\":\"200\",\"error\":\"\",\"message\":\"Patient admission data found\",\"data\":{\"uhid\":\"2025-26RG5918\",\"patient_id\":\"7060\",\"name\":\"ROCHAK\",\"middle_name\":\"Data is not available\",\"l_name\":\"NIGAM\",\"dob\":\"45 Yrs\",\"phone\":\"9971139930\",\"address\":\"H.NO-1229 B-1, VASANT KUNJ\",\"care_team\":\"ALISHA NAGAR\",\"admitting_complaint\":\"Data is not available\",\"ward\":\"Data is not available\",\"bed_no\":\"Data is not available\",\"admission_status\":\"IPD\",\"visit_date\":\"2026-02-09 19:47:01\"}}",
+        "time": 417,
+        "size": 481,
+        "actualRequest": {
+          "method": "POST",
+          "url": "https://gaurav.tirupatihms.in/hms/Api/admissionStatusPush",
+          "headers": {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "api-key": "Tulsi000111",
+            "Cookie": "CAKEPHP=4rdn66jk2e13k950ikvi9bpfe5"
+          },
+          "body": "\n{\n  \"uhid\": \"2025-26RG5918\"\n}",
+          "protocol": "HTTP/1.1",
+          "certificateNames": "System Trust Store"
+        },
+        "cookies": [],
+        "timingPhases": [
+          {
+            "name": "Environment",
+            "duration": 1
+          },
+          {
+            "name": "Auth",
+            "duration": 0
+          },
+          {
+            "name": "HTTP Request",
+            "duration": 417
+          },
+          {
+            "name": "Post-processing",
+            "duration": 0
+          }
+        ]
+      },
+      "error": null,
+      "loading": false,
+      "wsConnected": false,
+      "wsUrl": null,
+      "wsMessages": [],
+      "grpcConnected": false,
+      "grpcStreaming": false,
+      "grpcMessages": [],
+      "grpcConfig": null,
+      "groupId": null,
+      "mcpDescription": "",
+      "mcpInputSchema": "",
+      "collectionId": null,
+      "folderId": null,
+      "folderPath": null,
+      "editorScope": "local"
+    }
+  ],
+  "groups": [],
+  "activeTabId": "1791182078361to9l",
+  "currentView": "requests",
+  "sidebarTab": "collections",
+  "sidebarCollapsed": true,
+  "responseTab": "body",
+  "layoutMode": "horizontal",
+  "splitRatio": 0.5,
+  "horizontalSplitRatio": 0.5,
+  "selectedMockServerId": null
+}

@@ -1,0 +1,328 @@
+{
+  "hero": {
+    "heading": "Get better care for your Mental and Behavioural Health",
+    "headingEmphasis": "Mental and Behavioural Health",
+    "text": "Tulasi Healthcare is a psychiatric hospital & rehabilitation centre in Gurgaon, Delhi, India. Treatment is carried out for addiction and all mental illnesses including Schizophrenia, Bipolar disorder, Depression, Anxiety and other psychiatric illnesses by means of medication and comprehensive psychosocial rehabilitation.",
+    "cta": {
+      "label": "CALL NOW",
+      "href": "tel:8800000255"
+    },
+    "image": {
+      "src": "/wp-content/uploads/2024/07/banner-removebg-preview-1.webp",
+      "alt": "header-img"
+    },
+    "background": null
+  },
+  "stats": [
+    {
+      "value": 200000,
+      "display": "200000+",
+      "label": "Satisfied Patients"
+    },
+    {
+      "value": 400000,
+      "display": "400000+",
+      "label": "Man Hours Invested"
+    },
+    {
+      "value": 100,
+      "display": "100+",
+      "label": "Mental Health Experts"
+    },
+    {
+      "value": 200,
+      "display": "200+",
+      "label": "Beds"
+    }
+  ],
+  "about": {
+    "eyebrow": "Why Choose Our Rehabilitation Centre",
+    "heading": "Tulasi Healthcare - Best Rehabilitation Centre in Delhi NCR, India",
+    "text": "We, at Tulasi Healthcare, are dedicated to the cause of saving lives of individuals with mental illnesses and addiction, reinstating them in society and restoring their ties with their families. Our team at Psychiatric Hospital comprises experienced Mental Health Professionals including expert psychiatrists, clinical psychologists, social workers and paramedical staff. We follow a patient-centric approach for the treatment of psychiatric illnesses and addiction disorders, integrating medicinal treatment with psychological intervention, tailoring the treatment in accordance with the patient’s needs and requirements.",
+    "points": [
+      "20+ years of experience",
+      "Largest Team of Mental Health Professionals",
+      "Intensive Inpatient Programs and Structured Outpatient Services."
+    ],
+    "more": {
+      "label": "Read More",
+      "href": "/about-us/"
+    },
+    "image": {
+      "src": "/wp-content/uploads/2023/07/b1.png",
+      "alt": "img"
+    }
+  },
+  "apart": {
+    "eyebrow": "OUR DEPARTMENTS",
+    "heading": "What Sets us Apart",
+    "items": [
+      {
+        "title": "Residential Care at TULASI",
+        "text": "THC offers clinically approved treatment and psychosocial rehabilitation programs that focus on comprehensive recovery that includes supported living, on the go psychotherapy and customized residential programs.",
+        "image": {
+          "src": "/wp-content/uploads/2022/07/clinic.png",
+          "alt": "icon"
+        }
+      },
+      {
+        "title": "Trusted & Trained Team at Rehab Centre",
+        "text": "We have the highest doctor: patient ratio at mental hospital with more than 25+ psychologist and 7+ psychiatrist.",
+        "image": {
+          "src": "/wp-content/uploads/2022/07/team-svgrepo-com_2.svg",
+          "alt": "icon"
+        }
+      },
+      {
+        "title": "Highest Quality of life of Patients at Rehab Centre",
+        "text": "we have good infrastructure at our India's leading psychiatric hospital & rehabilitation centre, that boasts of engaging recreational activities, healthy gourmet meals and open spaces .",
+        "image": {
+          "src": "/wp-content/uploads/2022/07/patient-1.png",
+          "alt": "icon"
+        }
+      }
+    ]
+  },
+  "team": {
+    "eyebrow": "OUR TEAM",
+    "heading": "Psychiatrists and Psychologists",
+    "text": "Highly qualified and dedicated team of mental health professionals."
+  },
+  "premium": "PREMIUM CENTRE FOR REHAB SERVICES AT AFFORDABLE PRICES",
+  "awards": [
+    {
+      "title": "Best Psychiatric Hospital & Rehabilitation Centre 2025",
+      "text": "Tulasi Healthcare has been awarded best psychiatric hospital & rehabilitation centre 2025 in Asia excellence awards 2025",
+      "image": {
+        "src": "/wp-content/uploads/2025/09/Best-Psychiatric-Hospital-Rehabilitation-Centre-2025-225x300.webp",
+        "alt": "Best Psychiatric Hospital & rehabilitation centre 2025"
+      }
+    },
+    {
+      "title": "Excellence in Clinical Services – Psychiatry (North)",
+      "text": "Tulasi Healthcare has been awarded by the Economic Times for Excellence in Clinical Services – Psychiatry for North region.",
+      "image": {
+        "src": "/wp-content/uploads/2025/09/Excellence-in-Clinical-Services-%E2%80%93-Psychiatry-North-225x300.webp",
+        "alt": "Excellence in Clinical Services – Psychiatry (North)"
+      }
+    },
+    {
+      "title": "Psychiatrist of the Year (National) – Dr. Gorav Gupta 2025",
+      "text": "Dr. Gorav Gupta has been awarded Psychiatrist of the year 2025 award by the Economic Times for National region.",
+      "image": {
+        "src": "/wp-content/uploads/2025/09/Psychiatrist-of-the-Year-National-%E2%80%93-Dr.-Gorav-Gupta-225x300.webp",
+        "alt": "Psychiatrist of the Year (National) – Dr. Gorav Gupta"
+      }
+    },
+    {
+      "title": "Excellence in clinical services - Mental Health & Wellness",
+      "text": "Tulasi Healthcare has been awarded by the Economic Times for Excellence in clinical services – Mental Health & Wellness for North region.",
+      "image": {
+        "src": "/wp-content/uploads/2024/10/excellent-clinical-services-300x222.png",
+        "alt": "Excellence in clinical services - Mental Health & Wellness North"
+      }
+    },
+    {
+      "title": "Psychiatrist of the Year",
+      "text": "Dr. Gorav Gupta has been awarded Psychiatrist of the year award by the Economic Times for National region.",
+      "image": {
+        "src": "/wp-content/uploads/2024/10/best-psychiatrist-of-the-year-300x222.png",
+        "alt": "best psychiatrist in india"
+      }
+    },
+    {
+      "title": "Frost & Sullivan Best Practices Award",
+      "text": "Tulasi Healthcare has won the Frost & Sullivan Best Practices Award in the Indian Mental Rehabilitation industry.",
+      "image": {
+        "src": "/wp-content/uploads/2022/07/Award-logo-300x222.jpg",
+        "alt": "tulasi healthcare awards"
+      }
+    },
+    {
+      "title": "Institutional Excellence in Rehabilitation services De-Addiction Therapies",
+      "text": "Tulasi Healthcare has been awarded by the BW in Institutional Excellence in Rehabilitation services De-Addiction Therapies",
+      "image": {
+        "src": "/wp-content/uploads/2025/04/Institutional-excellence-award-tulasi-healthcare-300x300.webp",
+        "alt": "Institutional Excellence in rehabilitation services"
+      }
+    },
+    {
+      "title": "Institutional Excellence in Mental Health",
+      "text": "Tulasi Healthcare has been awarded by the BW in Institutional Excellence in Mental Health",
+      "image": {
+        "src": "/wp-content/uploads/2025/04/institutional-excellence-in-mental-health-300x300.webp",
+        "alt": "institutional excellence in mental health"
+      }
+    },
+    {
+      "title": "Institutional Excellence in De-Addiction Services",
+      "text": "Tulasi Healthcare has been honoured by the Government of Haryana for Institutional Excellence in De-Addiction Services.",
+      "image": {
+        "src": "/wp-content/uploads/2026/06/Screenshot-2026-06-29-121831.png",
+        "alt": "Excellence in De-addiction Services"
+      }
+    }
+  ],
+  "nabh": {
+    "text": "Tulasi Healthcare NABH accredited hospital committed to quality care and patient safety.",
+    "image": null
+  },
+  "insurance": {
+    "heading": "Insurance Partner",
+    "text": "Tulasi Healthcare psychiatric hospital & rehabilitation centres in Gurgaon & Delhi is now empanelled with SBI General Insurance and Future Generali Insurance for cashless treatment of patients with mental health problems.",
+    "logos": [
+      {
+        "src": "/wp-content/uploads/2022/06/FG-logo-300x100-1.png",
+        "alt": "tulasi healthcare insurance"
+      },
+      {
+        "src": "/wp-content/uploads/2022/07/sbi.jpg",
+        "alt": "mental health insurance tulasi"
+      }
+    ]
+  },
+  "intro": {
+    "heading": "Tulasi Healthcare Best Psychiatric Hospital & Rehabilitation Centre in Delhi, Gurgaon, India",
+    "blocks": [
+      {
+        "heading": "Why Choose Tulasi Psychiatric & Rehab Centre in Delhi, Gurgaon, India",
+        "paragraphs": [
+          "Our team comprises of a group of highly trained psychiatrists, psychologists, social workers and para-medical staff who operate out of psychiatric hospital & Rehabilitation Centres located across Delhi-NCR. At Tulasi Healthcare leading rehab centre, the emphasis is on treatment of mental illnesses and substance abuse disorders. Since Tulasi Healthcare’s inauguration in 2002, it has been dedicated to the cause of saving lives of individuals with mental illness and addiction, reinstating them in society and restoring their ties with their respective families."
+        ]
+      },
+      {
+        "heading": "Best Rehabilitation Centers in India",
+        "paragraphs": [
+          "Tulasi Healthcare follows a patient-centric approach to mental illnesses and addiction treatment by integrating psychiatric treatment with psychological intervention. Our 12-step drug and alcohol abstinence program and family therapy are time-tested and have always produced optimal results. The treatment in Tulasi Healthcare is tailored in accordance with the patient’s needs and requirements."
+        ]
+      },
+      {
+        "heading": "Leading Rehab Center in Delhi, Gurgaon",
+        "paragraphs": [
+          "Research has shown that patients who are in continuous support and care after In-patient treatment are more likely to remain functional in the long term. With that in mind, our daycare programs for the psychiatric and addiction patients cater to their specific needs in order to guide, encourage and fully support them. Timely follow-ups have been efficiently helping our patients to remain productive and adjust well. We offer treatment to patients from diverse backgrounds and from all tiers of the socio-economic strata. Depending on the financial feasibility, a family can choose from any of the centers operating in Delhi NCR."
+        ]
+      },
+      {
+        "heading": "Why consider us as your healthcare partner?",
+        "paragraphs": [
+          "Led by pioneer of psychiatric healthcare Dr. Gorav Gupta, we are one of the largest and best facilities in the Delhi-NCR region. Our ethics and efforts go hand in hand, which were recognized through the Frost and Sullivan’s best practices award in 2020.",
+          "Uplifting our spirits, Dr. Gorav Gupta leads you through a journey of making an insightful choice by choosing Tulasi Health Care as your welfare advocate."
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/wp-content/uploads/2023/01/RehabCentre-1024x1024.webp",
+        "alt": "rehab centre"
+      },
+      {
+        "src": "/wp-content/uploads/2024/07/b3.png",
+        "alt": "touch-illustration"
+      }
+    ]
+  },
+  "faq": {
+    "heading": "FAQ's",
+    "text": "We receive lots of emails from concerned family members and patients regarding mental illness and addiction problems and their respective treatments Following are a few questions which are usually asked:",
+    "items": [
+      {
+        "q": "Is mental illness treatable?",
+        "a": "Yes it is. With proper psychiatric treatment and psychological intervention, all mental illnesses are treatable."
+      },
+      {
+        "q": "Will the patient need medication throughout his/her life?",
+        "a": "The frequency of medication and the period over which it is administered, both depends on the kind of mental illness being treated. In a few cases, medication can be stopped after sometime but there are certain illnesses that might require medication for a long term or for life."
+      },
+      {
+        "q": "What is the role of counseling in treatment?",
+        "a": "Like medicines, counseling plays a pivotal role in the treatment of mental illness(es). It helps the patient manage his/her mental illness and regain control of his/her life."
+      },
+      {
+        "q": "What does it mean to go into rehab centre?",
+        "a": "Patients who are suffering from addiction to drugs, alcohol, any narcotic substance and behavioural addiction are often admitted to rehabilitation centre. Patient undergo treatment that includes medication & psychosocial rehabilitation."
+      },
+      {
+        "q": "What addictions treatment available at rehab centre?",
+        "a": "Our inpatient rehab centre provides detoxification for alcohol, smoking, heroin, meth, benzo (benzodiazepine), opioids, marijuana, LSD and other narcotic substance. We also treat addictions for prescription drugs painkillers and sedatives. The treatment is a combination of medication, therapy (CBT, DBT, MET, Psycho education and family therapy), mindfulness, VR, DTMS and Cognitive retraining."
+      },
+      {
+        "q": "Do rehab centre offer aftercare?",
+        "a": "Aftercare makes the patient transition back to normal life easier. Tulasi Healthcare rehabilitation centre has two aftercare programs digital & offline. These programs allow patients to live a good fruitful life that allows them to work and reintegrate with the society. We also have psychoeducation, family therapy, individual therapy and day care program for our patients as follow-up care."
+      }
+    ]
+  },
+  "blog": {
+    "heading": "Stay Updated To Our Blog & News",
+    "text": "Help Erase Stigma You can change attitudes about mental health by learning more and sharing our educational resources with your friends and loved ones.",
+    "postTitles": [
+      "What are the different Types of Group Therapy, and Who can Benefit from Them?",
+      "Stressed, Burnt Out, or Something More? How to Know When It’s Time to See a Therapist in Delhi or Gurgaon",
+      "Can Ketamine Therapy Transform Mental Healthcare and What should You Know?",
+      "What is Substance Abuse Treatment and What Happens During the Recovery Process?",
+      "Therapy with Counselor in Gurgaon and Delhi for Personal Growth and Wellness",
+      "How can Family Support Help During Mental Health and Addiction Recovery?",
+      "Why is Psychiatric Medication Important in Mental Healthcare?",
+      "Why do People Use Psychological Terms without Understanding their Meaning?",
+      "Why is Mental Health Recovery Often Misunderstood?",
+      "What is psychosis, what causes it and what treatment options are available?",
+      "Why do I Feel Disconnected from Everyone?",
+      "Psychodynamic Therapy: What It Is and How It Works",
+      "Why does Couples Therapy Work?",
+      "ACT Therapy- A Simple Guide to Acceptance and Commitment Therapy",
+      "What is DBT Therapy?",
+      "What is It Like to Have Schizophrenia?",
+      "Can a Psychologist Diagnose Bipolar Disorder? Understanding the Assessment Process",
+      "How Therapy Helps with Depression?",
+      "What to Expect During Your Child’s First Counseling Session?",
+      "Is It Just Stress or Something More? 7 Signs You Need to See a Psychologist"
+    ]
+  },
+  "resources": {
+    "heading": "Patient Resources",
+    "subheading": "FOR PATIENTS AND FAMILIES",
+    "items": [
+      {
+        "title": "Navigating Your Care"
+      }
+    ],
+    "text": "At Tulasi Healthcare, We are dedicated to making sure patients and their families have access to informational and educational resources at every step of the recovery journey.",
+    "links": [
+      {
+        "label": "Schizophrenia Ebook",
+        "href": "/wp-content/uploads/2024/06/Schizophrenia-Ebook_Tulasi-Healthcare.pdf"
+      },
+      {
+        "label": "Addiction Ebook",
+        "href": "/wp-content/uploads/2024/03/Addiction-EBook-THC.pdf"
+      },
+      {
+        "label": "Anxiety Disorder Ebook",
+        "href": "/wp-content/uploads/2024/07/Anxiety-Disorder-Ebook_Tulasihealthcare.pdf"
+      }
+    ],
+    "images": [
+      {
+        "src": "/wp-content/uploads/2023/12/FSD.webp",
+        "alt": "female sexual disorder"
+      }
+    ]
+  },
+  "testimonials": {
+    "heading": "What Our Patient’s Say",
+    "text": "A word from patients treated by our mental health professionals.",
+    "items": [
+      {
+        "name": "Vipin Sharma",
+        "quote": "Tulasi health care have a great team of professionals & they know there job very well. Excellent arrangements for security, food, home away from home. They provide best treatment for psychiatric illness. One of my friend had very good experience here."
+      },
+      {
+        "name": "Manav",
+        "quote": "Best psychiatric hospital & rehabilitation center. Counsellors and psychiatrists look after patients very well. After treatment I'm in control of my life. Thanks to Dr. Gorav Gupta and his team of psychologists and psychiatrists. Recommended to visit if you have any mental health issues."
+      },
+      {
+        "name": "Navneet Kaur",
+        "quote": "Got good treatment for mental health and psychiatrists are really helpful. Great facilities and each and every person is cooperative. Tulasi Healthcare is best rehab centre in gurgaon."
+      }
+    ]
+  }
+}
