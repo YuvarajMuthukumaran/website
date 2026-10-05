@@ -1,0 +1,2738 @@
+[
+  {
+    "from": "/psychiatrist-in-delhi/",
+    "to": "/best-psychiatrist-in-delhi/",
+    "status": 301,
+    "reason": "already redirects on the live site"
+  },
+  {
+    "from": "/sexologist/",
+    "to": "/sexologist-in-delhi/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/sexual-disorders-treatment-hospital/",
+    "to": "/sexologist-in-delhi/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/schizophrenia-treatment-delhi/",
+    "to": "/schizophrenia-treatment-delhi-gurgaon-ncr/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/schizophrenia-treatment-delhi.php",
+    "to": "/schizophrenia-treatment-delhi-gurgaon-ncr/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/de-addiction-treatment/",
+    "to": "/deaddiction-centre/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/cognitive-behavioural-therapy-cbt-delhi-india.php",
+    "to": "/cbt-behavioural-therapy/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/bipolar-disorder-treatment/",
+    "to": "/bipolar-disorder-treatment-delhi-gurgaon/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/de-adddiction-treatment/",
+    "to": "/deaddiction-centre/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/de-addiction-treatment/alcohol-addiction/",
+    "to": "/deaddiction-centre/alcohol-addiction/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/de-addiction-treatment/heroin-addiction/",
+    "to": "/deaddiction-centre/heroin-addiction/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/psychosocial-rehabilitation-centre/",
+    "to": "/rehabilitation-centre-in-india/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/blog/borderline-personality-disorder",
+    "to": "/blog/borderline-personality-disorder-case-study/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/de-adddiction-treatment/alcohol-addiction/",
+    "to": "/deaddiction-centre/alcohol-addiction/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/rehabilitation-centre-faq/",
+    "to": "/rehabilitation-centre/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/de-addiction-treatment/cocaine-addiction/",
+    "to": "/deaddiction-centre/cocaine-addiction/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/team/mr-inderjeet-singh/",
+    "to": "/team/inderjeet-singh/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/psychiatric-hospital-in-delhi/",
+    "to": "/psychiatric-mental-hospital-in-delhi/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/de-addiction-treatment/marijuana-treatment/",
+    "to": "/deaddiction-centre/marijuana-treatment/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/rehabilitation-centre-in-meerut/%20",
+    "to": "/rehabilitation-centre-in-meerut/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/rehabilitation-centre-in-south-delhi/",
+    "to": "/rehabilitation-centre-in-delhi/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/psychosexual-disorders-treatment-hospital/",
+    "to": "/sexologist-in-delhi/",
+    "status": 301,
+    "reason": "internal link target that redirects today"
+  },
+  {
+    "from": "/?p=18062",
+    "to": "/blog/types-of-group-therapy-and-benefits/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=18001",
+    "to": "/blog/when-to-see-a-therapist-in-delhi-gurgaon/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=17961",
+    "to": "/blog/ketamine-therapy-for-mental-health/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=17905",
+    "to": "/blog/substance-abuse-treatment-recovery-process/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=17877",
+    "to": "/blog/mental-health-counsellor-gurgaon-delhi/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=17849",
+    "to": "/blog/how-can-family-support-help-during-mental-health-and-addiction-recovery/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=17656",
+    "to": "/blog/why-is-psychiatric-medication-important-in-mental-healthcare/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=17637",
+    "to": "/blog/understanding-psychological-terms/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=17624",
+    "to": "/blog/why-is-mental-health-recovery-often-misunderstood/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=17571",
+    "to": "/blog/what-is-psychosis-causes-symptoms-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=17529",
+    "to": "/blog/why-do-i-feel-disconnected-from-everyone/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=17437",
+    "to": "/blog/psychodynamic-therapy-what-it-is-and-how-it-works/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=17408",
+    "to": "/blog/why-does-couples-therapy-work/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=17257",
+    "to": "/blog/act-therapy-a-simple-guide/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=17094",
+    "to": "/blog/what-is-dbt-therapy/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=16740",
+    "to": "/blog/what-is-it-like-to-have-schizophrenia/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=16566",
+    "to": "/blog/can-a-psychologist-diagnose-bipolar-disorder/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=16479",
+    "to": "/blog/how-therapy-helps-with-depression/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=16411",
+    "to": "/blog/what-to-expect-during-your-childs-first-counseling-session/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=16380",
+    "to": "/blog/7-signs-you-need-to-see-a-psychologist/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=16292",
+    "to": "/blog/how-to-verify-psychologist-rci-registration/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=16222",
+    "to": "/blog/cbt-vs-dbt-vs-emdr-for-anxiety-and-depression/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=16154",
+    "to": "/blog/understanding-bipolar-disorder-signs-symptoms/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=16091",
+    "to": "/blog/what-happens-in-your-first-therapy-session/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=16018",
+    "to": "/blog/corporate-burnout-delhi-ncr-hustle-culture-brain-effects/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15937",
+    "to": "/blog/top-5-questions-to-ask-a-psychologist-before-your-first-appointment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15809",
+    "to": "/blog/when-should-you-go-to-a-deaddiction-centre-for-help/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15673",
+    "to": "/blog/what-happens-during-the-deaddiction-treatment-programme/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15657",
+    "to": "/blog/what-is-family-therapy-types-benefits-and-solution/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15637",
+    "to": "/blog/how-dbt-therapy-works/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15604",
+    "to": "/blog/what-is-act-therapy-used-for/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15591",
+    "to": "/blog/what-does-art-therapy-do/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15567",
+    "to": "/blog/what-is-dtms-therapy/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15542",
+    "to": "/blog/how-does-cbt-therapy-work/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15451",
+    "to": "/blog/when-should-you-seek-a-therapist-for-anxiety/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15425",
+    "to": "/blog/can-a-psychiatrist-treats-stress/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15409",
+    "to": "/blog/is-a-psychiatrist-only-for-depression/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15381",
+    "to": "/blog/what-is-the-difference-between-stress-and-anxiety/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15353",
+    "to": "/blog/can-a-schizophrenic-live-a-normal-life/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15335",
+    "to": "/blog/what-is-considered-an-alcohol-disorder/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15299",
+    "to": "/blog/what-are-the-most-common-treatments-for-drug-addiction/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15277",
+    "to": "/blog/how-does-therapy-help-with-work-related-stress/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15264",
+    "to": "/blog/how-to-motivate-someone-to-seek-help-for-addiction/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15241",
+    "to": "/blog/what-are-the-most-common-misconceptions-about-therapy/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15207",
+    "to": "/blog/how-do-i-know-if-therapy-is-working-for-me/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15195",
+    "to": "/blog/what-are-the-best-treatments-for-depression/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15177",
+    "to": "/blog/how-long-does-therapy-take-with-a-psychiatrist/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15161",
+    "to": "/blog/how-can-a-psychologist-help-with-stress-and-anxiety/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15146",
+    "to": "/blog/what-does-a-psychiatrist-do-in-a-session/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15119",
+    "to": "/blog/how-to-see-a-psychiatrist-immediately/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15107",
+    "to": "/blog/how-to-identify-a-good-psychiatrist/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15085",
+    "to": "/blog/is-anxiety-a-mental-illness/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15062",
+    "to": "/blog/how-to-reset-your-body-from-chronic-stress/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15028",
+    "to": "/blog/can-i-talk-to-a-psychologist-online/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=15009",
+    "to": "/blog/which-hormone-is-tested-for-anxiety/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=14968",
+    "to": "/blog/is-overthinking-a-form-of-ocd/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=14946",
+    "to": "/blog/what-is-the-three-month-role-in-mental-health/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=14891",
+    "to": "/blog/what-habits-reduce-depression/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=14725",
+    "to": "/blog/what-is-a-red-flag-in-therapy/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=14693",
+    "to": "/blog/what-type-of-counseling-is-best-for-anxiety/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=14654",
+    "to": "/blog/is-it-okay-to-cry-in-front-of-a-psychiatrist/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=14634",
+    "to": "/blog/what-kind-of-questions-do-psychiatrists-ask/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=14589",
+    "to": "/blog/how-are-patients-treated-in-a-mental-hospital/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=14538",
+    "to": "/blog/what-not-to-say-to-your-psychiatrist/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=14475",
+    "to": "/blog/how-quickly-can-a-psychiatrist-make-a-diagnosis/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=14382",
+    "to": "/blog/what-are-the-condition-and-types-of-diseases-treated-by-a-psychiatrist/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=14340",
+    "to": "/blog/will-a-psychiatrist-prescribed-medication-in-the-first-visit/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=14290",
+    "to": "/blog/how-do-i-prepare-for-my-first-psychiatry-appointment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=14251",
+    "to": "/blog/different-aspects-of-consulting-with-a-psychiatrist/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=14084",
+    "to": "/blog/what-are-the-five-golden-rules-of-mental-health/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=14054",
+    "to": "/blog/can-a-test-detect-all-mental-illnesses/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13881",
+    "to": "/blog/what-happens-when-mental-illness-goes-untreated/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13863",
+    "to": "/blog/what-are-the-signs-of-a-mental-breakdown/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13838",
+    "to": "/blog/which-is-the-hardest-mental-illness-to-live-with/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13808",
+    "to": "/blog/how-do-people-with-anxiety-act/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13787",
+    "to": "/blog/what-is-high-functioning-anxiety/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13764",
+    "to": "/blog/signs-of-depression-in-adolescents/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13749",
+    "to": "/blog/importance-of-meditation-and-handling-anxiety/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13691",
+    "to": "/blog/top-five-signs-of-bipolar-disorder-you-should-know/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13665",
+    "to": "/blog/can-anxiety-be-felt-in-the-body/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13649",
+    "to": "/blog/how-does-depression-emerge/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13609",
+    "to": "/blog/can-ocd-be-100-percent-cured/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13581",
+    "to": "/blog/what-is-the-right-treatment-plan-for-ocd/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13536",
+    "to": "/blog/what-does-schizophrenia-look-like/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13502",
+    "to": "/blog/why-are-mental-health-services-important/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13458",
+    "to": "/blog/is-alcoholism-an-illness/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13382",
+    "to": "/blog/what-is-the-best-therapy-for-anxiety/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13339",
+    "to": "/blog/how-to-pick-a-good-psychiatrist/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13321",
+    "to": "/blog/what-are-the-signs-of-a-mental-health-issue/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13307",
+    "to": "/blog/what-are-the-first-signs-of-anxiety/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13196",
+    "to": "/blog/can-diet-affect-depression/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13179",
+    "to": "/blog/can-a-normal-person-go-to-a-psychiatrist/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=13129",
+    "to": "/blog/sedentary-lifestyle-and-impact-on-mental-well-being/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=12441",
+    "to": "/blog/what-is-it-like-to-live-with-antisocial-personality-disorder/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=12204",
+    "to": "/blog/can-a-person-overcome-borderline-personality-disorder/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=12192",
+    "to": "/blog/is-schizophrenia-treatable/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=12129",
+    "to": "/blog/what-is-histrionic-personality-disorder/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=12110",
+    "to": "/blog/can-a-person-with-ocd-live-a-happy-life/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=12092",
+    "to": "/blog/what-are-the-signs-of-a-narcissist-person/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=12078",
+    "to": "/blog/is-alcholism-a-disability/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=12023",
+    "to": "/blog/which-foods-are-good-for-anxiety-and-depression/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=12008",
+    "to": "/blog/is-cbt-good-for-schizophreniai/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11995",
+    "to": "/blog/how-does-cbt-treat-anxiety/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11979",
+    "to": "/blog/what-are-the-4-stages-of-group-therapy/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11964",
+    "to": "/blog/what-is-the-goal-of-acceptance-and-commitment-therapy/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11948",
+    "to": "/blog/tips-to-get-out-of-depression/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11917",
+    "to": "/blog/what-are-the-4-domains-of-interpersonal-therapy/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11875",
+    "to": "/blog/what-does-exposure-therapy-do/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11854",
+    "to": "/blog/what-is-the-rebt-approach-to-therapy/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11842",
+    "to": "/blog/what-is-dbt-therapy-and-how-does-it-work/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11818",
+    "to": "/blog/how-does-cbt-help-in-rehabilitation/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11792",
+    "to": "/blog/how-does-environment-affect-mental-health/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11722",
+    "to": "/blog/does-alcoholism-run-in-families/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11693",
+    "to": "/blog/what-causes-cluster-a-personality-disorder/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11681",
+    "to": "/blog/can-bpd-be-cured/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11602",
+    "to": "/blog/what-is-deep-tms-therapy/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11583",
+    "to": "/blog/why-mental-health-is-important/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11559",
+    "to": "/blog/how-to-know-if-your-child-needs-psychiatric-support/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11444",
+    "to": "/blog/what-is-the-success-rate-for-psychiatric-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11390",
+    "to": "/blog/can-psychiatrist-treat-erectile-dysfunction/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11346",
+    "to": "/blog/what-is-mect/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11290",
+    "to": "/blog/what-foods-help-with-depression/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11268",
+    "to": "/blog/are-mood-swings-always-a-sign-of-bipolar-disorder/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11257",
+    "to": "/blog/mental-health-stigma-in-india/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11205",
+    "to": "/blog/can-depression-be-genetic/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11188",
+    "to": "/blog/what-are-the-most-common-psychiatric-tests/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11171",
+    "to": "/blog/what-are-the-six-most-essential-questions-in-psychiatric-diagnosis/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11154",
+    "to": "/blog/burnout-vs-depression-whats-the-difference/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11147",
+    "to": "/blog/blood-tests-indicating-risk-of-future-mental-illness/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11121",
+    "to": "/blog/how-to-effectively-cope-with-depression/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11105",
+    "to": "/blog/what-are-the-best-resources-for-anxiety/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11076",
+    "to": "/blog/how-is-the-environment-of-a-rehabilitation-center/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11044",
+    "to": "/blog/do-rehabilitation-center-cure-addiction/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=11029",
+    "to": "/blog/do-rehabilitation-centers-take-adolescents/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10998",
+    "to": "/blog/what-happens-in-a-rehabilitation-center/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10991",
+    "to": "/blog/who-is-a-psychiatrist/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10975",
+    "to": "/blog/how-to-approach-mental-health-concerns-the-right-way/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10946",
+    "to": "/blog/purpose-of-a-rehabilitation-centre/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10941",
+    "to": "/blog/role-of-therapy-in-de-addiction-cbt-dbt-and-more/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10934",
+    "to": "/blog/adult-adhd/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10928",
+    "to": "/blog/early-signs-of-relapse-you-shouldnt-ignore/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10889",
+    "to": "/blog/how-do-i-know-if-i-need-a-psychiatrist/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10836",
+    "to": "/blog/how-can-a-psychiatrist-help-me/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10795",
+    "to": "/blog/what-is-alzehimers-disease-how-can-we-treat-manage-it/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10770",
+    "to": "/blog/geriatric-therapy-how-to-help-aging-adults-with-mental-health-issues/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10716",
+    "to": "/blog/how-rehabilitation-centers-tailor-treatment-plans-for-individual-needs-debunking-myths/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10680",
+    "to": "/blog/is-dementia-curable/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10529",
+    "to": "/blog/coping-skills-for-depression-by-best-psychiatrist-in-delhi/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10500",
+    "to": "/blog/ocd-treatment-by-the-best-psychiatrist-in-delhi/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10462",
+    "to": "/blog/personality-disorder-and-its-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10398",
+    "to": "/blog/bipolar-disorder-specialists/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10296",
+    "to": "/blog/a-day-at-tulasi-healthcare-our-rehab-centre-in-delhi/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10217",
+    "to": "/blog/female-sexual-disorders-treatment-options-with-best-sexologist-in-delhi/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=10111",
+    "to": "/blog/signs-of-alcoholism/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=9974",
+    "to": "/blog/sexologist-for-female-sexual-disorder/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=9681",
+    "to": "/blog/ocd-treatment-options-and-management-strategies/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=9661",
+    "to": "/blog/approach-towards-anxiety-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=9605",
+    "to": "/blog/how-to-tackle-depression-finding-the-right-treatment-plan/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=9402",
+    "to": "/blog/erectile-dysfunction-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=9256",
+    "to": "/blog/harmful-effects-of-alcohol-addiction-why-consider-an-alcohol-rehabilitation-center/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=9227",
+    "to": "/blog/top-4-rehabilitation-centre-in-india/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=9081",
+    "to": "/blog/why-consider-a-rehabilitation-centre-for-your-mental-well-being/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=8852",
+    "to": "/blog/borderline-personality-disorder-treatment-case-study/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=8792",
+    "to": "/blog/borderline-personality-disorder-case-study/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=8698",
+    "to": "/blog/benefit-choosing-right-deaddiction-center/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=8587",
+    "to": "/blog/case-study-of-an-ocd-patient/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=8550",
+    "to": "/blog/top-3-psychiatrists-in-delhi/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=8427",
+    "to": "/blog/tulasi-healthcare-the-best-rehabilitation-centre/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=8039",
+    "to": "/blog/top-5-mental-hospitals-in-india/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=7879",
+    "to": "/blog/the-journey-of-a-mental-health-patient-a-case-study-at-tulasi-healthcare/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=7860",
+    "to": "/blog/best-treatment-modalities-for-bipolar-disorder/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=7624",
+    "to": "/blog/the-best-resources-for-your-mental-health/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=7557",
+    "to": "/blog/treatment-modalities-by-psychiatrist-delhi/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=7276",
+    "to": "/blog/lifestyle-regimen-for-alcohol-addiction/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=7259",
+    "to": "/blog/interventions-for-treatment-resistant-depression/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=7252",
+    "to": "/blog/role-of-a-psychiatrist-in-rehabilitating-from-substance-abuse/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=7188",
+    "to": "/blog/how-does-addiction-begin/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=7170",
+    "to": "/blog/addiction-and-rehabilitation-treating-alcohol-abuse-at-a-rehab-centre/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=7068",
+    "to": "/blog/new-treatment-approaches-to-ocd-erp-and-dtms/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=6908",
+    "to": "/blog/why-is-importance-of-mental-health/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=6897",
+    "to": "/blog/overcoming-challenges-of-substance-abuse/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=6809",
+    "to": "/blog/delusional-disorder-causes-symptoms-types-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=6698",
+    "to": "/blog/best-care-modalities-with-our-mental-health-hospital/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=6681",
+    "to": "/blog/bipolar-disorder-its-symptoms-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=6671",
+    "to": "/blog/explore-tulasi-healthcare-as-your-psychiatric-care-facility/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=6632",
+    "to": "/blog/top-4-rehabilitation-centre-in-delhi/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=6530",
+    "to": "/blog/trusted-mental-facility-in-delhi-ncr/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=5154",
+    "to": "/blog/menopausal-anxiety-understanding-coping-and-seeking-support/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=5143",
+    "to": "/blog/how-does-environment-influence-precipitation-of-mental-illness/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=5132",
+    "to": "/blog/what-is-cognitive-rehabilitation-therapy/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=5117",
+    "to": "/blog/how-to-control-your-teenager-screen-time/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=5092",
+    "to": "/blog/importance-of-family-therapy-a-guide-in-a-rehabilitation-centre/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=5081",
+    "to": "/blog/what-are-the-different-types-of-schizophrenia/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=5048",
+    "to": "/blog/role-of-aa-12-step-program-in-rehabilitation-centre-near-me/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=5043",
+    "to": "/blog/lifestyle-impact-on-mental-health-insights-by-top-delhi-psychiatrist/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=5036",
+    "to": "/blog/types-of-mood-stabilizers/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=5029",
+    "to": "/blog/tips-for-caregivers-of-patients-of-schizophrenia-an-insight-by-psychiatrist-in-india/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=5019",
+    "to": "/blog/mindfulness-and-mental-health/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=5014",
+    "to": "/blog/treatment-of-catatonia-in-rehabilitation-centre/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=5006",
+    "to": "/blog/overview-of-cluster-c-personality-disorders/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4992",
+    "to": "/blog/types-of-schizophrenia-with-their-treatment-in-mental-hospital-in-india/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4980",
+    "to": "/blog/understanding-schizophrenia-a-comprehensive-overview-by-the-best-psychiatrist-in-india/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4956",
+    "to": "/blog/comprehensive-alcohol-addiction-treatment-in-a-deaddiction-center/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4926",
+    "to": "/blog/management-of-treatment-resistant-ocd-a-comprehensive-approach/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4913",
+    "to": "/blog/therapies-for-substance-dependency-in-rehabilitation-centre/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4900",
+    "to": "/blog/treatment-of-suicidal-patients-in-a-mental-rehabilitation-center/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4890",
+    "to": "/blog/guidelines-for-the-treatment-of-mania-in-a-rehabilitation-centre/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4882",
+    "to": "/blog/treatment-of-mental-illnesses-in-a-rehabilitation-centre/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4873",
+    "to": "/blog/obsessive-compulsive-disorder-effective-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4863",
+    "to": "/blog/comprehensive-guide-for-psychosis-treatment-by-psychiatrists-near-me/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4852",
+    "to": "/blog/phobias-and-their-treatment-by-psychiatrists/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4835",
+    "to": "/blog/female-sexual-disorders-diagnosis-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4823",
+    "to": "/blog/erectile-disorder-causes-and-treatment-by-psychiatrist-at-sexual-health-clinic-in-delhi-and-gurgaon/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4800",
+    "to": "/blog/erectile-dysfunction/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4789",
+    "to": "/blog/premature-ejaculation/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4781",
+    "to": "/blog/the-role-of-psychiatric-rehabilitation-center-in-mental-health-recovery/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4599",
+    "to": "/blog/healing-and-hope-at-tulasi-healthcare-rehabilitation-centre/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4558",
+    "to": "/blog/ocd-treatment-dtms-therapy/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4458",
+    "to": "/blog/schizophrenia-treatment-in-rehabilitation-centre/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4447",
+    "to": "/blog/%e0%a4%b8%e0%a4%b0%e0%a5%8d%e0%a4%b5%e0%a4%b6%e0%a5%8d%e0%a4%b0%e0%a5%87%e0%a4%b7%e0%a5%8d%e0%a4%a0-%e0%a4%a8%e0%a4%b6%e0%a4%be%e0%a4%ae%e0%a5%81%e0%a4%95%e0%a5%8d%e0%a4%a4%e0%a4%bf-%e0%a4%95%e0%a5%87/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4373",
+    "to": "/blog/ocd-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4337",
+    "to": "/blog/transcranial-magnetic-stimulation/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=4325",
+    "to": "/blog/deaddiction-centre/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2731",
+    "to": "/blog/clozapine-an-atypical-antipsychotic/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=3454",
+    "to": "/blog/drug-and-alcohol-treatment-centre/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2868",
+    "to": "/blog/bipolar-disorder/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2890",
+    "to": "/blog/how-to-deal-with-a-teenager-with-a-drug-abuse/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2884",
+    "to": "/blog/roller-coaster-ride-of-schizophrenia/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2876",
+    "to": "/blog/cbt-an-effective-treatment-for-schizophrenia/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2861",
+    "to": "/blog/relapse-bitter-truth/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2854",
+    "to": "/blog/sharing-insanity/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2848",
+    "to": "/blog/anxiety-boon-bane/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2838",
+    "to": "/blog/rehabilitation-centre/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2829",
+    "to": "/blog/look-offshore-de-addiction-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2822",
+    "to": "/blog/a-man/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2813",
+    "to": "/blog/a-man-2/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2800",
+    "to": "/blog/alcoholism-disease-just-bad-habit/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2790",
+    "to": "/blog/life-without-alcohol/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2781",
+    "to": "/blog/tips-overcome-alcohol-craving/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2775",
+    "to": "/blog/role-occupational-therapy-rehab-centre/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2768",
+    "to": "/blog/binge-drinking/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2760",
+    "to": "/blog/mysterious-world-delusions/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2754",
+    "to": "/blog/nervous-breakdown/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2747",
+    "to": "/blog/story-woman-alcoholic/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2739",
+    "to": "/blog/myths-and-facts-about-schizophrenia/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2722",
+    "to": "/blog/deal-behavioural-problems-teenagers/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2715",
+    "to": "/blog/harm-reduction-avoiding-trouble/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2702",
+    "to": "/blog/co-existent-psychosis-with-obsessive-compulsive-disorder/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2694",
+    "to": "/blog/naltrexone-an-opiod-antagonist/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2687",
+    "to": "/blog/challenges-after-initial-psychiatric-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2680",
+    "to": "/blog/relationship-parenting-style-mental-illness/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2668",
+    "to": "/blog/coping-schizophrenia/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2661",
+    "to": "/blog/delusional-disorders/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2654",
+    "to": "/blog/cluster-a-personality-disorder/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2643",
+    "to": "/blog/how-to-tell-if-your-child-is-addicted-to-substances/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2632",
+    "to": "/blog/how-you-can-prevent-a-winter-relapse/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2624",
+    "to": "/blog/tips-for-managing-boredom-in-recovery/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2614",
+    "to": "/blog/methods-for-avoiding-relapse/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2603",
+    "to": "/blog/things-to-say-to-your-addicted-loved-one/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2595",
+    "to": "/blog/what-most-rehabs-recommend-you-bring/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2587",
+    "to": "/blog/nuances-of-rehabilitation/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2580",
+    "to": "/blog/rehabilitation-of-patients-suffering-from-depression/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2568",
+    "to": "/blog/rehabilitation-centers-for-people-suffering-from-mental-disorders/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2557",
+    "to": "/blog/hospitalization-of-patients-suffering-from-bipolar-disorder/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2548",
+    "to": "/blog/what-it-is-like-to-be-in-a-psychiatric-hospital-located-in-the-ncr/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2541",
+    "to": "/blog/relearn-social-skills-while-in-a-psychiatric-hospital/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2534",
+    "to": "/blog/holistic-treatment-of-psychiatric-illnesses-hospitals/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2525",
+    "to": "/blog/borderline-personality-disorder-part-i/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2517",
+    "to": "/blog/borderline-personality-disorder-part-ii/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2511",
+    "to": "/blog/schizophrenia-treatable-or-curable/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2495",
+    "to": "/blog/12-steps-of-alcoholics-anonymous-help-recovering-addicts/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2498",
+    "to": "/blog/keep-calm-and-treat-schizophrenia-recovery/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2479",
+    "to": "/blog/features-of-residential-treatment-of-schizophrenia/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2472",
+    "to": "/blog/treatment-of-marijuana-induced-psychosis-at-rehabilitation-centres/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2465",
+    "to": "/blog/patient-safety-in-mental-hospitals-located-in-delhi/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2457",
+    "to": "/blog/body-shaming-among-teens/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2446",
+    "to": "/blog/treatment-of-p-t-s-d/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2435",
+    "to": "/blog/crypto-currency-gambling-addiction/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2390",
+    "to": "/blog/importance-of-intake-of-vitamin-d-for-individuals-residing-at-psychiatric-hospitals/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2376",
+    "to": "/blog/management-of-alcohol-withdrawal-symptoms-at-mental-hospital/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2368",
+    "to": "/blog/importance-of-mental-wellbeing-in-the-corporate/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2360",
+    "to": "/blog/role-of-family-during-rehabilitation-of-relatives-suffering-from-mental-illness/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2350",
+    "to": "/blog/precautions-to-be-taken-for-preventing-the-onset-or-dispersal-of-coronavirus-covid-19/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2342",
+    "to": "/blog/familiarizing-elderly-patients-isolated-in-the-wake-of-the-spreading-covid-with-functionality-of-digital-applications-for-procurement-of-groceries-and-medicines-online/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2334",
+    "to": "/blog/schizophrenia-symptoms-causes-and-treatments-tulasi-healthcare/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2323",
+    "to": "/blog/bipolar-disorder-symptoms-causes-and-treatments-tulasi-healthcare/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2307",
+    "to": "/blog/management-of-withdrawal-symptoms-during-lockdown/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2299",
+    "to": "/blog/drug-induced-psychosis-and-heroin-addiction/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2288",
+    "to": "/blog/role-of-alcoholic-anonymous-in-alcohol-addiction-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2278",
+    "to": "/blog/marijuana-induced-psychosis/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2269",
+    "to": "/blog/coping-with-bipolar-disorder/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2261",
+    "to": "/blog/psychiatric-disorders-which-affect-suicidal-patients-admitted-into-psychiatric-hospitals/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2244",
+    "to": "/blog/multiple-barriers-against-successful-care-for-depressed-patients-at-mental-hospitals/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2236",
+    "to": "/blog/prevalence-of-self-stigma-and-its-association-with-self-esteem-among-patients-in-mental-hospitals/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2225",
+    "to": "/blog/patient-assaults-among-staff-members-of-mental-health-hospitals/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2211",
+    "to": "/blog/susceptibility-risk-factors-for-in-patient-violence-at-psychiatric-hospitals/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2202",
+    "to": "/blog/world-mental-health-day-overcoming-stress/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2191",
+    "to": "/blog/ocd-among-children/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2183",
+    "to": "/blog/increased-digital-addiction-among-children/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2172",
+    "to": "/blog/a-new-beginning-the-story-of-my-journey-of-recovery/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2162",
+    "to": "/blog/best-psychiatric-hospital-in-delhi-and-gurgaon/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2154",
+    "to": "/blog/a-casual-drinker-who-needed-to-quit/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2146",
+    "to": "/blog/importance-of-mental-health/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2129",
+    "to": "/blog/dual-diagnosis-mental-illness-along-with-drug-alcohol-addiction/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2118",
+    "to": "/blog/tulasi-healthcare-is-the-top-mental-hospital-for-psychiatric-care-in-india/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2110",
+    "to": "/blog/alcohol-rehab-centre-in-gurgaon/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2103",
+    "to": "/blog/drug-rehab-centre-in-gurgaon/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2084",
+    "to": "/blog/all-you-need-to-know-about-obsessive-compulsive-disorder-ocd/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2076",
+    "to": "/blog/rehabilitation-centre-in-gurgaon/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2070",
+    "to": "/blog/world-mental-health-day/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=2055",
+    "to": "/blog/alcohol-and-drug-rehab-centre-in-gurgaon/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=1923",
+    "to": "/blog/obsessive-compulsive-disorder-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=1900",
+    "to": "/blog/drug-induced-schizophrenia-what-it-is-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=1887",
+    "to": "/blog/schizophrenia-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=1874",
+    "to": "/blog/types-of-schizophrenia/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=592",
+    "to": "/blog/understanding-schizophrenia/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=589",
+    "to": "/blog/what-is-obsessive-compulsive-disorder-ocd/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?p=585",
+    "to": "/blog/what-is-drug-induced-psychosis/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=18075",
+    "to": "/marriage-counselling/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=17681",
+    "to": "/mental-hospital-in-noida/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=17595",
+    "to": "/terms-of-use/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=17497",
+    "to": "/child-counsellor-near-me/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=17296",
+    "to": "/autism-care-centre/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=17041",
+    "to": "/iq-testing/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=16763",
+    "to": "/child-psychologist/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=16627",
+    "to": "/psychologist-in-chandigarh/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=16507",
+    "to": "/adhd-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=16448",
+    "to": "/autism-spectrum-disorder/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=15725",
+    "to": "/best-psychologist-in-india/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=13058",
+    "to": "/psychiatrist-in-chandigarh/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=12936",
+    "to": "/psychiatrist-in-bangalore/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=12697",
+    "to": "/psychiatrist-in-noida/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=12329",
+    "to": "/psychiatrist-in-mumbai/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=12228",
+    "to": "/counsellor-near-me/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=11933",
+    "to": "/stroke-rehabilitation/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=11575",
+    "to": "/drug-screening-tests/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=10773",
+    "to": "/psychologist-in-delhi/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=10692",
+    "to": "/dementia-treatment-in-india/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=10636",
+    "to": "/employee-assistance-program/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=10589",
+    "to": "/palliative-care-for-dementia/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=10548",
+    "to": "/mental-hospital-in-india/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=10354",
+    "to": "/dementia-treatment-clinic-in-gurgaon/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=10260",
+    "to": "/sexologist-in-gurgaon/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=10103",
+    "to": "/mental-hospital-near-me/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=10043",
+    "to": "/rehabilitation-centre-in-jammu/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=9811",
+    "to": "/best-psychiatrist-in-delhi/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=9728",
+    "to": "/mental-hospital-in-faridabad/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=9496",
+    "to": "/mental-hospital-in-gurgaon/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=9116",
+    "to": "/psychologist-in-gurgaon/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=8454",
+    "to": "/sitemap/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=8303",
+    "to": "/rehabilitation-centre-in-imphal/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=8270",
+    "to": "/rehabilitation-centre-in-aizawl/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=8050",
+    "to": "/rehabilitation-centre-in-guwahati/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=7842",
+    "to": "/rehabilitation-center-in-dehradun/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=7814",
+    "to": "/rehabilitation-center-in-kanpur/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=7760",
+    "to": "/ocd-treatment-in-india/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=7583",
+    "to": "/rehabilitation-centres-for-chronic-mental-illnesses/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=7467",
+    "to": "/nasha-mukti-kendra-in-ludhiana/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=7288",
+    "to": "/psychiatrist-in-india/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=7227",
+    "to": "/rehabilitation-centre-in-faridabad/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=7155",
+    "to": "/rehabilitation-centre-in-sirsa/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=7117",
+    "to": "/rehabilitation-centre-in-rohtak/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=7082",
+    "to": "/rehabilitation-centre-in-meerut/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=7033",
+    "to": "/rehabilitation-centre-in-panipat/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=6965",
+    "to": "/rehabilitation-centre-in-haryana/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=6886",
+    "to": "/rehabilitation-centre-in-delhi/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=6719",
+    "to": "/rehabilitation-centre-in-jaipur/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=6639",
+    "to": "/internship/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=6604",
+    "to": "/rehabilitation-centre-in-lucknow/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=6479",
+    "to": "/rehabilitation-centre-in-noida/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=6352",
+    "to": "/rehabilitation-centre-in-chandigarh/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=6342",
+    "to": "/rehabilitation-centre-near-me/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=1634",
+    "to": "/admission/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=5477",
+    "to": "/international-patient-services/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=5432",
+    "to": "/rehabilitation-centre/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=5418",
+    "to": "/publications/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=5099",
+    "to": "/anxiety/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=5055",
+    "to": "/psychiatrist-in-delhi/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=4841",
+    "to": "/modified-electroconvulsive-therapy/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=4669",
+    "to": "/sexologist-in-delhi/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=4590",
+    "to": "/psychiatrist-in-gurgaon/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=4526",
+    "to": "/virtual-reality-therapy/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=4474",
+    "to": "/digital-and-gaming-addiction/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=4394",
+    "to": "/deeptms-ocd-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=4383",
+    "to": "/dtms-for-treatment-resistance-depression/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=4273",
+    "to": "/deep-tms-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=4234",
+    "to": "/smoking-cessation/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=4218",
+    "to": "/map-direction/gurgaon/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=4201",
+    "to": "/map-direction/delhi/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=4176",
+    "to": "/cluster-c-personality-disorders/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=4153",
+    "to": "/ocd-treatment-in-delhi/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=4113",
+    "to": "/cluster-b-personality-disorders/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=4081",
+    "to": "/cluster-a-personality-disorders/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=3691",
+    "to": "/healourmind/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=3677",
+    "to": "/alcohol-use-disorder-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=3663",
+    "to": "/liver-cirrhosis/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=3651",
+    "to": "/alcoholic-hepatitis-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=3620",
+    "to": "/fatty-liver-disease/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=1114",
+    "to": "/map-direction/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=3381",
+    "to": "/drug-addiction-treatment-in-delhi-gurgaon-and-ncr/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=3268",
+    "to": "/our-team/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=1929",
+    "to": "/blog/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=1854",
+    "to": "/rehabilitation-centre-in-india/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=1690",
+    "to": "/rehab-centre-in-gurgaon/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=1666",
+    "to": "/about-us/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=1316",
+    "to": "/videos/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=1314",
+    "to": "/gallery/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=1178",
+    "to": "/psychiatric-mental-hospital-in-delhi/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=1078",
+    "to": "/privacy-policy/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=1063",
+    "to": "/mission-vision/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=344",
+    "to": "/services-2/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=306",
+    "to": "/faqs/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=304",
+    "to": "/careers/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=302",
+    "to": "/treatment-of-problem-drinking/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=300",
+    "to": "/depression/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=298",
+    "to": "/family-therapy/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=296",
+    "to": "/obsessive-compulsive-disorder-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=294",
+    "to": "/bipolar-disorder-treatment-delhi-gurgaon/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=292",
+    "to": "/cbt-behavioural-therapy/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=290",
+    "to": "/dual-diagnosis/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=288",
+    "to": "/relapse-prevention/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=286",
+    "to": "/schizophrenia-treatment-delhi-gurgaon-ncr/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=284",
+    "to": "/deaddiction-centre/heroin-addiction/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=282",
+    "to": "/deaddiction-centre/cocaine-addiction/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=280",
+    "to": "/deaddiction-centre/alcohol-addiction/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=278",
+    "to": "/deaddiction-centre/marijuana-treatment/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=276",
+    "to": "/deaddiction-centre/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=274",
+    "to": "/child-psychiatry-hospital-services/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=272",
+    "to": "/treatment-of-dementia/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=270",
+    "to": "/treatment-of-personality-disorders/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=71",
+    "to": "/contact-us/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/?page_id=61",
+    "to": "/",
+    "status": 301,
+    "reason": "WordPress shortlink"
+  },
+  {
+    "from": "/feed/",
+    "to": "/blog/feed.xml",
+    "status": 301,
+    "reason": "RSS feed moves to a static feed"
+  },
+  {
+    "from": "/comments/feed/",
+    "to": "/blog/feed.xml",
+    "status": 301,
+    "reason": "comments feed retired"
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "slug": "tulasihe_new",
+    "name": "admin",
+    "path": "/author/tulasihe_new/",
+    "wpAuthorIds": [
+      1
+    ],
+    "seo": {
+      "title": "admin, Author at Tulasi Healthcare",
+      "description": null,
+      "canonical": "https://www.tulasihealthcare.com/author/tulasihe_new/",
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    }
+  },
+  {
+    "slug": "dr-ratnarakshit-ingole",
+    "name": "Dr. Ratnarakshit Ingole",
+    "path": "/author/dr-ratnarakshit-ingole/",
+    "wpAuthorIds": [
+      5
+    ],
+    "seo": {
+      "title": "Dr. Ratnarakshit Ingole, Author at Tulasi Healthcare",
+      "description": null,
+      "canonical": "https://www.tulasihealthcare.com/author/dr-ratnarakshit-ingole/",
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    }
+  },
+  {
+    "slug": "dr-gorav-gupta",
+    "name": "Dr. Gorav Gupta",
+    "path": "/author/dr-gorav-gupta/",
+    "wpAuthorIds": [
+      3
+    ],
+    "seo": {
+      "title": "Dr. Gorav Gupta, Author at Tulasi Healthcare",
+      "description": null,
+      "canonical": "https://www.tulasihealthcare.com/author/dr-gorav-gupta/",
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    }
+  }
+]

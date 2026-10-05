@@ -1,0 +1,236 @@
+@import "tailwindcss";
+
+/* ───────────────────────── Design tokens (from the logo) ─────────────────────────
+   Blue = trust and structure. Red = action and emphasis only.
+   Every text/background pair used below meets WCAG 2.2 AA (4.5:1 body, 3:1 large). */
+@theme {
+  --color-brand-50: #eef2ff;
+  --color-brand-100: #dce4ff;
+  --color-brand-200: #b9c8ff;
+  --color-brand-300: #8aa3ff;
+  --color-brand-500: #2f55e0;
+  --color-brand-600: #0a2fb5; /* primary — 8.9:1 on white */
+  --color-brand-700: #0825a0; /* hover */
+  --color-brand-800: #07208a;
+  --color-brand-900: #061a6b; /* deep navy */
+  --color-brand-950: #040f45;
+
+  --color-accent-50: #fdecee;
+  --color-accent-600: #d7141f; /* CTA red — 5.0:1 on white */
+  --color-accent-700: #b10f19;
+
+  --color-ink: #0f1222;
+  --color-ink-soft: #3b4160; /* secondary text — 9.6:1 on white */
+  --color-mist: #f6f7fb; /* cool grey section tint */
+  --color-sand: #faf6f0; /* warm, calm section tint */
+  --color-line: #e3e7f3;
+
+  --font-display: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 1.5rem;
+  --radius-blob: 2.5rem;
+
+  --shadow-soft: 0 1px 2px rgb(6 26 107 / 0.04), 0 8px 24px -8px rgb(6 26 107 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(6 26 107 / 0.05), 0 24px 48px -16px rgb(6 26 107 / 0.25);
+  --shadow-glow: 0 0 0 1px rgb(255 255 255 / 0.08), 0 20px 60px -20px rgb(10 47 181 / 0.55);
+
+  --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Fluid type scale (320px → 1440px) */
+  --text-display: clamp(2.25rem, 1.6rem + 3.2vw, 4.5rem);
+  --text-h1: clamp(2rem, 1.55rem + 2.2vw, 3.5rem);
+  --text-h2: clamp(1.625rem, 1.35rem + 1.4vw, 2.625rem);
+  --text-h3: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --text-lead: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+}
+
+:root {
+  --header-h: 72px;
+  color-scheme: light;
+}
+
+html, body { overflow-x: clip; } /* clip (not hidden) keeps position:sticky working */
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+p { text-wrap: pretty; }
+
+/* Visible, consistent focus ring for keyboard users (WCAG 2.4.7 / 2.4.13). */
+:focus-visible {
+  outline: 3px solid var(--color-brand-500);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.on-dark :focus-visible { outline-color: #ffffff; }
+
+::selection { background: var(--color-brand-100); color: var(--color-brand-900); }
+
+/* ───────────── Motion: progressive enhancement ─────────────
+   Content is always visible in the HTML. After hydration, the motion script
+   marks only the .reveal elements that are still below the fold with
+   .reveal-wait, and removes it as each one scrolls into view. So crawlers,
+   no-JS users and reduced-motion users always see everything, and nothing
+   above the fold ever flashes. */
+.reveal { transition: opacity 0.6s var(--ease-calm), transform 0.7s var(--ease-calm); transition-delay: var(--reveal-delay, 0ms); }
+.reveal-wait { opacity: 0; transform: translate3d(0, 20px, 0); }
+.reveal-wait.reveal-scale { transform: scale(0.96); }
+.reveal-wait.reveal-left { transform: translate3d(-28px, 0, 0); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal-wait { opacity: 1; transform: none; }
+}
+
+/* Route transition (see app/template.tsx) */
+@keyframes page-in {
+  from { opacity: 0; transform: translate3d(0, 10px, 0); }
+  to { opacity: 1; transform: none; }
+}
+html.nav-ready .page-enter:not(.page-static) { animation: page-in 0.5s var(--ease-calm) both; }
+
+@keyframes step-in {
+  from { opacity: 0; transform: translate3d(24px, 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+.step-in { animation: step-in 0.4s var(--ease-calm) both; }
+
+/* Mobile menu: overlay fades, items rise in sequence */
+@keyframes menu-in { from { opacity: 0; } to { opacity: 1; } }
+.menu-in { animation: menu-in 0.35s ease both; }
+.menu-item-in { animation: step-in 0.5s var(--ease-calm) both; animation-name: rise-in; }
+@keyframes rise-in { from { opacity: 0; transform: translate3d(0, 16px, 0); } to { opacity: 1; transform: none; } }
+
+
+/* ───────────── Reusable pieces ───────────── */
+@utility container-page {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  @media (width >= 640px) { padding-inline: 1.5rem; }
+  @media (width >= 1024px) { padding-inline: 2rem; }
+}
+
+@utility glass {
+  background: rgb(255 255 255 / 0.94);
+  /* Backdrop blur is costly to paint on phones; tablets and up only. */
+  @media (width >= 768px) {
+    background: rgb(255 255 255 / 0.9);
+    backdrop-filter: saturate(1.6) blur(16px);
+    -webkit-backdrop-filter: saturate(1.6) blur(16px);
+  }
+  border: 1px solid rgb(255 255 255 / 0.6);
+}
+
+@utility glass-dark {
+  background: rgb(255 255 255 / 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgb(255 255 255 / 0.14);
+}
+
+@utility bg-hero {
+  background:
+    radial-gradient(60% 70% at 85% 10%, rgb(47 85 224 / 0.55), transparent 60%),
+    radial-gradient(50% 60% at 10% 90%, rgb(138 163 255 / 0.25), transparent 60%),
+    linear-gradient(160deg, var(--color-brand-950) 0%, var(--color-brand-900) 45%, var(--color-brand-600) 100%);
+}
+
+@utility eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-brand-600);
+}
+
+/* Animated underline links */
+@utility link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1.5px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.4s var(--ease-calm);
+  &:hover, &:focus-visible { background-size: 100% 1.5px; }
+}
+
+/* Soft floating glow orbs */
+@keyframes float-slow {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(0, -18px, 0) scale(1.04); }
+}
+.orb { animation: float-slow 12s ease-in-out infinite; }
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+.marquee-track { animation: marquee 50s linear infinite; }
+.marquee-reverse { animation-direction: reverse; }
+.marquee:hover .marquee-track, .marquee:focus-within .marquee-track { animation-play-state: paused; }
+.team-wall::-webkit-scrollbar, .team-wall *::-webkit-scrollbar { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  /* No drifting: a plain, swipeable row without the loop copies. */
+  .marquee-track { animation: none !important; }
+  .team-dup { display: none; }
+}
+
+/* ───────────── Migrated WordPress content ─────────────
+   Clean semantic HTML from the scraper; styled here so every post/page reads well. */
+.prose-tulasi {
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: var(--color-ink-soft);
+  max-width: 72ch;
+}
+.prose-tulasi > * + * { margin-top: 1.1em; }
+.prose-tulasi h2 { font-size: var(--text-h2); color: var(--color-ink); line-height: 1.2; margin-top: 2em; font-weight: 700; }
+.prose-tulasi h3 { font-size: var(--text-h3); color: var(--color-ink); line-height: 1.3; margin-top: 1.8em; font-weight: 700; }
+.prose-tulasi h4, .prose-tulasi h5, .prose-tulasi h6 { font-size: 1.125rem; color: var(--color-ink); margin-top: 1.6em; font-weight: 700; }
+.prose-tulasi strong, .prose-tulasi b { color: var(--color-ink); font-weight: 650; }
+.prose-tulasi a { color: var(--color-brand-600); font-weight: 500; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.prose-tulasi a:hover { color: var(--color-brand-700); text-decoration-thickness: 2px; }
+.prose-tulasi ul, .prose-tulasi ol { padding-left: 1.4em; }
+.prose-tulasi ul { list-style: none; padding-left: 0; }
+.prose-tulasi ul > li { position: relative; padding-left: 1.6em; }
+.prose-tulasi ul > li::before { content: ""; position: absolute; left: 0.25em; top: 0.72em; width: 0.5em; height: 0.5em; border-radius: 999px; background: var(--color-brand-300); }
+.prose-tulasi ol { list-style: decimal; }
+.prose-tulasi li + li { margin-top: 0.5em; }
+.prose-tulasi img { border-radius: 1rem; height: auto; max-width: 100%; margin-inline: auto; }
+.prose-tulasi figure { margin-block: 1.8em; }
+.prose-tulasi figcaption { font-size: 0.875rem; text-align: center; margin-top: 0.6em; }
+.prose-tulasi blockquote { border-left: 4px solid var(--color-brand-300); padding: 0.4em 0 0.4em 1.2em; color: var(--color-ink); font-style: italic; }
+.prose-tulasi table { width: 100%; border-collapse: collapse; font-size: 0.95rem; display: block; overflow-x: auto; }
+.prose-tulasi th, .prose-tulasi td { border: 1px solid var(--color-line); padding: 0.6em 0.8em; text-align: left; }
+.prose-tulasi th { background: var(--color-brand-50); color: var(--color-ink); }
+.prose-tulasi iframe { width: 100%; aspect-ratio: 16 / 9; height: auto; border-radius: 1rem; }
+.prose-tulasi hr { border-color: var(--color-line); margin-block: 2.5em; }

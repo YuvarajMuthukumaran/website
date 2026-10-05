@@ -1,0 +1,65 @@
+
+---Downloaded files---
+The import files for: Import Mecare Home 1 were successfully downloaded!
+Initial max execution time = 120
+Files info:
+Site URL = http://localhost/tulasi_new
+Data file = C:\xampp\htdocs\tulasi_new/wp-content/themes/mecare/sample-data/contents-demo.xml
+Widget file = C:\xampp\htdocs\tulasi_new/wp-content/themes/mecare/sample-data/widget-settings.json
+Customizer file = C:\xampp\htdocs\tulasi_new/wp-content/themes/mecare/sample-data/customizer-data.dat
+Redux files:
+not defined!
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+---Importing widgets---
+Primary Sidebar : 
+
+Search - Search - Imported
+Text - Instagram - Imported
+Text - Follow Us - Imported
+ Recent Posts - Feeds - Imported
+Categories - No Title - Imported
+Tag Cloud - Tags - Imported
+
+Services Sidebar : 
+
+Custom HTML - No Title - Imported
+
+Project Sidebar : 
+
+Custom HTML - No Title - Imported
+
+Footer One Widget : 
+
+Custom HTML - Our Links - Imported
+
+Footer Two Widget : 
+
+Custom HTML - Other Links - Imported
+
+Footer Three Widget : 
+
+Custom HTML - Contact Us - Imported
+
+
+
+---Importing customizer settings---
+Error: The customizer import file is not in a correct format. Please make sure to use the correct customizer import file.
+
+---ocdi/after_import---
+
