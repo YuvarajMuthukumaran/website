@@ -9,7 +9,7 @@ export default function NotFound() {
   const site = getSite();
   const services = site.menu.find((m) => m.label === "Services")?.groups.flatMap((g) => g.links).slice(0, 8) ?? [];
   return (
-    <section className="container-page py-20 lg:py-28">
+    <section className="container-page pt-36 pb-20 lg:pt-44 lg:pb-28">
       <p className="eyebrow">Error 404</p>
       <h1 className="mt-3 max-w-2xl text-[length:var(--text-h1)] font-extrabold leading-tight text-ink">We couldn’t find that page.</h1>
       <p className="mt-4 max-w-xl text-[length:var(--text-lead)] text-ink-soft">It may have moved. These links can help, or you can call us and we’ll guide you.</p>

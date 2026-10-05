@@ -3,6 +3,7 @@ import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { getDoctors, getSite, SITE_URL } from "@/lib/content";
 import { Header } from "@/components/layout/Header";
+import { portraitOf } from "@/components/team";
 import { Footer } from "@/components/layout/Footer";
 import { CrisisStrip } from "@/components/layout/CrisisStrip";
 import { FloatingActions } from "@/components/layout/FloatingActions";
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#061a6b",
+  themeColor: "#1d3da3",
   width: "device-width",
   initialScale: 1,
 };
@@ -37,6 +38,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   const site = getSite();
   const phone = { display: site.contact.phoneDisplay, href: site.contact.phoneHref };
   const logo = site.logo ?? { src: "/brand/tulasi-logo-600.webp", alt: "Tulasi Healthcare" };
+  const doctors = getDoctors();
+  const team = { count: doctors.length, faces: doctors.map(portraitOf).filter((p) => p?.cutout).map((p) => p!.src).slice(0, 5) };
   return (
     <html lang="en-IN" className={`${jakarta.variable} ${inter.variable}`}>
       <body className="flex min-h-dvh flex-col">
@@ -44,12 +47,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <CrisisStrip phone={phone} />
-        <Header menu={site.menu} phone={phone} logo={{ src: logo.src, alt: "Tulasi Healthcare logo" }} />
+        <Header menu={site.menu} phone={phone} logo={{ src: logo.src, alt: "Tulasi Healthcare logo" }} team={team} />
         <main id="main" tabIndex={-1} className="flex-1 outline-none">
           {children}
         </main>
         <Footer site={site} />
-        <FloatingActions phone={phone} doctorSlugs={Object.fromEntries(getDoctors().map((d) => [d.name, d.slug]))} />
+        <FloatingActions phone={phone} doctorSlugs={Object.fromEntries(doctors.map((d) => [d.name, d.slug]))} doctorPhotos={Object.fromEntries(doctors.flatMap((d) => { const p = portraitOf(d); return p ? [[d.name, p.src]] : []; }))} />
         <Consent />
         <MotionProvider />
         <ScrollProgress />

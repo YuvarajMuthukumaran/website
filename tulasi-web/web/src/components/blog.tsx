@@ -8,15 +8,24 @@ import { Reveal } from "@/components/ui/primitives";
 // 10 per page, like WordPress: /blog/page/2/ … /blog/page/32/ keep the same URLs.
 export const PER_PAGE = 10;
 
-export function PostGrid({ posts, priorityFirst }: { posts: Entry[]; priorityFirst?: boolean }) {
+export function PostGrid({ posts, priorityFirst, featureFirst }: { posts: Entry[]; priorityFirst?: boolean; featureFirst?: boolean }) {
+  const [first, ...rest] = posts;
+  const list = featureFirst ? rest : posts;
   return (
-    <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {posts.map((p, i) => (
-        <Reveal as="li" key={p.id} delay={(i % 3) * 80}>
-          <PostCard p={p} priority={priorityFirst && i < 3} headingLevel="h2" />
+    <>
+      {featureFirst && first && (
+        <Reveal className="mb-16 border-b border-line pb-16 [&_article]:lg:grid [&_article]:lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] [&_article]:lg:items-center [&_article]:lg:gap-12">
+          <PostCard p={first} priority headingLevel="h2" feature />
         </Reveal>
-      ))}
-    </ul>
+      )}
+      <ul className="grid gap-x-8 gap-y-14 md:grid-cols-2 lg:grid-cols-3">
+        {list.map((p, i) => (
+          <Reveal as="li" key={p.id} delay={(i % 3) * 80}>
+            <PostCard p={p} priority={priorityFirst && !featureFirst && i < 3} headingLevel="h2" />
+          </Reveal>
+        ))}
+      </ul>
+    </>
   );
 }
 
@@ -33,7 +42,7 @@ export function Pagination({ page, total, base }: { page: number; total: number;
           <Link
             href={href(n)}
             aria-current={n === page ? "page" : undefined}
-            className={clsx("grid size-11 place-items-center rounded-full text-sm font-semibold", n === page ? "bg-brand-600 text-white" : "text-ink hover:bg-brand-50")}
+            className={clsx("grid size-11 place-items-center rounded-full text-sm font-semibold transition-colors", n === page ? "bg-midnight text-white" : "text-ink shadow-[inset_0_0_0_1px_var(--color-line)] hover:shadow-[inset_0_0_0_1px_var(--color-brand-200)]")}
           >
             {n}
           </Link>

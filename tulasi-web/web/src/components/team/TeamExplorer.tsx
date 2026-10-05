@@ -19,6 +19,7 @@ export type TeamPerson = {
   bg: string;
   tags: string[];
   experience: string | null;
+  excerpt?: string | null;
 };
 export type TeamGroup = { heading: string; anchor: string; people: TeamPerson[] };
 
@@ -30,7 +31,7 @@ export function TeamExplorer({ groups, tags }: { groups: TeamGroup[]; tags: { ta
   return (
     <LayoutGroup>
       {/* filter bar */}
-      <div className="sticky top-[4.5rem] z-30 -mx-4 border-b border-line/70 bg-white/90 px-4 py-4 backdrop-blur-md sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+      <div className="sticky top-[84px] z-30 -mx-4 bg-white/92 px-4 py-4 shadow-[0_1px_0_var(--color-line)] backdrop-blur-xl sm:-mx-6 sm:px-6 lg:-mx-10 lg:px-10">
         <div className="flex items-center gap-3">
           <p className="hidden shrink-0 text-sm font-semibold text-ink-soft md:block">Find by expertise</p>
           <div role="group" aria-label="Filter the team by area of expertise" className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]">
@@ -44,7 +45,7 @@ export function TeamExplorer({ groups, tags }: { groups: TeamGroup[]; tags: { ta
                   onClick={() => setTag(t.tag)}
                   className={clsx(
                     "relative inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors duration-300",
-                    on ? "text-white" : "bg-mist text-ink-soft hover:bg-brand-50 hover:text-brand-700"
+                    on ? "text-white" : "text-ink-soft shadow-[inset_0_0_0_1px_var(--color-line)] hover:text-ink hover:shadow-[inset_0_0_0_1px_var(--color-brand-200)]"
                   )}
                 >
                   {on && <motion.span layoutId="team-filter-pill" className="absolute inset-0 rounded-full bg-brand-600 shadow-[var(--shadow-soft)]" transition={{ type: "spring", stiffness: 420, damping: 34 }} />}
@@ -61,9 +62,9 @@ export function TeamExplorer({ groups, tags }: { groups: TeamGroup[]; tags: { ta
       {groups.map((g) => {
         const people = g.people.filter((p) => !tag || p.tags.includes(tag));
         return (
-          <section key={g.heading} id={g.anchor} aria-labelledby={`${g.anchor}-h`} className="scroll-mt-40 pt-16">
+          <section key={g.heading} id={g.anchor} aria-labelledby={`${g.anchor}-h`} className="scroll-mt-44 pt-20">
             <div className="flex items-end justify-between gap-4">
-              <h2 id={`${g.anchor}-h`} className="font-display text-[length:var(--text-h2)] font-bold text-ink">{g.heading}</h2>
+              <h2 id={`${g.anchor}-h`} className="font-display text-[length:var(--text-h2)] leading-[1.04] font-bold tracking-[-0.035em] text-ink">{g.heading}</h2>
               <p className="text-sm font-semibold text-ink-soft">
                 <motion.span key={people.length} initial={reduce ? false : { opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} className="inline-block tabular-nums">{people.length}</motion.span> specialists
               </p>
@@ -99,7 +100,7 @@ function MemberCard({ p }: { p: TeamPerson }) {
   const href = p.slug ? `/team/${p.slug}/` : "/our-team/";
   return (
     <article className="group relative">
-      <div className="relative isolate aspect-[4/5] overflow-hidden rounded-[1.75rem] transition-all duration-500 ease-[var(--ease-calm)] group-hover:-translate-y-1.5 group-hover:shadow-[var(--shadow-lift)]" style={{ backgroundColor: p.bg }}>
+      <div className="relative isolate aspect-[4/5] overflow-hidden rounded-[var(--radius-blob)] shadow-[inset_0_0_0_1px_rgb(10_47_181/0.06)] transition-all duration-500 ease-[var(--ease-calm)] group-hover:-translate-y-1.5 group-hover:shadow-[var(--shadow-lift)]" style={{ backgroundColor: p.bg }}>
         {/* soft halo behind the head */}
         <span aria-hidden="true" className="absolute top-[14%] left-1/2 size-[70%] -translate-x-1/2 rounded-full bg-white/50 blur-2xl transition-transform duration-700 group-hover:scale-110" />
         {p.src && (
@@ -115,7 +116,7 @@ function MemberCard({ p }: { p: TeamPerson }) {
           />
         )}
         {p.experience && (
-          <span className="absolute top-3 left-3 rounded-full bg-white/90 px-2.5 py-1 text-[0.7rem] font-bold text-brand-800 shadow-sm backdrop-blur">{p.experience}</span>
+          <span className="absolute top-3 left-3 rounded-full bg-white/90 px-2.5 py-1 text-[0.7rem] font-semibold text-brand-900 shadow-[0_1px_2px_rgb(15_18_34/0.1)]">{p.experience}</span>
         )}
         {/* actions revealed on hover / focus */}
         <div className="absolute inset-x-3 bottom-3 flex translate-y-3 gap-2 opacity-0 transition-all duration-500 ease-[var(--ease-calm)] group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:translate-y-0 group-hover:opacity-100">
@@ -127,6 +128,7 @@ function MemberCard({ p }: { p: TeamPerson }) {
         <Link href={href} className="hover:text-brand-700">{p.name}</Link>
       </h3>
       <p className="mt-1 text-sm leading-snug text-ink-soft">{p.designation}</p>
+      {p.excerpt && <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-ink-soft">{p.excerpt}</p>}
       {p.tags.length > 0 && (
         <ul className="mt-2.5 flex flex-wrap gap-1.5" aria-label="Areas of expertise">
           {p.tags.slice(0, 3).map((t) => (

@@ -1,34 +1,48 @@
-// /team/ (the WordPress team archive, listed in the sitemap): every profile.
+// /team/ (the WordPress team archive, listed in the sitemap): every profile,
+// with the same excerpts the live archive shows, in the team explorer.
 import type { Metadata } from "next";
-import { getArchiveSeo, getDoctors } from "@/lib/content";
+import { getArchiveSeo, getDoctorFacts, getDoctors } from "@/lib/content";
 import { metadataFromArchive } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
-import { TeamMember } from "@/components/team";
-import { Reveal } from "@/components/ui/primitives";
+import { PASTELS, portraitOf } from "@/components/team";
+import { TeamExplorer, type TeamGroup } from "@/components/team/TeamExplorer";
+import { expertiseTags, TAG_LIST } from "@/lib/team-tags";
 
 export function generateMetadata(): Metadata {
   return metadataFromArchive(getArchiveSeo("/team/"), { title: "Team - Tulasi Healthcare", path: "/team/" });
 }
 
 export default function TeamIndex() {
-  const groups = [
-    { title: "Psychiatrists", list: getDoctors().filter((d) => d.role === "psychiatrist") },
-    { title: "Psychologists and therapists", list: getDoctors().filter((d) => d.role !== "psychiatrist") },
-  ];
+  let n = 0;
+  const groups: TeamGroup[] = [
+    { heading: "Psychiatrists", anchor: "team-psychiatrists", list: getDoctors().filter((d) => d.role === "psychiatrist") },
+    { heading: "Psychologists and therapists", anchor: "team-psychologists", list: getDoctors().filter((d) => d.role !== "psychiatrist") },
+  ].map((g) => ({
+    heading: g.heading,
+    anchor: g.anchor,
+    people: g.list.map((d) => {
+      const facts = getDoctorFacts(d.slug);
+      const p = portraitOf(d);
+      return {
+        slug: d.slug,
+        name: d.name,
+        designation: d.designation ?? "",
+        src: p?.src ?? null,
+        alt: d.name,
+        cutout: !!p?.cutout,
+        bg: PASTELS[n++ % PASTELS.length],
+        tags: expertiseTags([d.designation ?? "", ...(facts?.expertise ?? [])].join(" ")),
+        experience: facts?.experience ?? null,
+        excerpt: d.excerpt,
+      };
+    }),
+  }));
+  const tags = TAG_LIST.map((tag) => ({ tag, count: groups.reduce((c, g) => c + g.people.filter((p) => p.tags.includes(tag)).length, 0) })).filter((t) => t.count > 1);
   return (
     <>
-      <PageHero title={getArchiveSeo("/team/")?.h1 ?? "Team"} crumbs={[{ name: "Home", path: "/" }, { name: "Team", path: "/team/" }]} />
-      <div className="container-page space-y-16 py-14 lg:py-20">
-        {groups.map((g) => (
-          <section key={g.title}>
-            <h2 className="font-display text-[length:var(--text-h2)] font-bold text-ink">{g.title}</h2>
-            <ul className="mt-10 grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-              {g.list.map((d, i) => (
-                <Reveal as="li" key={d.slug} delay={(i % 5) * 60}><TeamMember d={d} index={i} excerpt={d.excerpt} /></Reveal>
-              ))}
-            </ul>
-          </section>
-        ))}
+      <PageHero title={getArchiveSeo("/team/")?.h1 ?? "Team"} crumbs={[{ name: "Home", path: "/" }, { name: "Team", path: "/team/" }]} scene="cradle" />
+      <div className="container-page pb-24">
+        <TeamExplorer groups={groups} tags={tags} />
       </div>
     </>
   );

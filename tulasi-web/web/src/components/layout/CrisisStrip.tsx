@@ -5,7 +5,7 @@ import { Icon } from "@/components/ui/primitives";
 
 export function CrisisStrip({ phone }: { phone: { display: string; href: string } }) {
   return (
-    <aside aria-label="Crisis help" className="relative z-40 bg-brand-950 text-white">
+    <aside aria-label="Crisis help" className="relative z-40 border-b border-white/[0.06] bg-midnight text-white">
       <div className="container-page flex min-h-10 items-center justify-between gap-3 py-1.5 text-[0.8125rem] leading-snug">
         <p className="flex min-w-0 items-center gap-2">
           <Icon name="heart" className="size-4 shrink-0 text-accent-50" />
@@ -15,7 +15,7 @@ export function CrisisStrip({ phone }: { phone: { display: string; href: string 
           </span>
         </p>
         <p className="flex shrink-0 items-center gap-2">
-          <a href="tel:14416" className="inline-flex min-h-8 items-center gap-1.5 rounded-full bg-white/10 px-3 font-semibold hover:bg-white/20" aria-label="Call Tele-MANAS on 14416, free, 24 hours a day">
+          <a href="tel:14416" className="inline-flex min-h-8 items-center gap-1.5 rounded-full bg-white/[0.06] px-3 font-semibold shadow-[inset_0_0_0_1px_rgb(255_255_255/0.1)] hover:bg-white/[0.12]" aria-label="Call Tele-MANAS on 14416, free, 24 hours a day">
             <Icon name="phone" className="size-3.5" /> 14416<span className="hidden font-normal text-brand-100 md:inline">&nbsp;Tele-MANAS (free, 24×7)</span>
           </a>
           <a href={phone.href} className="inline-flex min-h-8 items-center gap-1.5 rounded-full bg-accent-600 px-3 font-semibold hover:bg-accent-700" aria-label={`Call Tulasi Healthcare on ${phone.display}`}>

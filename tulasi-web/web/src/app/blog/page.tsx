@@ -16,11 +16,11 @@ export default function BlogIndex() {
   const posts = getPosts();
   return (
     <>
-      <PageHero title={page.h1} crumbs={[{ name: "Home", path: "/" }, { name: "Blog", path: "/blog/" }]} lead="Help Erase Stigma. You can change attitudes about mental health by learning more and sharing our educational resources with your friends and loved ones.">
+      <PageHero scene="pages" title={page.h1} crumbs={[{ name: "Home", path: "/" }, { name: "Blog", path: "/blog/" }]} lead="Help Erase Stigma. You can change attitudes about mental health by learning more and sharing our educational resources with your friends and loved ones.">
         <BlogSearch />
       </PageHero>
-      <div className="container-page py-14 lg:py-20">
-        <PostGrid posts={posts.slice(0, PER_PAGE)} priorityFirst />
+      <div className="container-page py-20 lg:py-28">
+        <PostGrid posts={posts.slice(0, PER_PAGE)} priorityFirst featureFirst />
         <Pagination page={1} total={Math.ceil(posts.length / PER_PAGE)} base="/blog/" />
       </div>
     </>

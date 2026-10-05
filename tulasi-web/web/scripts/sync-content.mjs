@@ -4,7 +4,7 @@
 //   ../data/media/wp-content/... -> public/wp-content/... (original paths kept)
 // and derives a few small indexes the routes need (authors, search index).
 // Run after re-scraping: `npm run sync-content`.
-import { cp, mkdir, readFile, writeFile, readdir } from "node:fs/promises";
+import { cp, mkdir, readFile, writeFile, readdir, rm } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 
@@ -66,5 +66,8 @@ await writeFile(path.join(WEB, "public", "search-index.json"), JSON.stringify(se
 // Media at their original URLs.
 const media = path.join(ROOT, "data", "media", "wp-content");
 if (existsSync(media)) await cp(media, path.join(WEB, "public", "wp-content"), { recursive: true });
+// Decorations retired in the redesign stay out of public/ (they 301, see next.config.ts).
+const retiredFile = path.join(OUT, "retired-media.json");
+if (existsSync(retiredFile)) for (const r of await read(retiredFile)) await rm(path.join(WEB, "public", r.path), { force: true });
 
 console.log({ files: (await readdir(OUT)).length, authors: authors.length, searchIndex: searchIndex.length, media: existsSync(media) });

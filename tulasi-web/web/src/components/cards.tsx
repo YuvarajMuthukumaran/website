@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
-import { formatDate, localPath, readingMinutes, type Doctor, type Entry } from "@/lib/content";
+import { formatDate, localPath, readingMinutes, tagsFor, type Doctor, type Entry } from "@/lib/content";
 import { Icon } from "@/components/ui/primitives";
 
 /** Doctor card: lifts with depth on hover, photo eases in, profile link revealed. */
@@ -45,40 +45,40 @@ export function DoctorCard({ d, priority, className, showExcerpt }: { d: Doctor;
 }
 
 /** Blog post card with an image reveal on hover. */
-export function PostCard({ p, priority, headingLevel = "h3" }: { p: Entry; priority?: boolean; headingLevel?: "h2" | "h3" }) {
+export function PostCard({ p, priority, headingLevel = "h3", feature }: { p: Entry; priority?: boolean; headingLevel?: "h2" | "h3"; feature?: boolean }) {
   const H = headingLevel;
+  const tag = tagsFor(p)[0];
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] bg-white shadow-[var(--shadow-soft)] ring-1 ring-line transition-all duration-500 ease-[var(--ease-calm)] hover:-translate-y-1.5 hover:shadow-[var(--shadow-lift)]">
-      <div className="relative aspect-[16/9] overflow-hidden bg-brand-50">
+    <article className="group relative flex h-full flex-col">
+      <div className={clsx("duo relative overflow-hidden rounded-[var(--radius-blob)] bg-brand-50 shadow-[0_0_0_1px_var(--color-line)]", feature ? "aspect-[16/10]" : "aspect-[16/10]")}>
         {p.featuredImage ? (
           <Image
             src={localPath(p.featuredImage.url)}
             alt={p.featuredImage.alt ?? ""}
             fill
-            sizes="(min-width:1024px) 380px, (min-width:640px) 50vw, 100vw"
-            className="object-cover transition-transform duration-700 ease-[var(--ease-calm)] group-hover:scale-[1.06]"
+            sizes={feature ? "(min-width:1024px) 720px, 100vw" : "(min-width:1024px) 400px, (min-width:640px) 50vw, 100vw"}
+            className="object-cover transition-transform duration-[900ms] ease-[var(--ease-calm)] group-hover:scale-[1.03]"
             priority={priority}
           />
         ) : (
-          <div className="h-full bg-gradient-to-br from-brand-100 to-brand-50" />
+          <div className="h-full bg-[radial-gradient(80%_60%_at_20%_10%,#2f5be0,transparent_60%),#0b236b]" />
         )}
-        {/* soft colour wash that lifts on hover */}
-        <div aria-hidden="true" className="absolute inset-0 bg-brand-900/10 transition-opacity duration-500 group-hover:opacity-0" />
       </div>
-      <div className="flex flex-1 flex-col p-6">
-        <p className="flex items-center gap-3 text-xs font-medium text-ink-soft">
+      <div className="flex flex-1 flex-col pt-5">
+        <p className="flex flex-wrap items-center gap-2.5 text-[0.8125rem] text-ink-soft">
+          {tag && <span className="rounded-full bg-brand-50 px-2.5 py-0.5 font-medium text-brand-900">{tag.name}</span>}
           <time dateTime={p.date ?? undefined}>{formatDate(p.date)}</time>
           <span aria-hidden="true">·</span>
           <span>{readingMinutes(p)} min read</span>
         </p>
-        <H className="mt-3 font-display text-lg font-bold leading-snug text-ink">
-          <Link href={p.path} className="after:absolute after:inset-0 hover:text-brand-700">
+        <H className={clsx("mt-3 font-display font-bold tracking-[-0.025em] text-ink", feature ? "text-[clamp(1.6rem,1.2rem+1.4vw,2.4rem)] leading-[1.1]" : "text-[1.15rem] leading-snug")}>
+          <Link href={p.path} className="after:absolute after:inset-0 group-hover:text-brand-700">
             {p.title}
           </Link>
         </H>
-        {p.excerpt && <p className="mt-2 line-clamp-3 text-[0.9375rem] leading-relaxed text-ink-soft">{p.excerpt.replace(/\s*\[…\]|\s*\[&hellip;\]/g, "…")}</p>}
+        {p.excerpt && <p className={clsx("mt-2 text-ink-soft", feature ? "line-clamp-3 max-w-[62ch] leading-relaxed" : "line-clamp-2 text-[0.9375rem] leading-relaxed")}>{p.excerpt.replace(/\s*\[…\]|\s*\[&hellip;\]/g, "…")}</p>}
         <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-brand-700">
-          Read article <Icon name="arrow" className="size-4 transition-transform group-hover:translate-x-1" />
+          Read article <Icon name="arrow" className="size-4 transition-transform duration-[450ms] group-hover:translate-x-1" />
         </span>
       </div>
     </article>

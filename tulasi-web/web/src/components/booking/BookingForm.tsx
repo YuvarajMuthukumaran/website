@@ -196,7 +196,7 @@ export function BookingForm({ siteDoctors }: { siteDoctors: SiteDoctor[] }) {
         </div>
       )}
 
-      <div className="min-h-[560px] rounded-[var(--radius-blob)] bg-white p-6 shadow-[var(--shadow-lift)] ring-1 ring-line sm:min-h-[460px] sm:p-10">
+      <div className="min-h-[560px] rounded-[var(--radius-blob)] bg-white p-6 shadow-[0_0_0_1px_var(--color-line),0_1px_0_#fff_inset,0_30px_80px_-40px_rgb(6_26_107/0.45)] sm:min-h-[460px] sm:p-10">
         {/* Each step slides in with a CSS animation (the first one is static). */}
         <div key={step} className={firstStep.current ? undefined : "step-in"}>
             {step === 0 && (

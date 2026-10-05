@@ -6,7 +6,8 @@ export const metadata: Metadata = { title: { absolute: "Patient Login - Tulasi H
 
 export default function PatientLogin() {
   return (
-    <section className="relative isolate overflow-clip bg-hero py-16 on-dark lg:py-24">
+    <section className="on-dark stage relative overflow-clip bg-hero pt-36 pb-20 lg:pt-44 lg:pb-28">
+      <div className="beam" aria-hidden="true" />
       <div aria-hidden="true" className="orb pointer-events-none absolute hidden md:block -top-24 -right-24 size-96 rounded-full bg-brand-300/25 blur-3xl" />
       <div className="container-page relative grid items-center gap-12 lg:grid-cols-2">
         <div className="text-white">

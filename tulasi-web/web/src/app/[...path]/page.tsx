@@ -8,11 +8,17 @@ import { getDoctorBySlug, getDoctorFacts, getPageByPath, getPages, getSite, rend
 import { addHeadingIds, extractFaq, headingsOf, teamGroups, tidy } from "@/lib/html";
 import { faqSchema, medicalPageSchema, metadataFromSeo } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
+import { sceneFor } from "@/components/HeroScene";
 import { Aside } from "@/components/Aside";
 import { PASTELS, portraitOf } from "@/components/team";
 import { TeamExplorer, type TeamGroup } from "@/components/team/TeamExplorer";
-import { ButtonLink, Icon, JsonLd, Reveal } from "@/components/ui/primitives";
+import { Arrow, ButtonLink, Icon, JsonLd, Reveal } from "@/components/ui/primitives";
 import { TrackedLink } from "@/components/layout/TrackedLink";
+import { TeamFilter } from "@/components/team/TeamFilter";
+import { FaceCluster } from "@/components/team/FaceCluster";
+import { structureTeamPage, teamLocationPaths } from "@/lib/team-location";
+import { TAG_LIST } from "@/lib/team-tags";
+import clsx from "clsx";
 
 // Routes with their own templates elsewhere.
 const OWN_ROUTE = new Set(["/", "/blog/"]);
@@ -51,6 +57,7 @@ export default async function WpPage({ params }: PageProps<"/[...path]">) {
   if (!page) notFound();
   if (page.path === "/our-team/") return <TeamPage page={page} />;
   if (page.path === "/contact-us/") return <ContactPage page={page} />;
+  if (teamLocationPaths().has(page.path)) return <TeamLocationPage page={page} />;
 
   const html = addHeadingIds(renderHtml(tidy(page.contentHtml)));
   const toc = headingsOf(html);
@@ -59,12 +66,95 @@ export default async function WpPage({ params }: PageProps<"/[...path]">) {
 
   return (
     <>
-      <PageHero title={page.h1} kicker={differs(page.title, page.h1) ? page.title : null} crumbs={crumbsFor(page)} />
-      <div className="container-page grid gap-12 py-14 lg:grid-cols-[minmax(0,1fr)_320px] lg:py-20">
+      <PageHero title={page.h1} kicker={differs(page.title, page.h1) ? page.title : null} crumbs={crumbsFor(page)} scene={sceneFor(page.pageType, page.path)} />
+      <div className="container-page grid gap-14 py-16 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-20 lg:py-24">
         <article className="prose-tulasi min-w-0 max-w-none" dangerouslySetInnerHTML={{ __html: html }} />
         <Aside path={page.path} toc={toc} />
       </div>
       {isMedical && <JsonLd data={medicalPageSchema(page, schemaKind(page.pageType))} />}
+      {faq.length >= 2 && <JsonLd data={faqSchema(faq)} />}
+    </>
+  );
+}
+
+/**
+ * The "Our Team" location pages (Psychiatrist in Gurgaon, Best Psychologist in Delhi ...):
+ * the same content in the same order, laid out as an intro, a filterable grid of
+ * doctor cards, then the rest of the page as feature grids, accordions and cards.
+ */
+function TeamLocationPage({ page }: { page: Entry }) {
+  const s = structureTeamPage(renderHtml(tidy(page.contentHtml)));
+  const faq = extractFaq(page.contentHtml);
+  const faces = [...new Set(s.cards.map((c) => c.cutout).filter((c): c is string => !!c))];
+  const kinds = (["Psychiatrist", "Psychologist"] as const).map((kind) => ({ kind, count: s.cards.filter((c) => c.kind === kind).length })).filter((k) => k.count);
+  const tags = TAG_LIST.map((tag) => ({ tag, count: s.cards.filter((c) => c.tags.includes(tag)).length })).filter((t) => t.count > 1 && t.count < s.cards.length);
+  const people = kinds.length === 1 ? `${kinds[0].kind.toLowerCase()}s` : "specialists";
+  return (
+    <>
+      <PageHero
+        title={page.h1}
+        kicker={differs(page.title, page.h1) ? page.title : null}
+        crumbs={crumbsFor(page)}
+        lead={page.seo.description}
+        visual={faces.length >= 3 ? <FaceCluster faces={faces} /> : undefined}
+        scene={faces.length >= 3 ? null : sceneFor(page.pageType, page.path)}
+      >
+        <div className="mt-9 flex flex-wrap gap-3">
+          {s.grid && (
+            <ButtonLink href="#team" variant="accent" size="lg">
+              Meet the {people} <Arrow />
+            </ButtonLink>
+          )}
+          <ButtonLink href={`/book-appointment/?from=${encodeURIComponent(page.path)}`} variant="glass" size="lg">
+            <Icon name="calendar" /> Book Appointment
+          </ButtonLink>
+        </div>
+        {s.cards.length > 0 && (
+          <div className="mt-10 flex items-center gap-4">
+            <div className="flex -space-x-3" aria-hidden="true">
+              {faces.slice(0, 5).map((f) => (
+                <span key={f} className="relative size-11 overflow-hidden rounded-full bg-[radial-gradient(circle_at_50%_85%,#fff,#c9d5ff_50%,#85a2f9)] ring-2 ring-[#0e266e]">
+                  <Image src={f} alt="" fill sizes="44px" className="object-cover object-[50%_10%]" />
+                </span>
+              ))}
+            </div>
+            <p className="text-sm leading-snug text-brand-100/80">
+              <b className="block font-display text-base font-bold text-white">{s.cards.length} {people}</b>
+              {/NABH/.test(page.contentHtml) ? "at an NABH-accredited hospital" : "at Tulasi Healthcare"}
+            </p>
+          </div>
+        )}
+      </PageHero>
+
+      {(s.intro || s.banner) && (
+        <section className={clsx("container-page grid items-center gap-12 py-20 lg:gap-16 lg:py-28", s.banner && "lg:grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)]")}>
+          <div className="prose-tulasi lt-prose min-w-0" dangerouslySetInnerHTML={{ __html: s.intro }} />
+          {s.banner && <div className="lt-banner" dangerouslySetInnerHTML={{ __html: s.banner }} />}
+        </section>
+      )}
+
+      {s.grid && (
+        <section id="team" className="relative scroll-mt-20 overflow-clip bg-[linear-gradient(180deg,#f2f5fe,#f8f9ff_55%,#fff)] py-20 lg:py-28">
+          <div aria-hidden="true" className="pointer-events-none absolute -top-40 left-1/2 h-80 w-[60rem] -translate-x-1/2 rounded-full bg-brand-300/20 blur-[90px]" />
+          <div className="container-page relative">
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+              <div>
+                <p className="eyebrow">Our {people}</p>
+                {s.teamHeading && <div className="lt-teamhead mt-4" dangerouslySetInnerHTML={{ __html: s.teamHeading }} />}
+              </div>
+              <p className="max-w-sm text-ink-soft lg:text-right">Open a card for the full profile, or call to book a consultation.</p>
+            </div>
+            <TeamFilter gridId="team-grid" kinds={kinds} tags={tags} total={s.cards.length} />
+            <div id="team-grid" className="mt-8" dangerouslySetInnerHTML={{ __html: s.grid }} />
+          </div>
+        </section>
+      )}
+
+      <div className="container-page grid gap-14 py-20 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-20 lg:py-28">
+        <article className="prose-tulasi lt-prose min-w-0 max-w-none" dangerouslySetInnerHTML={{ __html: s.rest }} />
+        <Aside path={page.path} toc={s.toc} />
+      </div>
+      {/condition|service|addiction|local-landing/.test(page.pageType) && <JsonLd data={medicalPageSchema(page, schemaKind(page.pageType))} />}
       {faq.length >= 2 && <JsonLd data={faqSchema(faq)} />}
     </>
   );
@@ -115,7 +205,7 @@ function TeamPage({ page }: { page: Entry }) {
   const tags = TAGS.map(([tag]) => ({ tag, count: explorerGroups.reduce((c, g) => c + g.people.filter((p) => p.tags.includes(tag)).length, 0) })).filter((t) => t.count > 1);
   return (
     <>
-      <PageHero title={page.h1} crumbs={crumbsFor(page)} lead={intro.join(" ")}>
+      <PageHero title={page.h1} crumbs={crumbsFor(page)} lead={intro.join(" ")} scene="cradle">
         <nav aria-label="Team groups" className="mt-8 flex flex-wrap gap-2">
           {groups.map((g) => (
             <a key={g.heading} href={`#${anchor(g.heading)}`} className="inline-flex min-h-11 items-center gap-2 rounded-full bg-white/10 px-5 text-sm font-semibold text-white ring-1 ring-white/20 transition hover:bg-white hover:text-brand-900">
@@ -142,52 +232,71 @@ function TeamPage({ page }: { page: Entry }) {
 function ContactPage({ page }: { page: Entry }) {
   const site = getSite();
   const mapQuery = encodeURIComponent(`Tulasi Healthcare, ${site.contact.address}`);
-  const cards = [
-    { icon: "phone" as const, label: "Call us", value: site.contact.phoneDisplay, href: site.contact.phoneHref },
-    { icon: "mail" as const, label: "Email", value: site.contact.email, href: `mailto:${site.contact.email}` },
-    { icon: "pin" as const, label: "Visit", value: site.contact.address, href: `https://www.google.com/maps/search/?api=1&query=${mapQuery}` },
-  ];
   return (
     <>
-      <PageHero title={page.h1} crumbs={crumbsFor(page)} lead="Get In Touch With Us" />
-      <div className="container-page py-14 lg:py-20">
-        <ul className="grid gap-6 md:grid-cols-3">
-          {cards.map((c, i) => (
-            <Reveal as="li" key={c.label} delay={i * 100}>
-              {c.icon === "phone" ? (
-                <TrackedLink event="call_click" eventLocation="contact" href={c.href} className="group flex h-full flex-col rounded-[var(--radius-card)] bg-white p-7 shadow-[var(--shadow-soft)] ring-1 ring-line transition hover:-translate-y-1 hover:shadow-[var(--shadow-lift)]">
-                <span className="grid size-12 place-items-center rounded-2xl bg-brand-50 text-brand-700 transition group-hover:bg-brand-600 group-hover:text-white">
-                  <Icon name={c.icon} />
+      <PageHero title={page.h1} crumbs={crumbsFor(page)} lead="Get In Touch With Us" scene="map" />
+      <div className="container-page py-20 lg:py-28">
+        <div className="grid auto-rows-[minmax(200px,auto)] gap-4 md:grid-cols-4">
+          <Reveal className="md:col-span-2 md:row-span-2">
+            <TrackedLink event="call_click" eventLocation="contact" href={site.contact.phoneHref} className="spot group block h-full">
+              <span className="spot-in flex h-full flex-col justify-between p-8 text-white sm:p-10">
+                <span className="icon-tile size-14"><Icon name="phone" className="size-6" /></span>
+                <span>
+                  <span className="block text-[0.7rem] font-semibold tracking-[0.14em] text-brand-200 uppercase">Call us</span>
+                  <span className="mt-3 block font-display text-[clamp(2rem,1.4rem+2.4vw,3.5rem)] leading-none font-extrabold tracking-[-0.04em]">{site.contact.phoneDisplay}</span>
+                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold">Tap to call <Arrow /></span>
                 </span>
-                <span className="mt-5 text-sm font-semibold uppercase tracking-wider text-ink-soft">{c.label}</span>
-                <span className="mt-1 font-display text-lg font-bold text-ink">{c.value}</span>
-              </TrackedLink>
-              ) : (
-                <a href={c.href} className="group flex h-full flex-col rounded-[var(--radius-card)] bg-white p-7 shadow-[var(--shadow-soft)] ring-1 ring-line transition hover:-translate-y-1 hover:shadow-[var(--shadow-lift)]" {...(c.icon === "pin" ? { target: "_blank", rel: "noopener" } : {})}>
-                <span className="grid size-12 place-items-center rounded-2xl bg-brand-50 text-brand-700 transition group-hover:bg-brand-600 group-hover:text-white">
-                  <Icon name={c.icon} />
+              </span>
+            </TrackedLink>
+          </Reveal>
+          <Reveal delay={80} className="md:col-span-2">
+            <a href={`mailto:${site.contact.email}`} className="spot-light group block h-full">
+              <span className="spot-in flex h-full flex-col justify-between p-7">
+                <span className="icon-tile size-12"><Icon name="mail" /></span>
+                <span>
+                  <span className="block text-[0.7rem] font-semibold tracking-[0.14em] text-ink-soft uppercase">Email</span>
+                  <span className="mt-2 block font-display text-xl font-bold tracking-[-0.02em] text-ink">{site.contact.email}</span>
                 </span>
-                <span className="mt-5 text-sm font-semibold uppercase tracking-wider text-ink-soft">{c.label}</span>
-                <span className="mt-1 font-display text-lg font-bold text-ink">{c.value}</span>
-              </a>
-              )}
-            </Reveal>
-          ))}
-        </ul>
-        <div className="mt-10 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
-          <div className="overflow-hidden rounded-[var(--radius-card)] ring-1 ring-line">
-            <iframe title="Map: Tulasi Healthcare, Gurugram" src={`https://www.google.com/maps?q=${mapQuery}&output=embed`} className="h-[380px] w-full" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
-          </div>
-          <div className="flex flex-col justify-between rounded-[var(--radius-card)] bg-gradient-to-br from-brand-600 to-brand-900 p-8 text-white">
+              </span>
+            </a>
+          </Reveal>
+          <Reveal delay={140}>
+            <a href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`} target="_blank" rel="noopener" className="spot-light group block h-full">
+              <span className="spot-in flex h-full flex-col justify-between p-7">
+                <span className="icon-tile size-12"><Icon name="pin" /></span>
+                <span>
+                  <span className="block text-[0.7rem] font-semibold tracking-[0.14em] text-ink-soft uppercase">Visit</span>
+                  <address className="mt-2 block font-display text-[1.02rem] leading-snug font-semibold text-ink not-italic">{site.contact.address}</address>
+                </span>
+              </span>
+            </a>
+          </Reveal>
+          <Reveal delay={200}>
+            <div className="flex h-full flex-col justify-between rounded-[var(--radius-blob)] bg-brand-50 p-7 shadow-[inset_0_0_0_1px_var(--color-brand-100)]">
+              <span className="icon-tile size-12 !bg-white"><Icon name="heart" /></span>
+              <p className="text-sm leading-relaxed text-ink">
+                <b className="block font-display text-base">In crisis?</b>
+                Call <a href="tel:14416" className="font-semibold text-brand-700 underline underline-offset-2">Tele-MANAS 14416</a>, free and 24×7.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+
+        <div className="mt-4 grid gap-4 lg:grid-cols-[1.5fr_1fr]">
+          <Reveal className="overflow-hidden rounded-[var(--radius-blob)] shadow-[0_0_0_1px_var(--color-line),var(--shadow-soft)]">
+            <iframe title="Map: Tulasi Healthcare, Gurugram" src={`https://www.google.com/maps?q=${mapQuery}&output=embed`} className="h-[420px] w-full grayscale-[0.4]" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+          </Reveal>
+          <Reveal delay={100} className="on-dark stage relative flex flex-col justify-between overflow-clip rounded-[var(--radius-blob)] bg-hero p-8 text-white">
+            <div className="beam" aria-hidden="true" />
             <div>
-              <p className="font-display text-2xl font-bold">Book an appointment</p>
-              <p className="mt-2 text-brand-100">Choose a specialist, date and time in a few steps. We’ll confirm your appointment.</p>
+              <p className="font-display text-[clamp(1.6rem,1.2rem+1.2vw,2.25rem)] leading-tight font-bold tracking-[-0.03em]">Book an <span className="text-glow">appointment</span></p>
+              <p className="mt-3 text-brand-100/80">Choose a specialist, date and time in a few steps. We’ll confirm your appointment.</p>
             </div>
-            <div className="mt-8 grid gap-3">
-              <Link href="/book-appointment/" className="flex min-h-12 items-center justify-center gap-2 rounded-full bg-accent-600 font-semibold hover:bg-accent-700"><Icon name="calendar" /> Book Appointment</Link>
-              <Link href="/map-direction/" className="flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/30 font-semibold hover:bg-white/10"><Icon name="pin" /> Map &amp; Direction</Link>
+            <div className="mt-10 grid gap-3">
+              <ButtonLink href="/book-appointment/" variant="accent">Book Appointment <Arrow /></ButtonLink>
+              <ButtonLink href="/map-direction/" variant="glass"><Icon name="pin" className="size-4" /> Map &amp; Direction</ButtonLink>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </>

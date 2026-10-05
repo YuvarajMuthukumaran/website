@@ -12,13 +12,28 @@ assistant, online booking and a patient portal.
 | URLs preserved | 688 | 688, plus 456 legacy redirects kept |
 | Titles / descriptions / canonicals / robots / H1 identical | – | 688 of 688 |
 | Content parity (live sentences found on new page) | – | **100.00%** |
-| Mobile Lighthouse, home (perf / a11y / best practices / SEO) | 42 / 87 / 96 / 85 | ~85 / 100 / 100 / 100 |
-| Mobile LCP, home / service page / blog post | 9.5 s / 13.3 s / 11.8 s | 3.7 s / 3.5 s / 3.2 s |
+| Mobile Lighthouse, home (perf / a11y / best practices / SEO) | 42 / 87 / 96 / 85 | 90–91 / 100 / 100 / 100 |
+| Mobile LCP, home / service page / blog post | 9.5 s / 13.3 s / 11.8 s | 3.4 s / 4.1 s / 3.3 s |
 | Desktop Lighthouse, home | – | 100 / 100 / 100 / 100 (LCP 0.8 s) |
 | Layout shift (CLS), home | 0.31 | 0 |
 
 Reports: [reports/parity-report.md](reports/parity-report.md), [reports/content-gap-report.md](reports/content-gap-report.md),
 [reports/inventory.csv](reports/inventory.csv), [reports/redirects.csv](reports/redirects.csv), [reports/lighthouse/](reports/lighthouse/).
+
+## Design system: "Held in light"
+
+Daylight sections for reading; midnight stages (hero, services, journey, booking, footer)
+carry one soft key light. Tokens live in `web/src/app/globals.css` (`@theme`): brand
+blues + Midnight `#030B3A` / Navy-900 `#081250`, red for primary actions only, radii
+12/16/24, hairlines, surfaces on dark (white 6/10/16%), motion tokens (200/450/700ms,
+ease-out). Building blocks: `components/ui/primitives.tsx` (buttons, Kinetic headings,
+tags, custom icon set), `HeroScene.tsx` (code-built scenes per page type),
+`WordField.tsx`, spotlight cards (`.spot` / `.spot-light`, one delegated pointer
+listener in `MotionProvider`). Visual language sheet:
+https://claude.ai/artifact/5vR1mWEarUUTvbLbouZjsx
+
+Old stock decorations were removed and 301 to the page they decorated
+(`web/content/retired-media.json`); every image inside migrated content is kept.
 
 ## Layout
 

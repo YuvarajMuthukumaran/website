@@ -57,5 +57,31 @@ export function MotionProvider() {
     };
   }, [pathname]);
 
+  // Cursor spotlight for every .spot / .spot-light card: one delegated,
+  // frame-batched listener sets --mx / --my on the hovered card.
+  useEffect(() => {
+    if (!matchMedia("(hover: hover)").matches) return;
+    let raf = 0;
+    let last: PointerEvent | null = null;
+    const apply = () => {
+      raf = 0;
+      if (!last) return;
+      const card = (last.target as Element | null)?.closest?.<HTMLElement>(".spot, .spot-light");
+      if (!card) return;
+      const r = card.getBoundingClientRect();
+      card.style.setProperty("--mx", `${(((last.clientX - r.left) / r.width) * 100).toFixed(1)}%`);
+      card.style.setProperty("--my", `${(((last.clientY - r.top) / r.height) * 100).toFixed(1)}%`);
+    };
+    const onMove = (e: PointerEvent) => {
+      last = e;
+      if (!raf) raf = requestAnimationFrame(apply);
+    };
+    document.addEventListener("pointermove", onMove, { passive: true });
+    return () => {
+      document.removeEventListener("pointermove", onMove);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
   return null;
 }

@@ -1,8 +1,9 @@
-// Sticky sidebar for content pages: book / call, and sibling links from the
-// same menu group (keeps the live site's internal linking close at hand).
+// Sticky sidebar for content pages: a midnight booking card, an "on this page"
+// outline, and sibling links from the same menu group (keeps the live site's
+// internal linking close at hand).
 import Link from "next/link";
 import { getSite } from "@/lib/content";
-import { Icon } from "@/components/ui/primitives";
+import { Arrow, Icon } from "@/components/ui/primitives";
 import { TrackedLink } from "@/components/layout/TrackedLink";
 
 export function Aside({ path, toc }: { path: string; toc?: { id: string; text: string }[] }) {
@@ -10,25 +11,26 @@ export function Aside({ path, toc }: { path: string; toc?: { id: string; text: s
   const group = site.menu.flatMap((m) => m.groups).find((g) => g.links.some((l) => l.href === path));
   const related = group?.links.filter((l) => l.href && l.href !== path).slice(0, 8) ?? [];
   return (
-    <aside className="space-y-6 lg:sticky lg:top-28" aria-label="Page tools">
-      <div className="rounded-[var(--radius-card)] bg-gradient-to-br from-brand-600 to-brand-900 p-6 text-white shadow-[var(--shadow-lift)]">
-        <p className="font-display text-lg font-bold">Speak to a specialist</p>
-        <p className="mt-1 text-sm text-brand-100">Book a consultation with our psychiatrists and psychologists.</p>
-        <Link href={`/book-appointment/?from=${encodeURIComponent(path)}`} className="mt-5 flex min-h-12 items-center justify-center gap-2 rounded-full bg-accent-600 font-semibold hover:bg-accent-700">
-          <Icon name="calendar" /> Book Appointment
+    <aside className="space-y-5 lg:sticky lg:top-28" aria-label="Page tools">
+      <div className="on-dark stage relative overflow-clip rounded-[var(--radius-blob)] bg-hero p-6 text-white shadow-[var(--shadow-glow)]">
+        <span className="icon-tile icon-tile-dark size-11"><Icon name="calendar" className="size-5" /></span>
+        <p className="mt-5 font-display text-xl font-bold tracking-[-0.02em]">Speak to a specialist</p>
+        <p className="mt-1.5 text-sm leading-relaxed text-brand-100/75">Book a consultation with our psychiatrists and psychologists.</p>
+        <Link href={`/book-appointment/?from=${encodeURIComponent(path)}`} className="group/btn mt-6 flex min-h-12 items-center justify-center gap-2 rounded-full bg-accent-600 font-semibold shadow-[inset_0_1px_0_rgb(255_255_255/0.25),0_10px_24px_-12px_rgb(215_20_31/0.8)] transition hover:bg-[#c8121c]">
+          Book Appointment <Arrow />
         </Link>
-        <TrackedLink event="call_click" eventLocation="sidebar" href={site.contact.phoneHref} className="mt-2 flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/30 font-semibold hover:bg-white/10">
-          <Icon name="phone" /> {site.contact.phoneDisplay}
+        <TrackedLink event="call_click" eventLocation="sidebar" href={site.contact.phoneHref} className="mt-2 flex min-h-12 items-center justify-center gap-2 rounded-full bg-white/[0.06] font-semibold shadow-[inset_0_0_0_1px_rgb(255_255_255/0.16)] hover:bg-white/[0.1]">
+          <Icon name="phone" className="size-4" /> {site.contact.phoneDisplay}
         </TrackedLink>
       </div>
 
       {toc && toc.length > 2 && (
-        <nav aria-label="On this page" className="hidden rounded-[var(--radius-card)] border border-line bg-white p-6 lg:block">
-          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-ink-soft">On this page</p>
-          <ol className="mt-3 space-y-2 text-sm">
+        <nav aria-label="On this page" className="hidden rounded-[var(--radius-blob)] p-6 shadow-[inset_0_0_0_1px_var(--color-line)] lg:block">
+          <p className="text-[0.7rem] font-semibold tracking-[0.14em] text-ink-soft uppercase">On this page</p>
+          <ol className="mt-4 space-y-1 border-l border-line">
             {toc.slice(0, 12).map((h) => (
               <li key={h.id}>
-                <a href={`#${h.id}`} className="line-clamp-2 text-ink-soft hover:text-brand-700">{h.text}</a>
+                <a href={`#${h.id}`} className="-ml-px line-clamp-2 border-l border-transparent py-1 pl-4 text-sm leading-snug text-ink-soft transition-colors hover:border-brand-600 hover:text-brand-800">{h.text}</a>
               </li>
             ))}
           </ol>
@@ -36,13 +38,13 @@ export function Aside({ path, toc }: { path: string; toc?: { id: string; text: s
       )}
 
       {related.length > 0 && (
-        <nav aria-label={group?.label ?? "Related"} className="rounded-[var(--radius-card)] border border-line bg-white p-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent-600">{group?.label ?? "Related"}</p>
-          <ul className="mt-3 space-y-1">
+        <nav aria-label={group?.label ?? "Related"} className="rounded-[var(--radius-blob)] p-6 shadow-[inset_0_0_0_1px_var(--color-line)]">
+          <p className="text-[0.7rem] font-semibold tracking-[0.14em] text-ink-soft uppercase">{group?.label ?? "Related"}</p>
+          <ul className="mt-3 space-y-0.5">
             {related.map((l) => (
               <li key={l.href}>
-                <Link href={l.href!} className="flex items-center justify-between gap-2 rounded-lg px-2 py-2 text-sm text-ink-soft hover:bg-brand-50 hover:text-brand-700">
-                  {l.label} <Icon name="chevron" className="size-4 shrink-0 opacity-50" />
+                <Link href={l.href!} className="group flex items-center justify-between gap-2 rounded-[var(--radius-tile)] px-2 py-2 text-sm text-ink-soft transition-colors hover:bg-brand-50 hover:text-brand-800">
+                  {l.label} <Arrow className="size-3.5 opacity-40 group-hover:opacity-100" />
                 </Link>
               </li>
             ))}

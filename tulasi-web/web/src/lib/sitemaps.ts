@@ -3,12 +3,16 @@
 // /team-sitemap.xml, /category-sitemap.xml, /post_tag-sitemap.xml, /author-sitemap.xml.
 // Each entry carries its images (image sitemap extension).
 import "server-only";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import { absoluteUrl, getAuthors, getCategories, getDoctors, getPages, getPosts, getTags, localPath, postsByAuthor, SITE_URL } from "./content";
 
 type Url = { loc: string; lastmod?: string | null; images?: string[] };
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-const imagesIn = (html: string) => [...html.matchAll(/<img[^>]+src="([^"]+)"/g)].map((m) => m[1]);
+// Images retired in the redesign (they now 301) are left out of the image sitemap.
+const RETIRED = new Set((JSON.parse(readFileSync(path.join(process.cwd(), "content", "retired-media.json"), "utf8")) as { path: string }[]).map((r) => r.path));
+const imagesIn = (html: string) => [...html.matchAll(/<img[^>]+src="([^"]+)"/g)].map((m) => m[1]).filter((u) => !RETIRED.has(localPath(u)));
 const abs = (u: string) => absoluteUrl(localPath(u));
 const uniq = (a: string[]) => [...new Set(a)];
 

@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: { absolute: "My Appointments - Tulasi
 
 export default function PortalPage() {
   return (
-    <div className="bg-mist/60 py-12 lg:py-16">
+    <div className="grid-light bg-mist pt-32 pb-16 lg:pt-40 lg:pb-24">
       <div className="container-page max-w-4xl">
         <Portal />
       </div>

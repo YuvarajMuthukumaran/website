@@ -6,65 +6,95 @@
 //   a recommendation and a booking link pre-filtered to the right specialists.
 import clsx from "clsx";
 import Link from "next/link";
+import { LayoutGroup, motion, useReducedMotion } from "motion/react";
 import { useMemo, useState } from "react";
 import { CONCERNS, INTENSITY, WHO, type Who } from "@/lib/care";
 import { Icon } from "@/components/ui/primitives";
 
 export function CareFinder({ phone }: { phone: { display: string; href: string } }) {
+  const reduce = useReducedMotion();
   const [who, setWho] = useState<Who>("self");
   const [guide, setGuide] = useState(false);
   const ordered = useMemo(() => [...CONCERNS].sort((a, b) => Number(b.who.includes(who)) - Number(a.who.includes(who))), [who]);
 
   return (
-    <div className="rounded-[var(--radius-blob)] bg-white p-6 shadow-[var(--shadow-lift)] ring-1 ring-line sm:p-10">
-      <div className="flex flex-wrap items-end justify-between gap-6">
-        <div>
-          <p className="eyebrow">Find the right care</p>
-          <h2 className="mt-2 font-display text-[length:var(--text-h2)] font-bold leading-tight text-ink">What would you like help with?</h2>
-        </div>
-        <div role="group" aria-label="Who is the care for?" className="flex flex-wrap gap-2 rounded-full bg-sand p-1.5">
-          {WHO.map((w) => (
-            <button
-              key={w.id}
-              type="button"
-              aria-pressed={who === w.id}
-              onClick={() => setWho(w.id)}
-              className={clsx("min-h-10 rounded-full px-4 text-sm font-semibold transition-all duration-300", who === w.id ? "bg-brand-600 text-white shadow-[var(--shadow-soft)]" : "text-ink-soft hover:text-ink")}
-            >
-              {w.label}
-            </button>
-          ))}
-        </div>
+    <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
+      <div>
+        <p className="eyebrow">Find the right care</p>
+        <h2 className="mt-5 font-display text-[length:var(--text-h2)] leading-[1.04] font-bold tracking-[-0.035em] text-ink">
+          What would you like <span className="text-brandgrad">help with?</span>
+        </h2>
+        <p className="mt-5 max-w-[44ch] text-[length:var(--text-lead)] leading-relaxed text-ink-soft">Choose who the care is for, then what feels closest. Each one opens how we treat it.</p>
+        <LayoutGroup id="care-who">
+          <div role="group" aria-label="Who is the care for?" className="mt-8 inline-flex max-w-full flex-wrap gap-1 rounded-[var(--radius-card)] bg-mist p-1 shadow-[inset_0_0_0_1px_var(--color-line)]">
+            {WHO.map((w) => {
+              const on = who === w.id;
+              return (
+                <button
+                  key={w.id}
+                  type="button"
+                  aria-pressed={on}
+                  onClick={() => setWho(w.id)}
+                  className={clsx("relative min-h-11 rounded-[var(--radius-tile)] px-4 text-sm font-semibold transition-colors duration-300", on ? "text-white" : "text-ink-soft hover:text-ink")}
+                >
+                  {on && (
+                    <motion.span
+                      layoutId="care-who-pill"
+                      aria-hidden="true"
+                      className="absolute inset-0 rounded-[var(--radius-tile)] bg-brand-600 shadow-[0_8px_18px_-8px_rgb(10_47_181/0.75)]"
+                      transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 34 }}
+                    />
+                  )}
+                  <span className="relative">{w.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </LayoutGroup>
       </div>
 
-      <ul className="mt-8 flex flex-wrap gap-2.5">
-        {ordered.map((c) => {
-          const match = c.who.includes(who);
-          return (
-            <li key={c.href + c.label} className={clsx("transition-all duration-500", match ? "opacity-100" : "opacity-45")}>
-              <Link
-                href={c.href}
-                className={clsx(
-                  "group inline-flex min-h-12 items-center gap-2 rounded-full border px-5 font-medium transition-all duration-300 hover:-translate-y-0.5",
-                  match ? "border-brand-200 bg-brand-50 text-brand-800 hover:border-brand-600 hover:bg-brand-600 hover:text-white" : "border-line bg-white text-ink-soft hover:border-brand-300"
-                )}
+      <div>
+      <p className="mb-3 text-sm font-semibold text-brand-700 lg:pt-2" aria-live="polite">
+        Best matches for: <span className="rounded-full bg-brand-600 px-2.5 py-0.5 text-white">{WHO.find((w) => w.id === who)?.label}</span>
+      </p>
+      <LayoutGroup id="care-chips">
+        <ul className="flex flex-wrap gap-2.5">
+          {ordered.map((c) => {
+            const match = c.who.includes(who);
+            return (
+              <motion.li
+                key={c.href + c.label}
+                layout="position"
+                initial={false}
+                animate={{ opacity: match ? 1 : 0.5 }}
+                transition={reduce ? { duration: 0 } : { layout: { type: "spring", stiffness: 260, damping: 30 }, opacity: { duration: 0.4 } }}
               >
-                {c.label}
-                <Icon name="arrow" className="size-4 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
+                <Link
+                  href={c.href}
+                  className={clsx(
+                    "group inline-flex min-h-12 items-center gap-2 rounded-full px-5 text-[0.95rem] transition-[background-color,color,box-shadow,transform] duration-[450ms] ease-[var(--ease-calm)] hover:-translate-y-px",
+                    match ? "bg-brand-50 font-semibold text-brand-800 shadow-[inset_0_0_0_1.5px_var(--color-brand-600)] hover:bg-brand-600 hover:text-white hover:shadow-[0_10px_24px_-12px_rgb(10_47_181/0.8)]" : "bg-transparent font-medium text-ink-soft shadow-[inset_0_0_0_1px_var(--color-line)] hover:text-ink"
+                  )}
+                >
+                  {match && <span className="size-1.5 rounded-full bg-brand-600 group-hover:bg-white" aria-hidden="true" />}
+                  {c.label}
+                  <Icon name="arrow" className="size-4 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
+                </Link>
+              </motion.li>
+            );
+          })}
+        </ul>
+      </LayoutGroup>
 
-      <div className="mt-8 flex flex-wrap items-center gap-4 border-t border-line pt-6">
-        <button type="button" onClick={() => setGuide((g) => !g)} aria-expanded={guide} aria-controls="care-guide" className="inline-flex min-h-12 items-center gap-2 rounded-full bg-ink px-6 font-semibold text-white transition hover:bg-brand-900">
+      <div className="mt-10 flex flex-wrap items-center gap-4 border-t border-line pt-8">
+        <button type="button" onClick={() => setGuide((g) => !g)} aria-expanded={guide} aria-controls="care-guide" className="inline-flex min-h-12 items-center gap-2 rounded-full bg-midnight px-6 font-semibold text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_10px_28px_-14px_rgb(3_11_58/0.9)] transition hover:-translate-y-px hover:bg-navy-900">
           <Icon name="spark" className="size-4" /> {guide ? "Close the guide" : "Not sure? Guide me in 3 steps"}
         </button>
         <p className="text-sm text-ink-soft">Or call us on <a href={phone.href} className="font-semibold text-brand-700 underline underline-offset-2">{phone.display}</a>: our team will help you choose.</p>
       </div>
 
       {guide && <Matcher initialWho={who} phone={phone} />}
+      </div>
     </div>
   );
 }
@@ -80,10 +110,10 @@ function Matcher({ initialWho, phone }: { initialWho: Who; phone: { display: str
   const forWho = CONCERNS.filter((c) => c.who.includes(who));
 
   const option = (selected: boolean) =>
-    clsx("flex min-h-14 w-full items-center justify-between gap-3 rounded-2xl border px-5 py-3 text-left font-medium transition-all duration-300", selected ? "border-brand-600 bg-brand-50 text-brand-800" : "border-line bg-white text-ink hover:border-brand-300 hover:-translate-y-0.5");
+    clsx("flex min-h-14 w-full items-center justify-between gap-3 rounded-[var(--radius-card)] px-5 py-3 text-left font-medium transition-all duration-300", selected ? "bg-brand-50 text-brand-800 shadow-[inset_0_0_0_1.5px_var(--color-brand-600)]" : "bg-white text-ink shadow-[inset_0_0_0_1px_var(--color-line)] hover:-translate-y-px hover:shadow-[inset_0_0_0_1px_var(--color-brand-200),0_8px_20px_-12px_rgb(10_47_181/0.35)]");
 
   return (
-    <div id="care-guide" className="step-in mt-8 rounded-[var(--radius-card)] bg-sand p-6 sm:p-8">
+    <div id="care-guide" className="step-in mt-8 rounded-[var(--radius-blob)] bg-mist p-6 shadow-[inset_0_0_0_1px_var(--color-line)] sm:p-8">
       <div className="flex items-center justify-between gap-4">
         <p className="text-sm font-semibold text-ink-soft">Step {Math.min(step + 1, 3)} of 3</p>
         {step > 0 && step < 3 && (

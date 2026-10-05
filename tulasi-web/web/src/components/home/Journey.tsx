@@ -1,156 +1,94 @@
 "use client";
-// "Your journey to recovery": scroll-driven storytelling with native CSS
-// sticky positioning (no scroll-jacking library, no pinning that changes the
-// page height after load).
-//
-// Desktop (motion allowed): the section is 3.2 screens tall; its inner panel
-// sticks to the viewport while four large cards glide horizontally, a progress
-// rail fills and the step counter ticks over.
-// Phones: a vertical timeline whose line fills as you scroll.
-// No JS / reduced motion: a plain 4-column grid, everything visible.
+// "Your journey to recovery": sticky side-by-side storytelling.
+// Desktop: a single visual stays pinned (native CSS sticky, no scroll-jacking)
+// and morphs between four scenes while the steps scroll past beside it; a
+// progress rail fills with the step. Phones / no JS / reduced motion: a plain,
+// fully readable list. All text is always in the HTML.
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
+import { HeroScene, type Scene } from "@/components/HeroScene";
+import { Logo3D } from "@/components/Logo3D";
 
 export type Step = { title: string; text: string };
+const SCENES: Scene[] = ["rings", "cradle", "sprout", "sunrise"];
 
-const ICONS = [
-  // assess: clipboard with pulse
-  "M9 4h6a1 1 0 0 1 1 1v1H8V5a1 1 0 0 1 1-1zM8 6H6a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-2M8 14h2l1.5-3 2 6 1.5-3h2",
-  // treat: heart with cross
-  "M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10zM9 11h6M12 8v6",
-  // heal: leaf
-  "M5 19c9 0 14-6 14-14C10 5 5 10 5 19zm0 0 8-8",
-  // thrive: sun rising
-  "M12 3v2M4.9 6.9l1.4 1.4M3 14h2M19 14h2M17.7 8.3l1.4-1.4M7 14a5 5 0 0 1 10 0M3 18h18M7 21h10",
-];
-
-export function Journey({ steps, heading, eyebrow }: { steps: Step[]; heading: string; eyebrow: string }) {
-  const root = useRef<HTMLElement>(null);
-  const track = useRef<HTMLOListElement>(null);
-  const [mode, setMode] = useState<"static" | "horizontal" | "vertical">("static");
+export function Journey({ steps, heading, eyebrow, highlight }: { steps: Step[]; heading: string; eyebrow: string; highlight?: string }) {
   const [active, setActive] = useState(0);
+  const refs = useRef<(HTMLLIElement | null)[]>([]);
 
   useEffect(() => {
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const mq = matchMedia("(min-width: 1024px)");
-    const pick = () => setMode(mq.matches ? "horizontal" : "vertical");
-    pick();
-    mq.addEventListener("change", pick);
-    return () => mq.removeEventListener("change", pick);
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) if (e.isIntersecting) setActive(Number((e.target as HTMLElement).dataset.i));
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
+    );
+    refs.current.forEach((el) => el && io.observe(el));
+    return () => io.disconnect();
   }, []);
 
-  useEffect(() => {
-    if (mode === "static") return;
-    const el = root.current;
-    if (!el) return;
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const r = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      // horizontal: 0 when the section top reaches the viewport top, 1 when its bottom does.
-      const p =
-        mode === "horizontal"
-          ? Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - vh)))
-          : Math.min(1, Math.max(0, (vh * 0.6 - r.top) / r.height));
-      el.style.setProperty("--p", p.toFixed(4));
-      if (mode === "horizontal" && track.current?.parentElement) {
-        const overflow = track.current.scrollWidth - track.current.parentElement.clientWidth;
-        track.current.style.transform = `translate3d(${(-p * Math.max(0, overflow)).toFixed(1)}px,0,0)`;
-      }
-      setActive(Math.min(steps.length - 1, Math.floor(p * steps.length * 0.999)));
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (track.current) track.current.style.transform = "";
-    };
-  }, [mode, steps.length]);
-
-  const horizontal = mode === "horizontal";
+  const idx = highlight ? heading.indexOf(highlight) : -1;
 
   return (
-    <section ref={root} aria-labelledby="journey-title" className={clsx("on-dark relative bg-hero text-white", horizontal ? "h-[320vh]" : "overflow-clip")}>
-      <div className={clsx("relative overflow-clip", horizontal && "sticky top-0 flex h-screen flex-col justify-center")}>
-        {/* drifting light */}
-        <div aria-hidden="true" className="orb pointer-events-none absolute -left-40 top-10 hidden size-[30rem] rounded-full bg-brand-500/30 blur-3xl md:block" />
-        <div aria-hidden="true" className="pointer-events-none absolute right-[-10%] bottom-[-20%] hidden size-[36rem] rounded-full bg-accent-600/15 blur-3xl md:block" style={{ transform: "translate3d(calc(var(--p, 0) * -180px), 0, 0)" }} />
-
-        <div className="container-page relative py-20 lg:py-0">
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <p className="eyebrow !text-brand-200">{eyebrow}</p>
-              <h2 id="journey-title" className="mt-3 max-w-2xl text-[length:var(--text-h2)] font-bold leading-tight">{heading}</h2>
+    <section aria-labelledby="journey-title" className="on-dark stage relative bg-hero text-white">
+      <div aria-hidden="true" className="pointer-events-none absolute top-0 left-0 hidden h-[520px] w-[620px] rounded-full bg-brand-600/30 blur-[120px] md:block" />
+      <div className="container-page relative grid gap-12 py-24 lg:grid-cols-2 lg:gap-20 lg:py-32">
+        {/* sticky visual */}
+        <div className="hidden lg:block">
+          <div className="sticky top-[14vh] h-[72vh] max-h-[640px]">
+            <div className="glass-dark relative h-full overflow-hidden rounded-[var(--radius-blob)]">
+              <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(70%_60%_at_50%_35%,rgb(47_85_224/0.35),transparent_70%)]" />
+              {SCENES.map((sc, i) => (
+                <div
+                  key={sc}
+                  aria-hidden="true"
+                  className={clsx("absolute inset-0 grid place-items-center p-10 transition-[opacity,transform] duration-[900ms] ease-[var(--ease-calm)]", i === active ? "scale-100 opacity-100" : "scale-[0.96] opacity-0")}
+                >
+                  {sc === "cradle" ? <Logo3D className="max-w-[360px]" /> : <HeroScene scene={sc} className="h-auto w-full max-w-[520px]" />}
+                </div>
+              ))}
+              <div className="absolute inset-x-8 bottom-8 flex items-center gap-4">
+                <span className="font-display text-sm font-semibold tabular-nums tracking-[0.18em] text-brand-200">0{active + 1} / 0{steps.length}</span>
+                <span aria-hidden="true" className="relative h-px flex-1 bg-white/15">
+                  <span className="absolute inset-y-0 left-0 bg-gradient-to-r from-brand-300 to-white transition-[width] duration-[700ms] ease-[var(--ease-calm)]" style={{ width: `${((active + 1) / steps.length) * 100}%` }} />
+                </span>
+                <span className="font-display text-sm font-semibold text-white">{steps[active]?.title}</span>
+              </div>
             </div>
-            {horizontal && (
-              <p className="font-display text-sm font-semibold tracking-[0.2em] text-brand-200" aria-hidden="true">
-                <span className="text-3xl text-white tabular-nums">0{active + 1}</span> / 0{steps.length}
-              </p>
+          </div>
+        </div>
+
+        {/* steps */}
+        <div>
+          <p className="eyebrow !text-brand-200">{eyebrow}</p>
+          <h2 id="journey-title" className="mt-5 text-[length:var(--text-h2)] leading-[1.04] font-bold tracking-[-0.035em]">
+            {idx >= 0 && highlight ? (
+              <>
+                {heading.slice(0, idx)}
+                <span className="text-glow">{highlight}</span>
+                {heading.slice(idx + highlight.length)}
+              </>
+            ) : (
+              heading
             )}
-          </div>
-
-          {/* progress rail (desktop) */}
-          {horizontal && (
-            <div aria-hidden="true" className="relative mt-10 h-1 w-full overflow-hidden rounded-full bg-white/15">
-              <div className="absolute inset-y-0 left-0 w-full origin-left rounded-full bg-gradient-to-r from-brand-300 via-white to-accent-600" style={{ transform: "scaleX(var(--p, 0))" }} />
-            </div>
-          )}
-
-          <div className={horizontal ? "mt-10" : "mt-12"}>
-            <ol ref={track} className={clsx(horizontal ? "flex w-max gap-8 will-change-transform" : mode === "vertical" ? "relative space-y-6 pl-11" : "grid gap-6 lg:grid-cols-4")}>
-              {/* vertical timeline line (phones) */}
-              {mode === "vertical" && (
-                <li aria-hidden="true" className="absolute top-2 bottom-2 left-[0.95rem] w-0.5 list-none rounded-full bg-white/15">
-                  <span className="absolute inset-0 origin-top rounded-full bg-gradient-to-b from-brand-300 to-accent-600" style={{ transform: "scaleY(var(--p, 0))" }} />
-                </li>
-              )}
-              {steps.map((s, i) => {
-                const on = mode === "static" || i <= active;
-                const current = horizontal && i === active;
-                return (
-                  <li key={s.title} className={clsx("relative transition-transform duration-700 ease-[var(--ease-calm)]", horizontal && "w-[min(540px,42vw)]", horizontal && !current && "scale-[0.94]")}>
-                    {mode === "vertical" && (
-                      <span aria-hidden="true" className={clsx("absolute top-7 -left-11 grid size-8 place-items-center rounded-full border-2 text-xs font-bold transition-colors duration-500", on ? "border-white bg-white text-brand-900" : "border-white/30 bg-brand-900 text-white/70")}>
-                        {i + 1}
-                      </span>
-                    )}
-                    <div
-                      className={clsx(
-                        "glass-dark relative h-full overflow-hidden rounded-[2rem] transition-all duration-700",
-                        horizontal ? "p-10" : "p-7",
-                        current && "!bg-white/[0.14] shadow-[var(--shadow-glow)] ring-1 ring-white/40"
-                      )}
-                    >
-                      {/* oversized outline number */}
-                      <span aria-hidden="true" className="pointer-events-none absolute -top-6 right-4 font-display text-[9rem] leading-none font-extrabold text-transparent [-webkit-text-stroke:1.5px_rgb(255_255_255/0.16)]">
-                        0{i + 1}
-                      </span>
-                      <span className={clsx("relative grid place-items-center rounded-2xl transition-all duration-700", horizontal ? "size-16" : "size-12", current ? "scale-110 bg-white text-brand-800" : "bg-white/15")}>
-                        <svg viewBox="0 0 24 24" className={horizontal ? "size-8" : "size-6"} fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                          <path d={ICONS[i % ICONS.length]} />
-                        </svg>
-                      </span>
-                      <p className="relative mt-6 font-display text-sm font-semibold tracking-[0.2em] text-brand-200">STEP 0{i + 1}</p>
-                      <h3 className={clsx("relative mt-2 font-display font-bold", horizontal ? "text-4xl" : "text-2xl")}>{s.title}</h3>
-                      <p className={clsx("relative mt-3 leading-relaxed text-brand-50", horizontal && "text-lg")}>{s.text}</p>
-                    </div>
-                  </li>
-                );
-              })}
-            </ol>
-          </div>
-          {horizontal && (
-            <p className="mt-10 flex items-center gap-2 text-sm text-brand-200" aria-hidden="true">
-              <span className="inline-block h-px w-10 bg-brand-200/60" /> Keep scrolling to follow the journey
-            </p>
-          )}
+          </h2>
+          <ol className="mt-12 lg:mt-0">
+            {steps.map((s, i) => (
+              <li
+                key={s.title}
+                ref={(el) => {
+                  refs.current[i] = el;
+                }}
+                data-i={i}
+                className="relative border-t border-white/10 py-10 lg:flex lg:min-h-[62vh] lg:flex-col lg:justify-center lg:py-0"
+              >
+                <p className={clsx("font-display text-sm font-semibold tracking-[0.18em] transition-colors duration-500", i === active ? "text-brand-200" : "text-brand-200/60")}>STEP 0{i + 1}</p>
+                <h3 className={clsx("mt-3 font-display text-[clamp(2.25rem,1.6rem+2.6vw,4rem)] leading-none font-extrabold tracking-[-0.04em] transition-colors duration-500", i === active ? "text-white" : "lg:text-white/45")}>{s.title}</h3>
+                <p className={clsx("mt-5 max-w-[40ch] text-[length:var(--text-lead)] leading-relaxed transition-colors duration-500", i === active ? "text-brand-100/90" : "text-brand-100/80 lg:text-brand-100/55")}>{s.text}</p>
+                <span aria-hidden="true" className={clsx("absolute top-0 left-0 h-px bg-gradient-to-r from-brand-300 to-transparent transition-[width] duration-[900ms] ease-[var(--ease-calm)]", i <= active ? "w-1/2" : "w-0")} />
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>

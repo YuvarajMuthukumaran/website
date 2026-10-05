@@ -7,6 +7,8 @@ import path from "node:path";
 // because a config redirect would carry the query string along.
 type Redirect = { from: string; to: string; status: number };
 const redirectFile = path.join(process.cwd(), "content", "redirects.json");
+const retiredFile = path.join(process.cwd(), "content", "retired-media.json");
+const retiredMedia: { path: string; to: string }[] = existsSync(retiredFile) ? JSON.parse(readFileSync(retiredFile, "utf8")) : [];
 const redirectMap: Redirect[] = existsSync(redirectFile)
   ? JSON.parse(readFileSync(redirectFile, "utf8")).filter((r: Redirect) => !r.from.includes("?") && r.from + "/" !== r.to)
   : [];
@@ -40,9 +42,18 @@ const nextConfig: NextConfig = {
     // Media keep their original /wp-content/uploads/... paths (public/).
     localPatterns: [{ pathname: "/**" }],
   },
+  // Optional same-origin proxy for the chat/booking API: set API_PROXY_TARGET
+  // (and leave NEXT_PUBLIC_API_URL empty) so the browser calls /api/* on this
+  // site and Next forwards it. No CORS setup needed on the API host.
+  async rewrites() {
+    const target = process.env.API_PROXY_TARGET?.replace(/\/$/, "");
+    return target ? [{ source: "/api/:path*", destination: `${target}/api/:path*` }] : [];
+  },
   async redirects() {
     return [
       ...redirectMap.map((r) => ({ source: r.from, destination: r.to, permanent: true })),
+      // Old decorative images retired in the redesign (never content images): 301 to the page they decorated.
+      ...retiredMedia.map((r) => ({ source: r.path, destination: r.to, permanent: true })),
       // Yoast answers /sitemap.xml with the index; keep that.
       { source: "/sitemap.xml", destination: "/sitemap_index.xml", permanent: true },
       // Profiles linked from live pages that no longer exist → the team page (see gap report).

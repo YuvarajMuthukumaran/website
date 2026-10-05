@@ -17,6 +17,7 @@ export default function BookAppointment() {
   return (
     <>
       <PageHero
+        scene="rings"
         title="Book an Appointment"
         lead="Choose a service, a specialist and a time that suits you. It takes about a minute."
         crumbs={[{ name: "Home", path: "/" }, { name: "Book an Appointment", path: "/book-appointment/" }]}
@@ -25,7 +26,7 @@ export default function BookAppointment() {
           <Icon name="phone" className="size-4" /> Prefer to talk? Call <a href={site.contact.phoneHref} className="font-semibold text-white underline">{site.contact.phoneDisplay}</a>
         </p>
       </PageHero>
-      <div className="bg-mist/60 py-12 lg:py-16">
+      <div className="grid-light bg-mist py-16 lg:py-24">
         <div className="container-page">
           <BookingForm siteDoctors={siteDoctors} />
           <p className="mx-auto mt-8 max-w-2xl text-center text-sm text-ink-soft">

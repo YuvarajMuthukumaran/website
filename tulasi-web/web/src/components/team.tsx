@@ -14,7 +14,8 @@ import clsx from "clsx";
 import { localPath, type Doctor } from "@/lib/content";
 
 // Soft pastels that sit well next to the brand blue (all keep white text legible on the dark name band).
-export const PASTELS = ["#e8e2fb", "#dff1e4", "#fdf1c7", "#fde2e4", "#dbe9fb", "#f3e6d8"] as const;
+// Cool brand tints only (no warm or earthy tones): portraits sit in soft blue light.
+export const PASTELS = ["#e5ebfe", "#dee6fd", "#e9eefe", "#d6e0fd", "#e1e8fb", "#dde5fd"] as const;
 
 export function portraitOf(d: Doctor) {
   const cut = `/team-cutouts/${d.slug}.webp`;

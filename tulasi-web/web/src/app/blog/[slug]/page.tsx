@@ -40,7 +40,7 @@ export default async function Post({ params }: PageProps<"/blog/[slug]">) {
 
   return (
     <>
-      <PageHero title={post.h1} kicker={differs(post.title, post.h1) ? post.title : null} crumbs={[{ name: "Home", path: "/" }, { name: "Blog", path: "/blog/" }, { name: post.title, path: post.path }]}>
+      <PageHero scene="pages" title={post.h1} kicker={differs(post.title, post.h1) ? post.title : null} crumbs={[{ name: "Home", path: "/" }, { name: "Blog", path: "/blog/" }, { name: post.title, path: post.path }]}>
         <p className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-brand-100">
           {writtenBy && writtenBy !== "admin" && (
             <span className="inline-flex items-center gap-2">
@@ -51,10 +51,13 @@ export default async function Post({ params }: PageProps<"/blog/[slug]">) {
           <span className="inline-flex items-center gap-2"><Icon name="calendar" className="size-4" /><time dateTime={post.date ?? undefined}>{formatDate(post.date)}</time></span>
           {post.modified && post.modified.slice(0, 10) !== post.date?.slice(0, 10) && <span>Updated <time dateTime={post.modified}>{formatDate(post.modified)}</time></span>}
           <span className="inline-flex items-center gap-2"><Icon name="clock" className="size-4" />{readingMinutes(post)} min read</span>
+          {tags.slice(0, 2).map((t) => (
+            <Link key={t.id} href={t.path} className="rounded-full bg-white/[0.08] px-3 py-1 text-xs font-medium text-brand-100 shadow-[inset_0_0_0_1px_rgb(255_255_255/0.14)] hover:bg-white/[0.14]">{t.name}</Link>
+          ))}
         </p>
       </PageHero>
 
-      <div className="container-page grid gap-12 py-12 lg:grid-cols-[minmax(0,1fr)_320px] lg:py-16">
+      <div className="container-page grid gap-14 py-16 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-20 lg:py-24">
         <div className="min-w-0">
           {img && (
             <Image
@@ -64,7 +67,7 @@ export default async function Post({ params }: PageProps<"/blog/[slug]">) {
               height={img.height ?? 720}
               priority
               sizes="(min-width:1024px) 800px, 100vw"
-              className="mb-10 h-auto w-full rounded-[var(--radius-card)] shadow-[var(--shadow-soft)]"
+              className="mb-12 h-auto w-full rounded-[var(--radius-blob)] shadow-[0_0_0_1px_var(--color-line),var(--shadow-lift)]"
             />
           )}
           <article className="prose-tulasi max-w-none" dangerouslySetInnerHTML={{ __html: html }} />

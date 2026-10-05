@@ -49,7 +49,7 @@ export const startChatSession = (history?: { role: string; text: string }[]) =>
   call<{ sessionId: string; crisisResources: unknown }>("/session", { method: "POST", body: JSON.stringify({ channel: "website", ...(history?.length ? { history } : {}) }) });
 export const endChatSession = (id: string) => fetch(`${API_BASE}/api/session/${encodeURIComponent(id)}`, { method: "DELETE" }).catch(() => {});
 
-export type ChatEvent = { text?: string; crisis?: boolean; error?: boolean; functional?: boolean; action?: "book" | "portal"; quickReplies?: string[]; doctors?: { name: string; role?: string }[] };
+export type ChatEvent = { text?: string; crisis?: boolean; error?: boolean; functional?: boolean; action?: "book" | "portal"; quickReplies?: string[]; doctors?: { name: string; role?: string; photo?: string | null }[] };
 
 /** Streams one reply (SSE over POST). Resolves when the stream ends. */
 export async function streamChat(sessionId: string, message: string, onEvent: (e: ChatEvent) => void, signal?: AbortSignal) {
