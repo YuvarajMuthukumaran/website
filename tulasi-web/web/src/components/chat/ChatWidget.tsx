@@ -276,22 +276,22 @@ export function ChatWidget({ onClose, phone, doctorSlugs = {}, doctorPhotos = {}
       initial={{ opacity: 0, y: 24, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-0 z-[65] flex max-sm:h-dvh flex-col bg-white sm:inset-auto sm:right-6 sm:bottom-28 sm:h-[min(640px,calc(100dvh-9rem))] sm:w-[400px] sm:overflow-hidden sm:rounded-[1.75rem] sm:shadow-[var(--shadow-lift)] sm:ring-1 sm:ring-line"
+      className="fixed inset-0 z-[65] flex max-sm:h-dvh flex-col bg-white sm:inset-auto sm:right-6 sm:bottom-28 sm:h-[min(640px,calc(100dvh-9rem))] sm:w-[400px] sm:overflow-hidden sm:rounded-[1.75rem] sm:shadow-[0_24px_60px_-20px_rgb(23_34_44/0.35)] sm:ring-1 sm:ring-line"
     >
       {/* Header */}
-      <div className="bg-hero on-dark flex items-center gap-3 px-5 py-3.5 pt-[max(0.875rem,env(safe-area-inset-top))] text-white">
-        <span className="relative grid size-12 shrink-0 place-items-center rounded-full bg-white/95 p-1 shadow-[0_6px_16px_-8px_rgb(0_0_0/0.5)]">
+      <div className="flex items-center gap-3 border-b border-line bg-white px-5 py-3.5 pt-[max(0.875rem,env(safe-area-inset-top))] text-ink">
+        <span className="relative grid size-12 shrink-0 place-items-center rounded-full bg-sage-50 p-1 shadow-[inset_0_0_0_1px_var(--color-sage-100)]">
           <TulasiMascot mood={mood} streaming={busy} doctorMode={doctorMode} className="size-full" />
-          <span className="absolute right-0 bottom-0 size-3 rounded-full bg-emerald-400 ring-2 ring-brand-700" aria-hidden="true" />
+          <span className="absolute right-0 bottom-0 size-3 rounded-full bg-sage-500 ring-2 ring-white" aria-hidden="true" />
         </span>
         <div className="min-w-0 flex-1">
-          <p className="font-display font-bold leading-tight">Tulasi</p>
-          <p className="text-xs text-brand-100">{busy ? "Thinking with you…" : "AI assistant · not a doctor"}</p>
+          <p className="font-display font-semibold leading-tight">Tulasi</p>
+          <p className="text-xs text-ink-soft">{busy ? "Thinking with you…" : "AI assistant · not a doctor"}</p>
         </div>
         {consented && msgs.length > 0 && (
-          <button type="button" onClick={newChat} className="min-h-10 rounded-full px-3 text-xs font-semibold text-brand-100 hover:bg-white/10">New chat</button>
+          <button type="button" onClick={newChat} className="min-h-10 rounded-full px-3 text-xs font-semibold text-ink-soft hover:bg-mist hover:text-brand-700">New chat</button>
         )}
-        <button type="button" onClick={onClose} className="grid size-11 place-items-center rounded-full hover:bg-white/10">
+        <button type="button" onClick={onClose} className="grid size-11 place-items-center rounded-full text-ink-soft hover:bg-mist hover:text-ink">
           <Icon name="close" />
           <span className="sr-only">Close chat</span>
         </button>
@@ -305,7 +305,7 @@ export function ChatWidget({ onClose, phone, doctorSlugs = {}, doctorPhotos = {}
           <ul className="mt-5 space-y-3 text-sm text-ink-soft">
             <li className="flex gap-3"><Icon name="spark" className="mt-0.5 size-4 shrink-0 text-brand-600" /><span>I’m an AI assistant, <strong className="text-ink">not a doctor</strong>. I can’t diagnose or advise on medicines.</span></li>
             <li className="flex gap-3"><Icon name="shield" className="mt-0.5 size-4 shrink-0 text-brand-600" /><span>Please don’t share your name, phone number or medical history here. To book, use our secure booking form.</span></li>
-            <li className="flex gap-3"><Icon name="heart" className="mt-0.5 size-4 shrink-0 text-accent-600" /><span>If you are in crisis, call <a href="tel:14416" className="font-semibold text-accent-700 underline">Tele-MANAS 14416</a> (free, 24×7) or <a href={phone.href} className="font-semibold text-accent-700 underline">{phone.display}</a>.</span></li>
+            <li className="flex gap-3"><Icon name="heart" className="mt-0.5 size-4 shrink-0 text-alert-600" /><span>If you are in crisis, call <a href="tel:14416" className="font-semibold text-alert-700 underline">Tele-MANAS 14416</a> (free, 24×7) or <a href={phone.href} className="font-semibold text-alert-700 underline">{phone.display}</a>.</span></li>
           </ul>
           <p className="mt-5 rounded-2xl bg-mist p-4 text-xs leading-relaxed text-ink-soft">
             Consent (Digital Personal Data Protection Act, 2023): your messages are processed by our AI provider to generate replies and are not used to identify you. You can start a new chat at any time to clear this conversation. See our <Link href="/privacy-policy/" className="font-semibold text-brand-700 underline">Privacy Policy</Link>.
@@ -341,7 +341,7 @@ export function ChatWidget({ onClose, phone, doctorSlugs = {}, doctorPhotos = {}
                     m.role === "user"
                       ? "max-w-[85%] rounded-3xl rounded-br-md bg-brand-600 px-4 py-2.5 text-[0.9375rem] whitespace-pre-wrap text-white"
                       : m.crisis
-                        ? "max-w-[92%] rounded-3xl rounded-bl-md border-2 border-accent-600 bg-accent-50 px-4 py-3 text-[0.9375rem] text-ink"
+                        ? "max-w-[92%] rounded-3xl rounded-bl-md border-2 border-alert-600 bg-alert-50 px-4 py-3 text-[0.9375rem] text-ink"
                         : m.error
                           ? "max-w-[88%] rounded-3xl rounded-bl-md bg-mist px-4 py-2.5 text-[0.9375rem] text-ink-soft ring-1 ring-line"
                           : "max-w-[88%] rounded-3xl rounded-bl-md bg-white px-4 py-2.5 text-[0.9375rem] text-ink shadow-[var(--shadow-soft)]"
@@ -358,8 +358,8 @@ export function ChatWidget({ onClose, phone, doctorSlugs = {}, doctorPhotos = {}
                   )}
                   {m.crisis && (
                     <div className="mt-3 grid gap-2">
-                      <a href="tel:14416" className="flex min-h-11 items-center justify-center gap-2 rounded-full bg-accent-600 font-semibold text-white"><Icon name="phone" className="size-4" /> Call Tele-MANAS 14416</a>
-                      <a href={phone.href} className="flex min-h-11 items-center justify-center gap-2 rounded-full border border-accent-600 font-semibold text-accent-700"><Icon name="phone" className="size-4" /> Call Tulasi Healthcare</a>
+                      <a href="tel:14416" className="flex min-h-11 items-center justify-center gap-2 rounded-full bg-alert-600 font-semibold text-white"><Icon name="phone" className="size-4" /> Call Tele-MANAS 14416</a>
+                      <a href={phone.href} className="flex min-h-11 items-center justify-center gap-2 rounded-full border border-alert-600 font-semibold text-alert-700"><Icon name="phone" className="size-4" /> Call Tulasi Healthcare</a>
                     </div>
                   )}
                   {m.action === "book" && <Link href="/book-appointment/" onClick={onClose} className="mt-3 flex min-h-11 items-center justify-center gap-2 rounded-full bg-accent-600 font-semibold text-white"><Icon name="calendar" className="size-4" /> Book Appointment</Link>}

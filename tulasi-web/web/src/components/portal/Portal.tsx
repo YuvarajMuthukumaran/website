@@ -78,7 +78,7 @@ export function Portal() {
         </div>
       </div>
 
-      {error && <p role="alert" className="mt-6 rounded-2xl bg-accent-50 p-4 text-accent-700">{error}</p>}
+      {error && <p role="alert" className="mt-6 rounded-2xl bg-alert-50 p-4 text-alert-700">{error}</p>}
 
       <section className="mt-10" aria-labelledby="up">
         <h2 id="up" className="font-display text-xl font-bold text-ink">Upcoming</h2>
@@ -95,7 +95,7 @@ export function Portal() {
                     <p className="text-sm text-ink-soft">{pretty(a)}</p>
                   </div>
                 </div>
-                <button type="button" onClick={() => cancel(a)} disabled={cancelling === a._id} className="min-h-11 rounded-full px-4 text-sm font-semibold text-accent-700 hover:bg-accent-50 disabled:opacity-50">
+                <button type="button" onClick={() => cancel(a)} disabled={cancelling === a._id} className="min-h-11 rounded-full px-4 text-sm font-semibold text-alert-700 hover:bg-alert-50 disabled:opacity-50">
                   {cancelling === a._id ? "Cancelling…" : "Cancel"}
                 </button>
               </li>

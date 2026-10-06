@@ -191,7 +191,7 @@ export function BookingForm({ siteDoctors }: { siteDoctors: SiteDoctor[] }) {
         </div>
       )}
       {error && (
-        <div className="mb-6 flex items-start gap-3 rounded-2xl bg-accent-50 p-4 text-accent-700" role="alert">
+        <div className="mb-6 flex items-start gap-3 rounded-2xl bg-alert-50 p-4 text-alert-700" role="alert">
           <Icon name="close" className="mt-0.5 size-4 shrink-0" /> {error}
         </div>
       )}
@@ -292,7 +292,7 @@ export function BookingForm({ siteDoctors }: { siteDoctors: SiteDoctor[] }) {
                   <div>
                     <label htmlFor="b-phone" className="text-sm font-semibold text-ink">Mobile number</label>
                     <input id="b-phone" type="tel" inputMode="tel" autoComplete="tel" value={phone} onChange={(e) => setPhone(e.target.value)} required aria-invalid={!!phone && !phoneOk} aria-describedby="b-phone-help" placeholder="98765 43210" className="mt-2 min-h-12 w-full rounded-2xl border border-line px-4 text-ink transition focus:border-brand-600 focus:outline-none focus:ring-4 focus:ring-brand-100" />
-                    <p id="b-phone-help" className={clsx("mt-1.5 text-xs", phone && !phoneOk ? "text-accent-700" : "text-ink-soft")}>{phone && !phoneOk ? "Please enter a 10-digit Indian mobile number." : "We’ll send your confirmation here."}</p>
+                    <p id="b-phone-help" className={clsx("mt-1.5 text-xs", phone && !phoneOk ? "text-alert-700" : "text-ink-soft")}>{phone && !phoneOk ? "Please enter a 10-digit Indian mobile number." : "We’ll send your confirmation here."}</p>
                   </div>
                 </div>
                 <label className="mt-6 flex cursor-pointer items-start gap-3 rounded-2xl bg-mist p-4 text-sm leading-relaxed text-ink-soft">

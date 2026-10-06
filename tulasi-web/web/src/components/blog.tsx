@@ -42,7 +42,7 @@ export function Pagination({ page, total, base }: { page: number; total: number;
           <Link
             href={href(n)}
             aria-current={n === page ? "page" : undefined}
-            className={clsx("grid size-11 place-items-center rounded-full text-sm font-semibold transition-colors", n === page ? "bg-midnight text-white" : "text-ink shadow-[inset_0_0_0_1px_var(--color-line)] hover:shadow-[inset_0_0_0_1px_var(--color-brand-200)]")}
+            className={clsx("grid size-11 place-items-center rounded-full text-sm font-semibold transition-colors", n === page ? "bg-brand-600 text-white" : "text-ink shadow-[inset_0_0_0_1px_var(--color-line)] hover:shadow-[inset_0_0_0_1px_var(--color-brand-200)]")}
           >
             {n}
           </Link>

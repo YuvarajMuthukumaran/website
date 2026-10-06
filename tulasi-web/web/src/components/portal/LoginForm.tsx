@@ -64,7 +64,7 @@ export function LoginForm() {
   return (
     <div className="rounded-[var(--radius-blob)] bg-white p-7 shadow-[var(--shadow-lift)] sm:p-10">
       {error && (
-        <p role="alert" className="mb-5 rounded-2xl bg-accent-50 p-4 text-sm text-accent-700">{error}</p>
+        <p role="alert" className="mb-5 rounded-2xl bg-alert-50 p-4 text-sm text-alert-700">{error}</p>
       )}
         {stage === "phone" ? (
           <form key="phone" onSubmit={sendCode}>

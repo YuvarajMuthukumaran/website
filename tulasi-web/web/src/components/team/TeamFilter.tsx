@@ -34,7 +34,7 @@ export function TeamFilter({ gridId, kinds, tags, total }: { gridId: string; kin
   const chip = (active: boolean) =>
     clsx(
       "inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-[background-color,color,box-shadow] duration-200",
-      active ? "bg-midnight text-white shadow-[0_8px_20px_-10px_rgb(3_11_58/0.7)]" : "bg-white text-ink/80 shadow-[inset_0_0_0_1px_var(--color-line)] hover:text-brand-800 hover:shadow-[inset_0_0_0_1px_var(--color-brand-200)]"
+      active ? "bg-brand-600 text-white" : "bg-white text-ink/80 shadow-[inset_0_0_0_1px_var(--color-line)] hover:text-brand-800 hover:shadow-[inset_0_0_0_1px_var(--color-brand-200)]"
     );
 
   return (

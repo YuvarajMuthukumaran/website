@@ -12,22 +12,23 @@ export function Reveal({ children, delay = 0, variant, as: Tag = "div", classNam
   );
 }
 
-export type ButtonVariant = "primary" | "accent" | "ghost" | "light" | "outline-light" | "line" | "glass";
+export type ButtonVariant = "primary" | "accent" | "ghost" | "light" | "outline-light" | "line" | "glass" | "soft";
 
 /**
- * One button system. accent = Brand Red (the single primary action),
- * primary = Royal Blue, line = hairline on light, glass = on midnight,
- * ghost = text link with arrow. 48px (md) / 56px (lg) tap targets.
+ * One calm button system: solid quiet blue for the main action, white with a
+ * hairline for secondary ones, a pale tint for soft ones. No glows, no red.
+ * (accent/light/glass/outline-light are kept as aliases so older call sites stay valid.)
+ * 48px (md) / 54px (lg) tap targets.
  */
 export function btnClass(variant: ButtonVariant = "primary", size: "md" | "lg" = "md", className?: string) {
+  const solid = variant === "primary" || variant === "accent";
+  const outline = variant === "line" || variant === "light" || variant === "glass" || variant === "outline-light";
   return clsx(
-    "group/btn relative inline-flex items-center justify-center gap-2 rounded-full font-semibold tracking-[-0.005em] whitespace-nowrap select-none transition-[transform,box-shadow,background-color,color] duration-[450ms] ease-[var(--ease-calm)] active:translate-y-px",
-    size === "lg" ? "min-h-14 px-7 text-[1rem]" : "min-h-12 px-6 text-[0.9375rem]",
-    variant === "accent" && "bg-accent-600 text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.25),0_1px_2px_rgb(15_18_34/0.2),0_10px_28px_-12px_rgb(215_20_31/0.75)] hover:-translate-y-px hover:bg-[#c8121c] hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.3),0_1px_2px_rgb(15_18_34/0.2),0_16px_36px_-12px_rgb(215_20_31/0.85)]",
-    variant === "primary" && "bg-brand-600 text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.22),0_1px_2px_rgb(15_18_34/0.2),0_10px_28px_-14px_rgb(10_47_181/0.8)] hover:-translate-y-px hover:bg-brand-700",
-    variant === "line" && "bg-white text-ink shadow-[inset_0_0_0_1px_var(--color-line),0_1px_2px_rgb(15_18_34/0.05)] hover:shadow-[inset_0_0_0_1px_var(--color-brand-200),0_8px_20px_-12px_rgb(10_47_181/0.4)] hover:-translate-y-px",
-    variant === "light" && "bg-white text-brand-900 shadow-[inset_0_-1px_0_rgb(15_18_34/0.08),0_8px_24px_-12px_rgb(3_11_58/0.6)] hover:-translate-y-px hover:bg-brand-50",
-    (variant === "glass" || variant === "outline-light") && "bg-white/[0.06] text-white shadow-[inset_0_0_0_1px_rgb(255_255_255/0.16),inset_0_1px_0_rgb(255_255_255/0.12)] hover:bg-white/[0.12]",
+    "group/btn relative inline-flex items-center justify-center gap-2 rounded-full font-semibold whitespace-nowrap select-none transition-[background-color,color,box-shadow,transform] duration-300 ease-[var(--ease-calm)] active:translate-y-px",
+    size === "lg" ? "min-h-[3.375rem] px-7 text-base" : "min-h-12 px-6 text-[0.9375rem]",
+    solid && "bg-brand-600 text-white shadow-[0_1px_2px_rgb(23_34_44/0.12)] hover:bg-brand-700",
+    outline && "bg-white text-ink shadow-[inset_0_0_0_1px_var(--color-line),0_1px_2px_rgb(23_34_44/0.04)] hover:shadow-[inset_0_0_0_1px_var(--color-brand-300)] hover:text-brand-700",
+    variant === "soft" && "bg-brand-50 text-brand-700 hover:bg-brand-100",
     variant === "ghost" && "!min-h-11 !px-3 text-brand-700 hover:bg-brand-50",
     className
   );
@@ -55,54 +56,29 @@ export function Arrow({ className = "size-4" }: { className?: string }) {
 }
 
 /**
- * Kinetic heading text: each word rises out of a mask once, in CSS.
- * The rendered text is identical to `text` (same words, same spaces), so the
- * heading text crawlers and screen readers get is unchanged.
- * `highlight` (a phrase inside `text`) gets the gradient treatment.
+ * Heading text with one highlighted phrase (colour only, no animation).
+ * The rendered text is identical to `text`. Kept under its old name so call sites stay valid.
  */
-export function Kinetic({ text, highlight, tone = "light", start = 0 }: { text: string; highlight?: string | null; tone?: "light" | "dark"; start?: number }) {
+export function Kinetic({ text, highlight }: { text: string; highlight?: string | null; tone?: "light" | "dark"; start?: number }) {
   const idx = highlight ? text.indexOf(highlight) : -1;
-  const parts: { s: string; hi: boolean }[] =
-    idx >= 0 && highlight
-      ? [{ s: text.slice(0, idx), hi: false }, { s: highlight, hi: true }, { s: text.slice(idx + highlight.length), hi: false }]
-      : [{ s: text, hi: false }];
-  let i = start;
+  if (idx < 0 || !highlight) return <>{text}</>;
   return (
-    <span className="kinetic">
-      {parts.map((p, pi) =>
-        p.s.split(/(\s+)/).map((w, wi) =>
-          /^\s+$/.test(w) || !w ? (
-            w
-          ) : (
-            <span key={`${pi}-${wi}`} className="kw">
-              <span style={{ "--i": i++ } as CSSProperties} className={p.hi ? (tone === "dark" ? "text-glow" : "text-brandgrad") : undefined}>
-                {w}
-              </span>
-            </span>
-          )
-        )
-      )}
-    </span>
+    <>
+      {text.slice(0, idx)}
+      <span className="text-brand-600">{highlight}</span>
+      {text.slice(idx + highlight.length)}
+    </>
   );
 }
 
-export function SectionHeading({ eyebrow, title, text, align = "left", as: H = "h2", className, dark, highlight }: { eyebrow?: string | null; title: string; text?: string | null; align?: "left" | "center"; as?: "h1" | "h2" | "h3"; className?: string; dark?: boolean; highlight?: string | null }) {
-  const idx = highlight ? title.indexOf(highlight) : -1;
+export function SectionHeading({ eyebrow, title, text, align = "left", as: H = "h2", className, highlight }: { eyebrow?: string | null; title: string; text?: string | null; align?: "left" | "center"; as?: "h1" | "h2" | "h3"; className?: string; dark?: boolean; highlight?: string | null }) {
   return (
-    <Reveal as="header" className={clsx("max-w-3xl", align === "center" && "mx-auto text-center", className)}>
-      {eyebrow && <p className={clsx("eyebrow mb-5", dark && "!text-brand-200")}>{eyebrow}</p>}
-      <H className={clsx("text-[length:var(--text-h2)] leading-[1.04] font-bold tracking-[-0.035em]", dark ? "text-white" : "text-ink")}>
-        {idx >= 0 && highlight ? (
-          <>
-            {title.slice(0, idx)}
-            <span className={dark ? "text-glow" : "text-brandgrad"}>{highlight}</span>
-            {title.slice(idx + highlight.length)}
-          </>
-        ) : (
-          title
-        )}
+    <Reveal as="header" className={clsx("max-w-2xl", align === "center" && "mx-auto text-center", className)}>
+      {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
+      <H className="text-[length:var(--text-h2)] leading-[1.15] font-semibold tracking-[-0.02em] text-ink">
+        <Kinetic text={title} highlight={highlight} />
       </H>
-      {text && <p className={clsx("mt-5 max-w-[56ch] text-[length:var(--text-lead)] leading-relaxed", align === "center" && "mx-auto", dark ? "text-brand-100/80" : "text-ink-soft")}>{text}</p>}
+      {text && <p className={clsx("mt-4 max-w-[56ch] text-[length:var(--text-lead)] leading-relaxed text-ink-soft", align === "center" && "mx-auto")}>{text}</p>}
     </Reveal>
   );
 }
@@ -112,17 +88,17 @@ export function JsonLd({ data }: { data: object | object[] }) {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }} />;
 }
 
-export function Breadcrumbs({ items, dark }: { items: { name: string; path: string }[]; dark?: boolean }) {
+export function Breadcrumbs({ items }: { items: { name: string; path: string }[]; dark?: boolean }) {
   return (
     <nav aria-label="Breadcrumb">
-      <ol className={clsx("flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.8125rem]", dark ? "text-brand-100/70" : "text-ink-soft")}>
+      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.8125rem] text-ink-soft">
         {items.map((it, i) => (
           <li key={it.path} className="flex items-center gap-2">
             {i > 0 && <span aria-hidden="true" className="opacity-40">/</span>}
             {i === items.length - 1 ? (
-              <span aria-current="page" className={clsx("line-clamp-1", dark ? "text-white" : "text-ink")}>{it.name}</span>
+              <span aria-current="page" className="line-clamp-1 text-ink">{it.name}</span>
             ) : (
-              <Link href={it.path} className="link-underline">{it.name}</Link>
+              <Link href={it.path} className="link-underline hover:text-brand-700">{it.name}</Link>
             )}
           </li>
         ))}
@@ -131,9 +107,9 @@ export function Breadcrumbs({ items, dark }: { items: { name: string; path: stri
   );
 }
 
-export function Tag({ children, tone = "light", className }: { children: ReactNode; tone?: "light" | "dark"; className?: string }) {
+export function Tag({ children, className }: { children: ReactNode; tone?: "light" | "dark"; className?: string }) {
   return (
-    <span className={clsx("inline-flex min-h-7 items-center gap-1.5 rounded-full px-2.5 text-[0.8125rem] font-medium", tone === "dark" ? "bg-white/[0.06] text-brand-100 shadow-[inset_0_0_0_1px_rgb(255_255_255/0.12)]" : "bg-brand-50 text-brand-900 shadow-[inset_0_0_0_1px_var(--color-brand-100)]", className)}>
+    <span className={clsx("inline-flex min-h-7 items-center gap-1.5 rounded-full bg-sage-50 px-2.5 text-[0.8125rem] font-medium text-sage-700 shadow-[inset_0_0_0_1px_var(--color-sage-100)]", className)}>
       {children}
     </span>
   );

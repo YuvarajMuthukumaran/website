@@ -6,14 +6,12 @@ export const metadata: Metadata = { title: { absolute: "Patient Login - Tulasi H
 
 export default function PatientLogin() {
   return (
-    <section className="on-dark stage relative overflow-clip bg-hero pt-36 pb-20 lg:pt-44 lg:pb-28">
-      <div className="beam" aria-hidden="true" />
-      <div aria-hidden="true" className="orb pointer-events-none absolute hidden md:block -top-24 -right-24 size-96 rounded-full bg-brand-300/25 blur-3xl" />
-      <div className="container-page relative grid items-center gap-12 lg:grid-cols-2">
-        <div className="text-white">
-          <p className="eyebrow !text-brand-200">Patient portal</p>
-          <h1 className="mt-3 text-[length:var(--text-h1)] font-extrabold leading-tight">Sign in to see your appointments</h1>
-          <p className="mt-4 max-w-md text-[length:var(--text-lead)] text-brand-100">Use the mobile number you booked with. We’ll text you a 6-digit code. No password needed.</p>
+    <section className="bg-gradient-to-b from-mist to-white py-12 lg:py-20">
+      <div className="container-page grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <p className="eyebrow">Patient portal</p>
+          <h1 className="mt-3 text-[length:var(--text-h1)] leading-[1.12] font-semibold tracking-[-0.025em] text-ink">Sign in to see your appointments</h1>
+          <p className="mt-4 max-w-md text-[length:var(--text-lead)] leading-relaxed text-ink-soft">Use the mobile number you booked with. We’ll text you a 6-digit code. No password needed.</p>
         </div>
         <LoginForm />
       </div>

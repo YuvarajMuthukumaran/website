@@ -31,6 +31,25 @@ export const CONCERNS: { label: string; href: string; specialty: string; who: Wh
   { label: "Stress & burnout", href: "/counsellor-near-me/", specialty: "stress", who: ["self", "loved"] },
 ];
 
+/** Quiet line icons for the condition tiles (brand icons; "i:" prefix = UI icon). */
+export const CONCERN_ICON: Record<string, string> = {
+  Anxiety: "breath",
+  Depression: "moon",
+  OCD: "link",
+  "Bipolar disorder": "balance",
+  "Schizophrenia & psychosis": "waves",
+  "Alcohol addiction": "sprout",
+  "Drug addiction": "sprout",
+  "Gaming & digital addiction": "sprout",
+  ADHD: "i:spark",
+  Autism: "child",
+  "Dementia & memory": "memory",
+  "Personality disorders": "therapy",
+  "Relationships & marriage": "family",
+  "Sexual health": "i:heart",
+  "Stress & burnout": "sunrise",
+};
+
 export type Pathway = { title: string; href: string; text: string; icon: "stethoscope" | "talk" | "home" | "leaf" | "child" | "elder" | "wave" | "briefcase" };
 
 export const PATHWAYS: Pathway[] = [

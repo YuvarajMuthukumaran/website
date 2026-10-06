@@ -56,7 +56,7 @@ ${ADS_ID ? `gtag('config','${ADS_ID}');` : ""}`}
 
       {choice === null && (
         <div role="region" aria-label="Cookie consent" className="fixed inset-x-3 bottom-3 z-[70] sm:inset-x-auto sm:right-5 sm:bottom-5 sm:max-w-md">
-          <div className="glass rounded-[var(--radius-card)] p-5 shadow-[var(--shadow-lift)]">
+          <div className="rounded-[var(--radius-card)] bg-white p-5 shadow-[var(--shadow-lift)] ring-1 ring-line">
             <p className="font-display text-base font-semibold text-ink">Your privacy</p>
             <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
               We use essential storage to run this site. With your permission we also use analytics cookies to understand which pages help people. We never use them to record health information. Read our{" "}

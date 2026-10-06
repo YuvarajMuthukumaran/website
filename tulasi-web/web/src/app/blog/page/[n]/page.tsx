@@ -27,8 +27,8 @@ export default async function BlogPage({ params }: PageProps<"/blog/page/[n]">) 
   if (!posts.length) notFound();
   return (
     <>
-      <PageHero compact scene="pages" title={`Blog: page ${n}`} crumbs={[{ name: "Home", path: "/" }, { name: "Blog", path: "/blog/" }, { name: `Page ${n}`, path: `/blog/page/${n}/` }]} />
-      <div className="container-page py-20 lg:py-28">
+      <PageHero compact title={`Blog: page ${n}`} crumbs={[{ name: "Home", path: "/" }, { name: "Blog", path: "/blog/" }, { name: `Page ${n}`, path: `/blog/page/${n}/` }]} />
+      <div className="container-page py-12 lg:py-16">
         <PostGrid posts={posts} />
         <Pagination page={n} total={totalPages()} base="/blog/" />
       </div>

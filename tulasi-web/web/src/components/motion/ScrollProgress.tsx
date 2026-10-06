@@ -44,8 +44,8 @@ export function ScrollProgress() {
 
   return (
     <>
-      <div aria-hidden="true" className="pointer-events-none fixed inset-x-0 top-0 z-[70] h-[3px]">
-        <div ref={bar} className="h-full origin-left scale-x-0 bg-gradient-to-r from-brand-500 via-brand-300 to-accent-600 shadow-[0_0_12px_rgb(47_85_224/0.6)]" />
+      <div aria-hidden="true" className="pointer-events-none fixed inset-x-0 top-0 z-[70] h-[2px]">
+        <div ref={bar} className="h-full origin-left scale-x-0 bg-brand-500" />
       </div>
       <button
         type="button"

@@ -216,7 +216,7 @@ export function localPath(href: string) {
  * native lazy-loading + async decoding, external links open safely.
  * Text is never touched.
  */
-const BOOKING_CTA = `<div class="not-prose my-10 flex flex-col gap-4 rounded-[1.5rem] bg-gradient-to-br from-brand-600 to-brand-900 p-7 text-white sm:flex-row sm:items-center sm:justify-between"><div><p class="font-display text-xl font-bold !text-white">Talk to a specialist</p><p class="mt-1 !text-brand-100">Book a consultation with our psychiatrists and psychologists.</p></div><a href="/book-appointment/" class="inline-flex min-h-12 shrink-0 items-center justify-center rounded-full bg-accent-600 px-6 font-semibold !text-white !no-underline hover:bg-accent-700">Book Appointment</a></div>`;
+const BOOKING_CTA = `<div class="not-prose my-10 flex flex-col gap-4 rounded-[1.25rem] bg-sage-50 p-6 ring-1 ring-sage-100 sm:flex-row sm:items-center sm:justify-between"><div><p class="font-display text-xl font-semibold !text-ink">Talk to a specialist</p><p class="mt-1 !text-ink-soft">Book a consultation with our psychiatrists and psychologists.</p></div><a href="/book-appointment/" class="inline-flex min-h-12 shrink-0 items-center justify-center rounded-full bg-brand-600 px-6 font-semibold !text-white !no-underline hover:bg-brand-700">Book appointment</a></div>`;
 
 export function renderHtml(html: string) {
   return html

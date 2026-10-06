@@ -40,7 +40,7 @@ export default function TeamIndex() {
   const tags = TAG_LIST.map((tag) => ({ tag, count: groups.reduce((c, g) => c + g.people.filter((p) => p.tags.includes(tag)).length, 0) })).filter((t) => t.count > 1);
   return (
     <>
-      <PageHero title={getArchiveSeo("/team/")?.h1 ?? "Team"} crumbs={[{ name: "Home", path: "/" }, { name: "Team", path: "/team/" }]} scene="cradle" />
+      <PageHero title={getArchiveSeo("/team/")?.h1 ?? "Team"} crumbs={[{ name: "Home", path: "/" }, { name: "Team", path: "/team/" }]} />
       <div className="container-page pb-24">
         <TeamExplorer groups={groups} tags={tags} />
       </div>

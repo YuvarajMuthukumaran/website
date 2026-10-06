@@ -17,20 +17,19 @@ export default function BookAppointment() {
   return (
     <>
       <PageHero
-        scene="rings"
         title="Book an Appointment"
         lead="Choose a service, a specialist and a time that suits you. It takes about a minute."
         crumbs={[{ name: "Home", path: "/" }, { name: "Book an Appointment", path: "/book-appointment/" }]}
       >
-        <p className="mt-6 inline-flex items-center gap-2 text-sm text-brand-100">
-          <Icon name="phone" className="size-4" /> Prefer to talk? Call <a href={site.contact.phoneHref} className="font-semibold text-white underline">{site.contact.phoneDisplay}</a>
+        <p className="mt-6 inline-flex items-center gap-2 text-sm text-ink-soft">
+          <Icon name="phone" className="size-4" /> Prefer to talk? Call <a href={site.contact.phoneHref} className="font-semibold text-ink underline underline-offset-2">{site.contact.phoneDisplay}</a>
         </p>
       </PageHero>
-      <div className="grid-light bg-mist py-16 lg:py-24">
+      <div className="bg-mist py-12 lg:py-16">
         <div className="container-page">
           <BookingForm siteDoctors={siteDoctors} />
           <p className="mx-auto mt-8 max-w-2xl text-center text-sm text-ink-soft">
-            If you or someone you know is in immediate danger, call <a href="tel:14416" className="font-semibold text-accent-700 underline">Tele-MANAS 14416</a> or <a href="tel:112" className="font-semibold text-accent-700 underline">112</a> now. Online booking is not for emergencies.
+            If you or someone you know is in immediate danger, call <a href="tel:14416" className="font-semibold text-alert-700 underline">Tele-MANAS 14416</a> or <a href="tel:112" className="font-semibold text-alert-700 underline">112</a> now. Online booking is not for emergencies.
           </p>
         </div>
       </div>
