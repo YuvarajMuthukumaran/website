@@ -5,7 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { doctorByName, formatDate, getPostBySlug, getPosts, localPath, readingMinutes, relatedPosts, renderHtml, tagsFor } from "@/lib/content";
 import { addHeadingIds, extractFaq, headingsOf, tidy } from "@/lib/html";
-import { articleSchema, faqSchema, metadataFromSeo } from "@/lib/seo";
+import { articleSchema, faqSchema, metadataFromSeo, descriptionFrom } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { Aside } from "@/components/Aside";
 import { PostCard } from "@/components/cards";
@@ -23,7 +23,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): Promise<Metadata> {
   const post = getPostBySlug((await params).slug);
   if (!post) return {};
-  return metadataFromSeo(post.seo, { title: post.title, path: post.path });
+  return metadataFromSeo(post.seo, { title: post.title, path: post.path, description: descriptionFrom(post.excerpt ?? post.contentHtml) });
 }
 
 export default async function Post({ params }: PageProps<"/blog/[slug]">) {

@@ -11,7 +11,8 @@ export const generateStaticParams = () => getTags().map((t) => ({ slug: decodeUR
 export async function generateMetadata({ params }: PageProps<"/tag/[slug]">): Promise<Metadata> {
   const tag = getTagBySlug((await params).slug);
   if (!tag) return {};
-  return metadataFromArchive(getArchiveSeo(tag.path) ?? { title: tag.seo.title, description: tag.seo.description, canonical: tag.seo.canonical, robots: null }, { title: tag.name, path: tag.path });
+  const seo = getArchiveSeo(tag.path) ?? { title: tag.seo.title, description: tag.seo.description, canonical: tag.seo.canonical, robots: null };
+  return metadataFromArchive({ ...seo, description: seo.description ?? `Articles about ${tag.name} from the psychiatrists and psychologists at Tulasi Healthcare.`, robots: "noindex, follow" }, { title: tag.name, path: tag.path });
 }
 
 export default async function TagPage({ params }: PageProps<"/tag/[slug]">) {

@@ -2734,5 +2734,95 @@
     "to": "/blog/feed.xml",
     "status": 301,
     "reason": "comments feed retired"
+  },
+  {
+    "from": "/psychologist-in-chandigarh/",
+    "to": "/best-psychologist-in-india/",
+    "status": 301,
+    "reason": "retired: the page implied a centre in a city where Tulasi has none"
+  },
+  {
+    "from": "/psychiatrist-in-chandigarh/",
+    "to": "/psychiatrist-in-india/",
+    "status": 301,
+    "reason": "retired: the page implied a centre in a city where Tulasi has none"
+  },
+  {
+    "from": "/psychiatrist-in-bangalore/",
+    "to": "/psychiatrist-in-india/",
+    "status": 301,
+    "reason": "retired: the page implied a centre in a city where Tulasi has none"
+  },
+  {
+    "from": "/psychiatrist-in-mumbai/",
+    "to": "/psychiatrist-in-india/",
+    "status": 301,
+    "reason": "retired: the page implied a centre in a city where Tulasi has none"
+  },
+  {
+    "from": "/rehabilitation-centre-in-jammu/",
+    "to": "/rehabilitation-centre-in-india/",
+    "status": 301,
+    "reason": "retired: the page implied a centre in a city where Tulasi has none"
+  },
+  {
+    "from": "/rehabilitation-centre-in-imphal/",
+    "to": "/rehabilitation-centre-in-india/",
+    "status": 301,
+    "reason": "retired: the page implied a centre in a city where Tulasi has none"
+  },
+  {
+    "from": "/rehabilitation-centre-in-aizawl/",
+    "to": "/rehabilitation-centre-in-india/",
+    "status": 301,
+    "reason": "retired: the page implied a centre in a city where Tulasi has none"
+  },
+  {
+    "from": "/rehabilitation-centre-in-guwahati/",
+    "to": "/rehabilitation-centre-in-india/",
+    "status": 301,
+    "reason": "retired: the page implied a centre in a city where Tulasi has none"
+  },
+  {
+    "from": "/rehabilitation-center-in-dehradun/",
+    "to": "/rehabilitation-centre-in-india/",
+    "status": 301,
+    "reason": "retired: the page implied a centre in a city where Tulasi has none"
+  },
+  {
+    "from": "/rehabilitation-center-in-kanpur/",
+    "to": "/rehabilitation-centre-in-india/",
+    "status": 301,
+    "reason": "retired: the page implied a centre in a city where Tulasi has none"
+  },
+  {
+    "from": "/nasha-mukti-kendra-in-ludhiana/",
+    "to": "/deaddiction-centre/",
+    "status": 301,
+    "reason": "retired: the page implied a centre in a city where Tulasi has none"
+  },
+  {
+    "from": "/rehabilitation-centre-in-sirsa/",
+    "to": "/rehabilitation-centre-in-haryana/",
+    "status": 301,
+    "reason": "retired: the page implied a centre in a city where Tulasi has none"
+  },
+  {
+    "from": "/rehabilitation-centre-in-jaipur/",
+    "to": "/rehabilitation-centre-in-india/",
+    "status": 301,
+    "reason": "retired: the page implied a centre in a city where Tulasi has none"
+  },
+  {
+    "from": "/rehabilitation-centre-in-lucknow/",
+    "to": "/rehabilitation-centre-in-india/",
+    "status": 301,
+    "reason": "retired: the page implied a centre in a city where Tulasi has none"
+  },
+  {
+    "from": "/rehabilitation-centre-in-chandigarh/",
+    "to": "/rehabilitation-centre-in-india/",
+    "status": 301,
+    "reason": "retired: the page implied a centre in a city where Tulasi has none"
   }
 ]

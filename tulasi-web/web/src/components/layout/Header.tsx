@@ -72,6 +72,10 @@ export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { displ
     document.documentElement.style.overflow = mobile ? "hidden" : "";
   }, [mobile]);
 
+  // The dropdown panels hold about 70 KB of links. Render each one the first time it is opened, not on every page load.
+  const [built, setBuilt] = useState<number[]>([]);
+  if (open !== null && !built.includes(open)) setBuilt([...built, open]);
+
   const enter = (i: number) => {
     clearTimeout(closeTimer.current);
     setOpen(i);
@@ -93,12 +97,12 @@ export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { displ
           </span>
         </Link>
 
-        <nav aria-label="Main" className="hidden xl:block">
+        <nav aria-label="Main" className="hidden min-[1340px]:block">
           <ul className="flex items-center">
             {items.map((item, i) => {
               const hasPanel = item.groups.some((g) => g.links.length);
               const active = item.href && (pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href)));
-              const base = "whitespace-nowrap rounded-full px-3.5 py-2 text-[0.9375rem] font-medium transition-colors duration-200";
+              const base = "whitespace-nowrap rounded-full px-3 py-2 2xl:px-3.5 text-[0.9375rem] font-medium transition-colors duration-200";
               return (
                 <li key={item.label} onMouseEnter={() => hasPanel && enter(i)} onMouseLeave={leave}>
                   <div className="flex items-center">
@@ -118,7 +122,7 @@ export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { displ
                     )}
                     {hasPanel && !item.href && <Icon name="chevron" className={clsx("-ml-2 size-3.5 rotate-90 text-ink-soft transition-transform duration-300", open === i && "-rotate-90")} />}
                   </div>
-                  {hasPanel && <NavPanel id={`menu-panel-${i}`} item={item} open={open === i} team={item.label === "Our Team" ? team : undefined} />}
+                  {hasPanel && (built.includes(i) || open === i) && <NavPanel id={`menu-panel-${i}`} item={item} open={open === i} team={item.label === "Our Team" ? team : undefined} />}
                 </li>
               );
             })}
@@ -127,12 +131,12 @@ export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { displ
 
         <div className="flex items-center gap-2">
           <a href={phone.href} onClick={() => track("call_click", { location: "header" })} className="hidden min-h-11 items-center gap-2 whitespace-nowrap rounded-full px-3 text-sm font-semibold text-ink hover:text-brand-700 md:inline-flex">
-            <Icon name="phone" className="size-4 text-sage-600" /> <span className="hidden xl:inline">{phone.display}</span><span className="xl:hidden">Call us</span>
+            <Icon name="phone" className="size-4 text-sage-600" /> <span className="hidden 2xl:inline">{phone.display}</span><span className="2xl:hidden">Call us</span>
           </a>
           <Link href="/book-appointment/" className="hidden min-h-11 items-center gap-2 whitespace-nowrap rounded-full bg-brand-600 px-5 text-[0.9375rem] font-semibold text-white transition-colors duration-300 hover:bg-brand-700 sm:inline-flex">
             Book appointment
           </Link>
-          <button type="button" className="grid size-11 place-items-center rounded-full text-ink hover:bg-mist xl:hidden" aria-expanded={mobile} aria-controls="mobile-menu" onClick={() => setMobile(true)}>
+          <button type="button" className="grid size-11 place-items-center rounded-full text-ink hover:bg-mist min-[1340px]:hidden" aria-expanded={mobile} aria-controls="mobile-menu" onClick={() => setMobile(true)}>
             <Icon name="menu" className="size-6" />
             <span className="sr-only">Open menu</span>
           </button>
@@ -205,9 +209,20 @@ function MobileMenu({ open, onClose, items, phone, pathname, logo }: { open: boo
             );
           })}
         </ul>
-        <Link href="/employee-assistance-program/" onClick={onClose} className="mt-2 block border-b border-line py-4 font-display text-xl font-semibold text-ink">Employee Assistance Program</Link>
+        <div className="mt-4 grid gap-2">
+          <Link href="/find-a-specialist/" onClick={onClose} className="flex min-h-12 items-center justify-between rounded-2xl bg-sage-50 px-4 font-semibold text-ink shadow-[inset_0_0_0_1px_var(--color-sage-100)]">
+            Find the right specialist <Icon name="arrow" className="size-4 text-sage-600" />
+          </Link>
+          <Link href="/mental-health-check/" onClick={onClose} className="flex min-h-12 items-center justify-between rounded-2xl bg-sage-50 px-4 font-semibold text-ink shadow-[inset_0_0_0_1px_var(--color-sage-100)]">
+            Free 2-minute check-in <Icon name="arrow" className="size-4 text-sage-600" />
+          </Link>
+        </div>
       </nav>
-      <div className="container-page grid shrink-0 gap-3 border-t border-line bg-white pt-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+      <div className="container-page grid shrink-0 gap-3 border-t border-line bg-white pt-3 pb-[max(1rem,env(safe-area-inset-bottom))]">
+        {/* The crisis bar is hidden behind this full-screen menu, so help stays one tap away here. */}
+        <a href="tel:14416" className="flex min-h-11 items-center justify-center gap-2 rounded-full bg-alert-50 text-sm font-semibold text-alert-700 shadow-[inset_0_0_0_1px_var(--color-alert-100)]">
+          <Icon name="heart" className="size-4" /> In crisis? Call 14416 (free, 24×7)
+        </a>
         <Link href="/book-appointment/" onClick={onClose} className="flex min-h-[3.25rem] items-center justify-center gap-2 rounded-full bg-brand-600 font-semibold text-white hover:bg-brand-700">
           <Icon name="calendar" className="size-5" /> Book appointment
         </Link>

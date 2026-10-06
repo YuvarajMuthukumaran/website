@@ -336,7 +336,7 @@ function groupRuns($: cheerio.CheerioAPI, root: cheerio.Cheerio<Element>, match:
 
 type Lookups = { bySlug: Map<string, { slug: string; name: string }>; byPhoto: Map<string, string>; cutoutOf: (s: string | null) => string | null };
 
-function buildCard($: cheerio.CheerioAPI, nodes: Element[], { bySlug, byPhoto, cutoutOf }: Lookups) {
+function buildCard($: cheerio.CheerioAPI, nodes: Element[], { byPhoto, cutoutOf }: Lookups) {
   const img = nodes[0].tagName === "img" ? $(nodes[0]) : null;
   const rest = img ? nodes.slice(1) : nodes;
   const h = $(rest[0]);

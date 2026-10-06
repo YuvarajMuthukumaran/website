@@ -23,8 +23,6 @@ jobs:
           cache: npm
           cache-dependency-path: tulasi-web/web/package-lock.json
       - run: npm ci
-      # Report-only for now: six older react-hooks findings (BlogSearch, BookingForm, Consent) still need a pass.
       - run: npm run lint
-        continue-on-error: true
       - run: npm run typecheck
       - run: npm run build

@@ -11,7 +11,7 @@ export function Aside({ path, toc }: { path: string; toc?: { id: string; text: s
   const related = group?.links.filter((l) => l.href && l.href !== path).slice(0, 8) ?? [];
   return (
     <aside className="space-y-5 lg:sticky lg:top-28" aria-label="Page tools">
-      <div className="rounded-[var(--radius-card)] bg-sage-50 p-6 shadow-[inset_0_0_0_1px_var(--color-sage-100)]">
+      <div className="hidden rounded-[var(--radius-card)] bg-sage-50 p-6 shadow-[inset_0_0_0_1px_var(--color-sage-100)] lg:block">
         <span className="icon-tile size-11 !bg-white"><Icon name="calendar" className="size-5" /></span>
         <p className="mt-4 font-display text-xl font-semibold tracking-[-0.015em] text-ink">Speak to a specialist</p>
         <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">Book a consultation with our psychiatrists and psychologists.</p>

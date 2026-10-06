@@ -4,7 +4,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getDoctors, getHome, getPageByPath, getSite } from "@/lib/content";
+import { getDoctors, getHome, getPageByPath, getSite, polishText } from "@/lib/content";
 import { faqSchema, metadataFromSeo } from "@/lib/seo";
 import { Arrow, BrandIcon, btnClass, ButtonLink, Icon, JsonLd, Reveal, SectionHeading } from "@/components/ui/primitives";
 import { TeamMember } from "@/components/team";
@@ -15,7 +15,7 @@ import { CONCERN_ICON, CONCERNS, PATHWAYS, type Pathway } from "@/lib/care";
 
 export function generateMetadata(): Metadata {
   const page = getPageByPath("/")!;
-  return metadataFromSeo(page.seo, { title: page.title, path: "/" });
+  return metadataFromSeo(page.seo, { title: page.title, path: "/", image: "/wp-content/uploads/2022/12/lasi-healthcare-psychiatric-hospital.webp" });
 }
 
 const PATHWAY_ICON: Record<Pathway["icon"], string> = {
@@ -58,6 +58,11 @@ export default function Home() {
     [beds, "Beds"],
   ];
 
+  const faqIntro = "Families and patients often write to us with questions about mental illness, addiction and their treatment. Here are some of the most common ones.";
+  const faqItems = h.faq.items.map((f) => ({ q: polishText(f.q), a: polishText(f.a) }));
+  const voices = h.testimonials.items.slice(0, 3);
+  const cashless = h.insurance.text.match(/empanelled with (.+?) for cashless/i)?.[1] ?? null;
+
   const concerns = HELP_WITH.map((l) => CONCERNS.find((c) => c.label === l)).filter((c): c is NonNullable<typeof c> => !!c);
   const services = PATHWAYS.slice(0, 6);
 
@@ -82,11 +87,6 @@ export default function Home() {
               Or call us on{" "}
               <TrackedLink event="call_click" eventLocation="hero" href={phone.href} className="font-semibold text-ink underline decoration-line underline-offset-4 hover:text-brand-700">{phone.display}</TrackedLink>
             </p>
-            <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink-soft">
-              {["NABH accredited", since ? `Since ${since}` : "20+ years of experience", `${experts} mental health experts`].map((t) => (
-                <li key={t} className="flex items-center gap-2"><Icon name="check" className="size-4 text-sage-600" strokeWidth={2.2} /> {t}</li>
-              ))}
-            </ul>
           </div>
           <div className="relative">
             <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] bg-sage-50 shadow-[0_0_0_1px_rgb(23_34_44/0.06),0_30px_60px_-36px_rgb(23_34_44/0.35)] lg:aspect-[5/4]">
@@ -182,6 +182,33 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ═════════════ First visit ═════════════ */}
+      <section aria-labelledby="first-visit" className={sectionPad}>
+        <div className="container-page">
+          <SectionHeading eyebrow="Your first visit" title="What to expect when you come to see us" text="Starting is often the hardest part. Here is how it works, so there are no surprises." id="first-visit" />
+          <ol className="mt-8 grid gap-4 md:grid-cols-3">
+            {[
+              ["Book or call", `Choose a doctor and a time online, or call ${phone.display}. If you are not sure who to see, we will help you choose.`],
+              ["Meet your specialist", "A first consultation with a psychiatrist or psychologist usually lasts 20 to 45 minutes. Bring any earlier reports and a list of current medicines."],
+              ["Agree a plan", "Your doctor explains what they found and suggests the next steps: therapy, medicines, follow-up visits, or admission if it is needed. You decide at your own pace."],
+            ].map(([t, d], i) => (
+              <Reveal as="li" key={t} delay={i * 70} className="rounded-[var(--radius-card)] bg-white p-6 shadow-[0_0_0_1px_var(--color-line)]">
+                <span className="grid size-9 place-items-center rounded-full bg-sage-50 font-display text-sm font-semibold text-sage-700 shadow-[inset_0_0_0_1px_var(--color-sage-100)]">{i + 1}</span>
+                <h3 className="mt-4 font-display text-lg font-semibold text-ink">{t}</h3>
+                <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-soft">{d}</p>
+              </Reveal>
+            ))}
+          </ol>
+          <p className="mt-6 flex items-start gap-3 text-[0.9375rem] leading-relaxed text-ink-soft">
+            <Icon name="shield" className="mt-0.5 size-5 shrink-0 text-sage-600" />
+            <span>
+              Consultation fees depend on the doctor and are shown on each <Link href="/our-team/" className="font-semibold text-brand-700 underline underline-offset-2">doctor’s profile</Link>.{" "}
+              {cashless ? `We are empanelled with ${cashless} for cashless treatment. ` : ""}Not sure what your policy covers? <TrackedLink event="call_click" eventLocation="home_first_visit" href={phone.href} className="font-semibold text-brand-700 underline underline-offset-2">Call {phone.display}</TrackedLink> and we will check with you.
+            </span>
+          </p>
+        </div>
+      </section>
+
       {/* ═════════════ How care works ═════════════ */}
       <section className={`${sectionPad} bg-mist`}>
         <div className="container-page">
@@ -200,6 +227,26 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ═════════════ Patient voices ═════════════ */}
+      {voices.length > 0 && (
+        <section aria-labelledby="voices" className={sectionPad}>
+          <div className="container-page">
+            <SectionHeading title="What patients say" text="From reviews shared by people we have treated." id="voices" />
+            <ul className="mt-8 grid gap-4 md:grid-cols-3">
+              {voices.map((v, i) => (
+                <Reveal as="li" key={v.name} delay={i * 70}>
+                  <figure className="flex h-full flex-col rounded-[var(--radius-card)] bg-white p-6 shadow-[0_0_0_1px_var(--color-line)]">
+                    <Icon name="quote" className="size-6 text-sage-500" />
+                    <blockquote className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-ink">{polishText(v.quote)}</blockquote>
+                    <figcaption className="mt-4 text-sm font-semibold text-ink-soft">{v.name}</figcaption>
+                  </figure>
+                </Reveal>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       {/* ═════════════ Visit ═════════════ */}
       <section aria-labelledby="visit-title" className={sectionPad}>
@@ -227,9 +274,9 @@ export default function Home() {
       {/* ═════════════ FAQ ═════════════ */}
       <section className={`${sectionPad} bg-mist`}>
         <div className="container-page grid gap-8 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:gap-16">
-          <SectionHeading title="Questions we are often asked" text={h.faq.text} />
+          <SectionHeading title="Questions we are often asked" text={faqIntro} />
           <Reveal className="divide-y divide-line rounded-[var(--radius-card)] bg-white px-5 shadow-[0_0_0_1px_var(--color-line)] sm:px-7">
-            {h.faq.items.slice(0, 5).map((f, i) => (
+            {faqItems.slice(0, 5).map((f, i) => (
               <details key={f.q} className="acc group" open={i === 0}>
                 <summary className="flex min-h-16 cursor-pointer items-center justify-between gap-4 py-4">
                   <h3 className="font-display text-base leading-snug font-semibold text-ink sm:text-[1.0625rem]">{f.q}</h3>
@@ -242,7 +289,7 @@ export default function Home() {
             ))}
           </Reveal>
         </div>
-        <JsonLd data={faqSchema(h.faq.items)} />
+        <JsonLd data={faqSchema(faqItems)} />
       </section>
 
       {/* ═════════════ Closing step ═════════════ */}

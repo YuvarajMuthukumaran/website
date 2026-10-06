@@ -16,8 +16,9 @@ const imagesIn = (html: string) => [...html.matchAll(/<img[^>]+src="([^"]+)"/g)]
 const abs = (u: string) => absoluteUrl(localPath(u));
 const uniq = (a: string[]) => [...new Set(a)];
 
-export const SITEMAPS = ["post", "page", "team", "category", "post_tag", "author"] as const;
-export type SitemapName = (typeof SITEMAPS)[number];
+// Tag archives are left out on purpose: they are noindex (thin lists of posts already in the post sitemap).
+export const SITEMAPS = ["post", "page", "team", "category", "author"] as const;
+export type SitemapName = (typeof SITEMAPS)[number] | "post_tag";
 
 function entries(name: SitemapName): Url[] {
   const posts = getPosts();

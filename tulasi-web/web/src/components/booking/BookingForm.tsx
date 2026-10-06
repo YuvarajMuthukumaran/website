@@ -36,7 +36,7 @@ const time12 = (t: string) => {
   return `${((h + 11) % 12) + 1}:${String(m).padStart(2, "0")} ${h < 12 ? "AM" : "PM"}`;
 };
 
-export function BookingForm({ siteDoctors }: { siteDoctors: SiteDoctor[] }) {
+export function BookingForm({ siteDoctors, clinicPhone }: { siteDoctors: SiteDoctor[]; clinicPhone: { display: string; href: string } }) {
   const [step, setStep] = useState(0);
   const [specialties, setSpecialties] = useState<string[] | null>(null);
   const [service, setService] = useState<string | null>(null);
@@ -44,6 +44,8 @@ export function BookingForm({ siteDoctors }: { siteDoctors: SiteDoctor[] }) {
   const [doctor, setDoctor] = useState<ApiDoctor | null>(null);
   const [date, setDate] = useState(istDate(1));
   const [slots, setSlots] = useState<string[] | null>(null);
+  // How many times are open on each of the next 14 days, so days the doctor isn't in can be greyed out.
+  const [openByDay, setOpenByDay] = useState<Record<string, number> | null>(null);
   const [time, setTime] = useState<string | null>(null);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -71,6 +73,7 @@ export function BookingForm({ siteDoctors }: { siteDoctors: SiteDoctor[] }) {
     // Pre-selected service (/book-appointment/?service=anxiety, from the care guide)
     const pre = params.get("service");
     if (pre && !params.get("doctor")) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- reads the ?service= link once on load
       setService(pre);
       setStep(1);
     }
@@ -95,12 +98,31 @@ export function BookingForm({ siteDoctors }: { siteDoctors: SiteDoctor[] }) {
 
   useEffect(() => {
     if (!service) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- show the loading state while a new list is fetched
     setDoctors(null);
     fetchDoctors(service === ANY ? undefined : service).then((r) => setDoctors(r.doctors)).catch((e) => setError(e.message));
   }, [service]);
 
   useEffect(() => {
     if (!doctor) return;
+    let live = true;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- show the loading state while availability is fetched
+    setOpenByDay(null);
+    Promise.all(dates.map((d) => fetchSlots(doctor._id, d).then((r) => [d, r.slots.length] as const).catch(() => [d, -1] as const))).then((rows) => {
+      if (!live) return;
+      const map = Object.fromEntries(rows);
+      setOpenByDay(map);
+      // Start on the first day that has anything open, instead of an empty day.
+      setDate((cur) => (map[cur] === 0 ? (dates.find((d) => map[d] > 0) ?? cur) : cur));
+    });
+    return () => {
+      live = false;
+    };
+  }, [doctor, dates]);
+
+  useEffect(() => {
+    if (!doctor) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- show the loading state while times are fetched
     setSlots(null);
     setTime(null);
     fetchSlots(doctor._id, date).then((r) => setSlots(r.slots)).catch((e) => setError(e.message));
@@ -198,6 +220,7 @@ export function BookingForm({ siteDoctors }: { siteDoctors: SiteDoctor[] }) {
 
       <div className="min-h-[560px] rounded-[var(--radius-blob)] bg-white p-6 shadow-[0_0_0_1px_var(--color-line),0_1px_0_#fff_inset,0_30px_80px_-40px_rgb(6_26_107/0.45)] sm:min-h-[460px] sm:p-10">
         {/* Each step slides in with a CSS animation (the first one is static). */}
+        {/* eslint-disable-next-line react-hooks/refs -- the first step is server-rendered fully visible; only later steps animate in */}
         <div key={step} className={firstStep.current ? undefined : "step-in"}>
             {step === 0 && (
               <fieldset>
@@ -249,9 +272,10 @@ export function BookingForm({ siteDoctors }: { siteDoctors: SiteDoctor[] }) {
                   <div className="mt-2 flex gap-2 overflow-x-auto pb-2">
                     {dates.map((iso) => {
                       const l = dayLabel(iso);
+                      const closed = openByDay?.[iso] === 0;
                       return (
-                        <label key={iso} className={clsx("grid min-w-16 cursor-pointer place-items-center rounded-2xl border px-2 py-3 text-center transition", date === iso ? "border-brand-600 bg-brand-600 text-white" : "border-line hover:border-brand-300")}>
-                          <input type="radio" name="date" className="sr-only" checked={date === iso} onChange={() => setDate(iso)} />
+                        <label key={iso} title={closed ? "No appointments this day" : undefined} className={clsx("grid min-w-16 place-items-center rounded-2xl border px-2 py-3 text-center transition", closed ? "cursor-not-allowed border-line bg-mist text-ink-soft/50" : "cursor-pointer", date === iso ? "border-brand-600 bg-brand-600 text-white" : "border-line hover:border-brand-300")}>
+                          <input type="radio" name="date" className="sr-only" checked={date === iso} disabled={closed} onChange={() => setDate(iso)} />
                           <span className="text-xs">{l.dow}</span>
                           <span className="font-display text-lg font-bold">{l.day}</span>
                           <span className="text-xs">{l.month}</span>
@@ -272,6 +296,9 @@ export function BookingForm({ siteDoctors }: { siteDoctors: SiteDoctor[] }) {
                     {!slots && Array.from({ length: 10 }, (_, i) => <span key={i} className="h-11 animate-pulse rounded-xl bg-mist" />)}
                   </div>
                   {slots?.length === 0 && <p className="mt-2 text-ink-soft">No times left on this day. Please choose another date.</p>}
+                  {openByDay && Object.values(openByDay).every((n) => n <= 0) && (
+                    <p className="mt-3 rounded-2xl bg-mist p-4 text-ink-soft">There are no online appointments open for {doctor.name} in the next two weeks. Please call us on <a href={clinicPhone.href} className="font-semibold text-ink underline">{clinicPhone.display}</a> and we’ll find a time, or choose another doctor.</p>
+                  )}
                 </fieldset>
                 <div className="mt-8 flex justify-between gap-3">
                   <button type="button" onClick={() => go(1)} className="min-h-12 rounded-full px-5 font-semibold text-brand-700 hover:bg-brand-50">Back</button>

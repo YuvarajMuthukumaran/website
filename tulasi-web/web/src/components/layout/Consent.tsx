@@ -24,6 +24,7 @@ export function Consent() {
   const [choice, setChoice] = useState<Choice | null | "unknown">("unknown");
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- the saved choice lives in localStorage, unknown on the server
     setChoice(readChoice());
     const reopen = () => setChoice(null);
     window.addEventListener("thc:open-consent", reopen);
@@ -55,17 +56,24 @@ ${ADS_ID ? `gtag('config','${ADS_ID}');` : ""}`}
       )}
 
       {choice === null && (
-        <div role="region" aria-label="Cookie consent" className="fixed inset-x-3 bottom-3 z-[70] sm:inset-x-auto sm:right-5 sm:bottom-5 sm:max-w-md">
-          <div className="rounded-[var(--radius-card)] bg-white p-5 shadow-[var(--shadow-lift)] ring-1 ring-line">
-            <p className="font-display text-base font-semibold text-ink">Your privacy</p>
-            <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
+        <div role="region" aria-label="Cookie consent" className="fixed inset-x-2 bottom-2 z-[70] sm:inset-x-auto sm:right-5 sm:bottom-5 sm:max-w-md">
+          <div className="rounded-[var(--radius-card)] bg-white p-3.5 shadow-[var(--shadow-lift)] ring-1 ring-line sm:p-5">
+            <p className="hidden font-display text-base font-semibold text-ink sm:block">Your privacy</p>
+            {/* Phones: one short line and two buttons, so the page and its forms stay usable underneath. */}
+            <p className="text-[0.8125rem] leading-snug text-ink-soft sm:hidden">
+              We use essential storage, and analytics only if you allow it. No health information is recorded.{" "}
+              <Link href="/privacy-policy/" className="font-medium text-brand-700 underline underline-offset-2">
+                Privacy Policy
+              </Link>
+            </p>
+            <p className="mt-1.5 hidden text-sm leading-relaxed text-ink-soft sm:block">
               We use essential storage to run this site. With your permission we also use analytics cookies to understand which pages help people. We never use them to record health information. Read our{" "}
               <Link href="/privacy-policy/" className="font-medium text-brand-700 underline underline-offset-2">
                 Privacy Policy
               </Link>
               .
             </p>
-            <div className="mt-4 grid grid-cols-2 gap-2">
+            <div className="mt-2.5 grid grid-cols-2 gap-2 sm:mt-4">
               <button type="button" onClick={() => decide("denied")} className="min-h-11 rounded-full border border-line bg-white px-4 text-sm font-semibold text-ink hover:border-brand-300">
                 Reject
               </button>

@@ -7,7 +7,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getArchiveSeo, getDoctorBySlug, getDoctorFacts, getDoctors, getSite, renderHtml } from "@/lib/content";
 import { tidy } from "@/lib/html";
-import { breadcrumbSchema, doctorSchema, metadataFromArchive } from "@/lib/seo";
+import { breadcrumbSchema, descriptionFrom, doctorSchema, metadataFromArchive } from "@/lib/seo";
 import { Arrow, Breadcrumbs, ButtonLink, Icon, JsonLd, Reveal, Tag, btnClass } from "@/components/ui/primitives";
 import { PortraitCard, portraitOf } from "@/components/team";
 import { TrackedLink } from "@/components/layout/TrackedLink";
@@ -19,7 +19,8 @@ export async function generateMetadata({ params }: PageProps<"/team/[slug]">): P
   const d = getDoctorBySlug((await params).slug);
   if (!d) return {};
   const path = `/team/${d.slug}/`;
-  return metadataFromArchive(getArchiveSeo(path) ?? { title: d.seo.title, description: d.seo.metaDescription, canonical: d.seo.canonical, robots: null, ogImage: d.photo }, { title: d.name, path });
+  const seo = getArchiveSeo(path) ?? { title: d.seo.title, description: d.seo.metaDescription, canonical: d.seo.canonical, robots: null, ogImage: d.photo };
+  return metadataFromArchive({ ...seo, description: seo.description ?? descriptionFrom(`${d.name}, ${d.designation ?? ""}. ${d.excerpt ?? d.bioHtml}`) ?? null }, { title: d.name, path });
 }
 
 export default async function DoctorPage({ params }: PageProps<"/team/[slug]">) {
@@ -28,7 +29,9 @@ export default async function DoctorPage({ params }: PageProps<"/team/[slug]">) 
   const all = getDoctors();
   const others = all.filter((x) => x.slug !== d.slug && x.role === d.role).slice(0, 10);
   const site = getSite();
-  const facts = getDoctorFacts(d.slug);
+  const rawFacts = getDoctorFacts(d.slug);
+  // The designation can already state the experience; two different figures would contradict each other.
+  const facts = rawFacts && /years?\s+of\s+experience/i.test(d.designation ?? "") ? { ...rawFacts, experience: null } : rawFacts;
   const portrait = portraitOf(d);
   const crumbs = [{ name: "Home", path: "/" }, { name: "Our Team", path: "/our-team/" }, { name: d.name, path: `/team/${d.slug}/` }];
   const firstName = d.honorific === "Dr." ? d.name.replace(/\s*\(.*?\)/, "") : d.name.split(" ").slice(0, 2).join(" ");

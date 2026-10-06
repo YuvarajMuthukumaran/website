@@ -45,6 +45,20 @@ export function DoctorCard({ d, priority, className, showExcerpt }: { d: Doctor;
 }
 
 /** Blog post card with an image reveal on hover. */
+const titleCase = (t: string) => t.replace(/\b([a-z])/g, (c) => c.toUpperCase());
+
+/** The first real paragraph of the article, so the card does not repeat the heading the excerpt used to start with. */
+function cardExcerpt(p: Entry) {
+  for (const m of (p.contentHtml ?? "").matchAll(/<p[^>]*>([\s\S]*?)<\/p>/g)) {
+    const t = m[1].replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&#8217;|&rsquo;/g, "’").replace(/\s+/g, " ").trim();
+    if (t.length < 70 || /^(%%|share|read more)/i.test(t)) continue;
+    if (t.length <= 170) return t;
+    const cut = t.slice(0, 170);
+    return cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:.\-–—\s]+$/, "") + "…";
+  }
+  return (p.excerpt ?? "").replace(/\s*\[…\]|\s*\[&hellip;\]/g, "…");
+}
+
 export function PostCard({ p, priority, headingLevel = "h3", feature }: { p: Entry; priority?: boolean; headingLevel?: "h2" | "h3"; feature?: boolean }) {
   const H = headingLevel;
   const tag = tagsFor(p)[0];
@@ -61,12 +75,12 @@ export function PostCard({ p, priority, headingLevel = "h3", feature }: { p: Ent
             priority={priority}
           />
         ) : (
-          <div className="h-full bg-[radial-gradient(80%_60%_at_20%_10%,#2f5be0,transparent_60%),#0b236b]" />
+          <div className="h-full bg-gradient-to-br from-sage-50 via-white to-brand-50" />
         )}
       </div>
       <div className="flex flex-1 flex-col pt-5">
         <p className="flex flex-wrap items-center gap-2.5 text-[0.8125rem] text-ink-soft">
-          {tag && <span className="rounded-full bg-brand-50 px-2.5 py-0.5 font-medium text-brand-900">{tag.name}</span>}
+          {tag && <span className="rounded-full bg-brand-50 px-2.5 py-0.5 font-medium text-brand-900">{titleCase(tag.name)}</span>}
           <time dateTime={p.date ?? undefined}>{formatDate(p.date)}</time>
           <span aria-hidden="true">·</span>
           <span>{readingMinutes(p)} min read</span>
@@ -76,7 +90,7 @@ export function PostCard({ p, priority, headingLevel = "h3", feature }: { p: Ent
             {p.title}
           </Link>
         </H>
-        {p.excerpt && <p className={clsx("mt-2 text-ink-soft", feature ? "line-clamp-3 max-w-[62ch] leading-relaxed" : "line-clamp-2 text-[0.9375rem] leading-relaxed")}>{p.excerpt.replace(/\s*\[…\]|\s*\[&hellip;\]/g, "…")}</p>}
+        {(() => { const x = cardExcerpt(p); return x ? <p className={clsx("mt-2 text-ink-soft", feature ? "line-clamp-3 max-w-[62ch] leading-relaxed" : "line-clamp-2 text-[0.9375rem] leading-relaxed")}>{x}</p> : null; })()}
         <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-brand-700">
           Read article <Icon name="arrow" className="size-4 transition-transform duration-[450ms] group-hover:translate-x-1" />
         </span>

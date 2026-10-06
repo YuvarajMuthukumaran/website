@@ -71,11 +71,11 @@ export function Kinetic({ text, highlight }: { text: string; highlight?: string 
   );
 }
 
-export function SectionHeading({ eyebrow, title, text, align = "left", as: H = "h2", className, highlight }: { eyebrow?: string | null; title: string; text?: string | null; align?: "left" | "center"; as?: "h1" | "h2" | "h3"; className?: string; dark?: boolean; highlight?: string | null }) {
+export function SectionHeading({ eyebrow, title, text, align = "left", as: H = "h2", className, highlight, id }: { eyebrow?: string | null; title: string; text?: string | null; align?: "left" | "center"; as?: "h1" | "h2" | "h3"; className?: string; dark?: boolean; highlight?: string | null; id?: string }) {
   return (
     <Reveal as="header" className={clsx("max-w-2xl", align === "center" && "mx-auto text-center", className)}>
       {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
-      <H className="text-[length:var(--text-h2)] leading-[1.15] font-semibold tracking-[-0.02em] text-ink">
+      <H id={id} className="text-[length:var(--text-h2)] leading-[1.15] font-semibold tracking-[-0.02em] text-ink">
         <Kinetic text={title} highlight={highlight} />
       </H>
       {text && <p className={clsx("mt-4 max-w-[56ch] text-[length:var(--text-lead)] leading-relaxed text-ink-soft", align === "center" && "mx-auto")}>{text}</p>}

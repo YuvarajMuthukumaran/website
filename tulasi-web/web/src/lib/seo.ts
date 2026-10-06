@@ -16,21 +16,35 @@ function robotsString(r: Seo["robots"] | string | null | undefined) {
 /** Canonicals point at the production domain, whatever host serves the page. */
 const canonical = (c: string | null | undefined, fallbackPath: string) => absoluteUrl(localPath(c ?? fallbackPath));
 
-export function metadataFromSeo(seo: Seo, fallback: { title: string; path: string }): Metadata {
+/** First sentences of a text, cut at a word boundary, for a description when none was written. */
+export function descriptionFrom(text: string | null | undefined, max = 155) {
+  const t = (text ?? "").replace(/<[^>]+>/g, " ").replace(/&[a-z#0-9]+;/gi, " ").replace(/\s+/g, " ").trim();
+  if (t.length <= max) return t || undefined;
+  const cut = t.slice(0, max);
+  return cut.slice(0, Math.max(cut.lastIndexOf(" "), 80)).replace(/[,;:.\-–—\s]+$/, "") + "…";
+}
+
+/** Shown when a page has no social-share image of its own: the hospital building. */
+const SHARE_FALLBACK = "/wp-content/uploads/2022/12/lasi-healthcare-psychiatric-hospital.webp";
+
+export function metadataFromSeo(seo: Seo, fallback: { title: string; path: string; description?: string | null; image?: string }): Metadata {
   const og = seo.og;
   const title = seo.title ?? fallback.title;
-  const images = (og?.image ?? []).map((i) => ({ url: absoluteUrl(localPath(i.url)), width: i.width, height: i.height, type: i.type }));
+  const own = (og?.image ?? []).map((i) => ({ url: absoluteUrl(localPath(i.url)), width: i.width, height: i.height, type: i.type }));
+  // An explicit image wins, then the page's own; a transparent cut-out (as the old home page used) makes a poor preview.
+  const images = fallback.image ? [{ url: absoluteUrl(fallback.image) }] : own.length ? own : [{ url: absoluteUrl(SHARE_FALLBACK) }];
+  const description = seo.description ?? fallback.description ?? undefined;
   return {
     title: { absolute: title },
-    description: seo.description ?? undefined,
+    description,
     robots: robotsString(seo.robots),
     alternates: { canonical: canonical(seo.canonical, fallback.path) },
     openGraph: {
-      locale: "en_US",
+      locale: "en_IN",
       siteName: "Tulasi Healthcare",
-      type: (og?.type as "website" | "article") ?? "website",
+      type: og?.type === "article" && fallback.path.startsWith("/blog/") && fallback.path !== "/blog/" ? "article" : "website",
       title: og?.title ?? title,
-      description: og?.description ?? seo.description ?? undefined,
+      description: og?.description ?? description,
       url: canonical(og?.url ?? seo.canonical, fallback.path),
       images,
       ...(og?.publishedTime ? { publishedTime: og.publishedTime } : {}),

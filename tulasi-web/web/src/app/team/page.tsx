@@ -33,7 +33,7 @@ export default function TeamIndex() {
         cutout: !!p?.cutout,
         bg: PASTELS[n++ % PASTELS.length],
         tags: expertiseTags([d.designation ?? "", ...(facts?.expertise ?? [])].join(" ")),
-        experience: facts?.experience ?? null,
+        experience: /years?\s+of\s+experience/i.test(d.designation ?? "") ? null : facts?.experience ?? null,
         credentials: credentialsOf(d),
         excerpt: d.excerpt,
       };

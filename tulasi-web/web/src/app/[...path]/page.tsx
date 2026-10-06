@@ -5,7 +5,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getDoctorBySlug, getDoctorFacts, getPageByPath, getPages, getSite, renderHtml, type Entry } from "@/lib/content";
 import { addHeadingIds, extractFaq, headingsOf, teamGroups, tidy } from "@/lib/html";
-import { faqSchema, medicalPageSchema, metadataFromSeo } from "@/lib/seo";
+import { faqSchema, medicalPageSchema, metadataFromSeo, descriptionFrom } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { Aside } from "@/components/Aside";
 import { PASTELS, portraitOf } from "@/components/team";
@@ -41,13 +41,17 @@ async function pageFor(params: Promise<{ path: string[] }>) {
 export async function generateMetadata({ params }: PageProps<"/[...path]">): Promise<Metadata> {
   const page = await pageFor(params);
   if (!page) return {};
-  return metadataFromSeo(page.seo, { title: page.title, path: page.path });
+  return metadataFromSeo(page.seo, { title: page.title, path: page.path, description: descriptionFrom(page.excerpt ?? page.contentHtml) });
 }
 
 function crumbsFor(page: Entry) {
   const parent = page.parent ? getPages().find((p) => p.id === page.parent) : undefined;
   return [{ name: "Home", path: "/" }, ...(parent ? [{ name: parent.title, path: parent.path }] : []), { name: page.title, path: page.path }];
 }
+
+// City pages kept for places in the wider NCR: say plainly where the hospital is.
+const NEARBY_CITY = /-in-(noida|faridabad|rohtak|meerut|panipat)\/$/;
+const cityName = (p: string) => (p.match(NEARBY_CITY)?.[1] ?? "").replace(/^./, (c) => c.toUpperCase());
 
 const schemaKind = (t: string) => (t === "condition" ? "condition" : /service|addiction/.test(t) ? "therapy" : "page");
 
@@ -67,7 +71,18 @@ export default async function WpPage({ params }: PageProps<"/[...path]">) {
     <>
       <PageHero title={page.h1} kicker={differs(page.title, page.h1) ? page.title : null} crumbs={crumbsFor(page)} />
       <div className="container-page grid gap-12 py-12 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-16 lg:py-16">
-        <article className="prose-tulasi min-w-0 max-w-none" dangerouslySetInnerHTML={{ __html: html }} />
+        <div className="min-w-0">
+          {NEARBY_CITY.test(page.path) && (
+            <p className="mb-8 flex items-start gap-3 rounded-[var(--radius-card)] bg-sage-50 p-4 text-[0.9375rem] leading-relaxed text-ink shadow-[inset_0_0_0_1px_var(--color-sage-100)]">
+              <Icon name="pin" className="mt-0.5 size-5 shrink-0 text-sage-600" />
+              <span>
+                <strong className="font-semibold">Where to find us.</strong> Our hospital and rehabilitation centre is at {getSite().contact.address}, with a centre in South Delhi. We welcome patients travelling from {cityName(page.path)}.{" "}
+                <Link href="/map-direction/" className="font-semibold text-brand-700 underline underline-offset-2">Map &amp; directions</Link>
+              </span>
+            </p>
+          )}
+          <article className="prose-tulasi max-w-none" dangerouslySetInnerHTML={{ __html: html }} />
+        </div>
         <Aside path={page.path} toc={toc} />
       </div>
       {isMedical && <JsonLd data={medicalPageSchema(page, schemaKind(page.pageType))} />}
@@ -194,7 +209,7 @@ function TeamPage({ page }: { page: Entry }) {
         cutout: !!portrait?.cutout,
         bg: PASTELS[n++ % PASTELS.length],
         tags: TAGS.filter(([, re]) => re.test(text)).map(([t]) => t),
-        experience: facts?.experience ?? null,
+        experience: /years?\s+of\s+experience/i.test(person.designation || d?.designation || "") ? null : facts?.experience ?? null,
         credentials: credentialsOf(d),
       };
     }),

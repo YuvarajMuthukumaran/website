@@ -111,6 +111,29 @@ type Redirect = { from: string; to: string };
 const DIR = path.join(process.cwd(), "content");
 const load = <T,>(name: string): T => JSON.parse(readFileSync(path.join(DIR, `${name}.json`), "utf8"));
 
+/** from -> to, whether or not the stored "from" ends in a slash. */
+const redirectLookup = (redirects: Redirect[]) => {
+  const m = new Map<string, string>();
+  for (const r of redirects) {
+    m.set(r.from, r.to);
+    m.set(r.from.replace(/\/?$/, "/"), r.to);
+  }
+  return m;
+};
+function withDirectLinks(site: Site, redirects: Redirect[]): Site {
+  const map = redirectLookup(redirects);
+  const fix = (l: Link): Link => {
+    if (!l.href) return l;
+    const p = l.href.replace(LIVE_ORIGINS, "");
+    return p.startsWith("/") && map.has(p) ? { ...l, href: map.get(p)! } : l;
+  };
+  return {
+    ...site,
+    menu: site.menu.map((m) => ({ ...m, href: m.href ? (map.get(m.href) ?? m.href) : m.href, groups: m.groups.map((g) => ({ ...g, links: g.links.map(fix) })) })),
+    footerColumns: site.footerColumns.map((c) => ({ ...c, links: c.links.map(fix) })),
+  };
+}
+
 const all = cache(() => {
   const posts = load<Entry[]>("posts")
     .filter((p) => p.title)
@@ -122,12 +145,13 @@ const all = cache(() => {
   return {
     posts,
     pages,
+    redirects,
     doctors: load<Doctor[]>("doctors"),
     tags: load<Term[]>("tags"),
     categories: load<Term[]>("categories"),
     authors: load<Author[]>("authors"),
     archiveSeo: load<Record<string, ArchiveSeo>>("archive-seo"),
-    site: load<Site>("site"),
+    site: withDirectLinks(load<Site>("site"), redirects),
     doctorDetails: load<Record<string, DoctorDetails>>("doctor-details"),
     home: load<Home>("home"),
     media: load<{ url: string; path: string; alt: string | null; width: number | null; height: number | null }[]>("media"),
@@ -211,18 +235,96 @@ export function localPath(href: string) {
   return href.replace(LIVE_ORIGINS, "") || "/";
 }
 
+// Wording the migrated pages used that reads as stigmatising, or that mixes US and UK spelling.
+// Applied to visible text only (never to tags or URLs). Order matters: longer phrases first.
+const WORDING: [RegExp, string][] = [
+  [/\bmentally sick patients\b/gi, "patients with mental illness"],
+  [/\bmentally ill patients\b/gi, "patients with mental illness"],
+  [/\bmental patients\b/gi, "people with mental illness"],
+  [/\bmental patient\b/gi, "person with mental illness"],
+  [/\bmentally sick\b/gi, "mentally unwell"],
+  [/\bmental hospitals\b/gi, "psychiatric hospitals"],
+  [/\bmental hospital\b/gi, "psychiatric hospital"],
+  [/\bsuffering from\b/gi, "living with"],
+  [/\bcounseling\b/gi, "counselling"],
+  [/\bcounselors\b/gi, "counsellors"],
+  [/\bcounselor\b/gi, "counsellor"],
+  [/\bcenters\b/gi, "centres"],
+  [/\bcenter\b(?! for\b)/gi, "centre"],
+  [/\bbehavioral\b/gi, "behavioural"],
+  [/\bbehaviors\b/gi, "behaviours"],
+  [/\bbehavior\b/gi, "behaviour"],
+  [/\bTherAapy\b/g, "Therapy"],
+  [/\bFAQ's\b/g, "FAQs"],
+  [/\bhis\/her\b/gi, "their"],
+];
+const keepCase = (from: string, to: string) =>
+  from === from.toUpperCase() && from.length > 3 ? to.toUpperCase() : from[0] === from[0].toUpperCase() ? to[0].toUpperCase() + to.slice(1) : to;
+export function polishText(text: string) {
+  return WORDING.reduce((t, [re, to]) => t.replace(re, (m) => keepCase(m, to)), text);
+}
+/** Runs `fn` over the text between tags only (and not inside <script>/<style>). */
+const mapText = (html: string, fn: (t: string) => string) =>
+  html.split(/(<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<[^>]+>)/i).map((seg, i) => (i % 2 ? seg : fn(seg))).join("");
+
+let legacy: { map: Map<string, string>; profiles: Set<string> } | undefined;
+const legacyLinks = () =>
+  (legacy ??= { map: redirectLookup(all().redirects), profiles: new Set(all().doctors.map((d) => d.slug)) });
+
+/** Internal links: always end in "/", skip the redirect hop, and never point at a profile that doesn't exist. */
+function fixInternalHref(href: string) {
+  if (!href.startsWith("/") || href.startsWith("//")) return href;
+  const [pathAndQuery, hash = ""] = href.split("#");
+  const [p, query = ""] = pathAndQuery.split("?");
+  const direct = legacyLinks().map.get(p);
+  if (direct) return direct + (query ? "?" + query : "") + (hash ? "#" + hash : ""); // includes old .php addresses
+  if (/\.[a-z0-9]{2,5}$/i.test(p)) return href; // a file
+  const withSlash = p.endsWith("/") ? p : p + "/";
+  const { map, profiles } = legacyLinks();
+  let to = map.get(withSlash) ?? withSlash;
+  const prof = to.match(/^\/team\/([^/]+)\/$/);
+  if (prof && !profiles.has(prof[1])) to = "/our-team/";
+  return to + (query ? "?" + query : "") + (hash ? "#" + hash : "");
+}
+
+/** Alt text from a descriptive file name ("best-psychiatrist-in-delhi-2.webp" -> "best psychiatrist in delhi"). */
+function altFromSrc(src: string) {
+  const base = decodeURIComponent(src.split("/").pop() ?? "").replace(/\.[a-z0-9]+$/i, "").replace(/-\d+x\d+$/, "").replace(/-\d+$/, "");
+  const words = base.split(/[-_ ]+/).filter((w) => /^[a-z]{2,}$/i.test(w));
+  if (words.length < 2 || /^(img|image|screenshot|whatsapp|dsc|photo|banner|untitled)/i.test(base)) return "";
+  return words.join(" ");
+}
+
 /**
- * Final pass over migrated HTML: internal links become relative, images get
- * native lazy-loading + async decoding, external links open safely.
- * Text is never touched.
+ * Final pass over migrated HTML: internal links become relative (and skip legacy redirects),
+ * images get native lazy-loading, async decoding and a descriptive alt where the editor left
+ * it empty, external links open safely, and a few stigmatising or mixed-spelling phrases are
+ * tidied in the visible text.
  */
 const BOOKING_CTA = `<div class="not-prose my-10 flex flex-col gap-4 rounded-[1.25rem] bg-sage-50 p-6 ring-1 ring-sage-100 sm:flex-row sm:items-center sm:justify-between"><div><p class="font-display text-xl font-semibold !text-ink">Talk to a specialist</p><p class="mt-1 !text-ink-soft">Book a consultation with our psychiatrists and psychologists.</p></div><a href="/book-appointment/" class="inline-flex min-h-12 shrink-0 items-center justify-center rounded-full bg-brand-600 px-6 font-semibold !text-white !no-underline hover:bg-brand-700">Book appointment</a></div>`;
 
+/**
+ * The old theme ended most pages with a scraped footer: a wall of "Psychiatrist / Rehabilitation
+ * centre in <city>" links (many for cities with no centre), a decorative image and an empty
+ * "Get in touch" heading. The real footer already links to what matters, so cut it, and keep
+ * the booking call-to-action that sat inside it.
+ */
+const stripSeoFooter = (html: string) =>
+  html
+    .replace(/<h[2-6][^>]*>[^<]*Psychiatrist in other locations\s*<\/h[2-6]>[\s\S]*?(?=<!-- contact-area -->)/i, "")
+    .replace(/<!-- contact-area -->[\s\S]*?<!-- contact-area-end -->/g, (block) => (block.includes("%%BOOKING_CTA%%") ? "<p>%%BOOKING_CTA%%</p>" : ""));
+
 export function renderHtml(html: string) {
-  return html
+  return mapText(stripSeoFooter(html), polishText)
+    .replace(/<h4>([^<]+)<\/h4>([\s\S]*?)<a href="([^"]+)">\s*Click here\s*<\/a>/g, (_m, title, body, href) => `<h4>${title}</h4>${body}<a href="${href}">Learn more<span class="sr-only"> about ${title.replace(/^Treatment of /i, "").trim()}</span></a>`)
     // Where the live page had an embedded contact form: a booking call-to-action.
     .replace(/(<p>%%BOOKING_CTA%%<\/p>\s*)+/g, BOOKING_CTA)
+    .replace(/tulasiheathcare\.com/gi, "tulasihealthcare.com") // a typo in older content
+    .replace(/<a\b[^>]*href="[^"]*\/wp-admin\/[^"]*"[^>]*>([\s\S]*?)<\/a>/gi, "$1") // editor links that never worked
     .replace(/(href|src)="(https?:\/\/(?:www\.)?tulasihealthcare\.com)(\/[^"]*)?"/gi, (_m, attr, _o, rest) => `${attr}="${rest ?? "/"}"`)
+    .replace(/href="(\/[^"]*)"/g, (_m, h) => `href="${fixInternalHref(h)}"`)
+    .replace(/<img\b([^>]*?)\balt=""([^>]*?)\bsrc="([^"]+)"/g, (m, a, b, src) => { const alt = altFromSrc(src); return alt ? `<img${a}alt="${alt}"${b}src="${src}"` : m; })
+    .replace(/<img\b([^>]*?)\bsrc="([^"]+)"([^>]*?)\balt=""/g, (m, a, src, b) => { const alt = altFromSrc(src); return alt ? `<img${a}src="${src}"${b}alt="${alt}"` : m; })
     // The first image is usually the page's LCP element: load it eagerly.
     .replace(/<img (?![^>]*loading=)/, '<img loading="eager" fetchpriority="high" decoding="async" ')
     .replace(/<img (?![^>]*loading=)/g, '<img loading="lazy" decoding="async" ')

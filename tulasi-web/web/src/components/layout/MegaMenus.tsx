@@ -228,6 +228,9 @@ function TeamPanel({ id, item, open, team }: { id: string; item: Item; open: boo
     <Shell id={id} open={open} width="w-[min(860px,calc(100vw-2.5rem))]">
       <div className="grid grid-cols-[250px_1fr]">
         <Intro title="Our team" text="Psychiatrists and psychologists, with full profiles and areas of expertise." cta={item.href ? { href: item.href, label: "Meet the team" } : undefined}>
+          <Link href="/find-a-specialist/" className="mb-5 flex items-center gap-2 rounded-xl bg-white px-3 py-2.5 text-sm font-semibold text-brand-700 shadow-[inset_0_0_0_1px_var(--color-line)] hover:text-brand-900">
+            <Icon name="search" className="size-4" /> Not sure who to see? Find the right specialist
+          </Link>
           {team && (
             <div className="mb-5">
               <div className="flex -space-x-3" aria-hidden="true">

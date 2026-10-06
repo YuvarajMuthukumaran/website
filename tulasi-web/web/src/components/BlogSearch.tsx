@@ -22,6 +22,7 @@ export function BlogSearch() {
   useEffect(() => {
     const initial = new URLSearchParams(window.location.search).get("q");
     if (initial) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- start from the ?q= in the address bar
       setQ(initial);
       load();
     }
