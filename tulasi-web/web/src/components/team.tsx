@@ -50,7 +50,7 @@ export function PortraitCard({ d, index = 0, size = "md", tabbable = true, prior
           fill
           priority={priority}
           sizes={size === "lg" ? "(min-width:1024px) 280px, 50vw" : "220px"}
-          className={clsx("transition-transform duration-500 ease-[var(--ease-calm)] group-hover:scale-[1.03]", p.cutout ? "object-cover object-bottom" : "scale-[1.1] object-cover object-[50%_30%]")}
+          className={clsx("transition-transform duration-500 ease-[var(--ease-calm)] group-hover:scale-[1.03]", p.cutout ? "portrait-fade object-cover object-bottom" : "scale-[1.1] object-cover object-[50%_30%]")}
         />
       )}
       {p && !p.cutout && <span aria-hidden="true" className="absolute inset-x-0 top-0 h-[40%]" style={{ background: `linear-gradient(to bottom, ${bg} 20%, ${bg}cc 55%, transparent)` }} />}

@@ -110,7 +110,7 @@ function MemberCard({ p }: { p: TeamPerson }) {
             alt={`${p.name}, ${p.designation}`}
             fill
             sizes="(min-width:1280px) 230px, (min-width:1024px) 22vw, (min-width:640px) 30vw, 46vw"
-            className={clsx("object-cover transition-transform duration-500 ease-[var(--ease-calm)] group-hover:scale-[1.03]", p.cutout ? "object-bottom" : "object-[50%_30%]")}
+            className={clsx("object-cover transition-transform duration-500 ease-[var(--ease-calm)] group-hover:scale-[1.03]", p.cutout ? "portrait-fade object-bottom" : "object-[50%_30%]")}
           />
         )}
         {p.experience && (

@@ -8,6 +8,7 @@ import { getDoctors, getHome, getPageByPath, getSite } from "@/lib/content";
 import { faqSchema, metadataFromSeo } from "@/lib/seo";
 import { Arrow, BrandIcon, btnClass, ButtonLink, Icon, JsonLd, Reveal, SectionHeading } from "@/components/ui/primitives";
 import { TeamMember } from "@/components/team";
+import { LeafVine } from "@/components/motion/LeafVine";
 import { TrackedLink } from "@/components/layout/TrackedLink";
 import { OpenChatButton } from "@/components/chat/OpenChatButton";
 import { CONCERN_ICON, CONCERNS, PATHWAYS, type Pathway } from "@/lib/care";
@@ -185,7 +186,9 @@ export default function Home() {
       <section className={`${sectionPad} bg-mist`}>
         <div className="container-page">
           <SectionHeading title="From the first conversation to life after treatment, we walk with you." className="max-w-3xl" />
-          <ol className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+          <div className="relative mt-10">
+          <LeafVine />
+          <ol className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
             {STEPS.map((s, i) => (
               <Reveal as="li" key={s.title} delay={i * 70} className="relative">
                 <span className="grid size-10 place-items-center rounded-full bg-white font-display text-sm font-semibold text-sage-700 shadow-[inset_0_0_0_1px_var(--color-sage-200)]">{i + 1}</span>
@@ -194,6 +197,7 @@ export default function Home() {
               </Reveal>
             ))}
           </ol>
+          </div>
         </div>
       </section>
 

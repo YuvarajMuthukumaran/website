@@ -338,3 +338,23 @@ details.acc > summary::-webkit-details-marker { display: none; }
 .prose-tulasi .lt-quote figcaption { display: flex; align-items: center; gap: 0.75rem; margin-top: auto; }
 .prose-tulasi .lt-avatar { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--color-sage-100); font-size: 0.8rem; font-weight: 600; color: var(--color-sage-700); }
 .prose-tulasi .lt-quote h6 { margin: 0; font-size: 0.95rem; }
+
+/* ───── Doctor cut-outs: the source photos are tight crops, so jackets end in hard
+   vertical edges. Fade the sides and bottom into the card colour instead. ───── */
+.portrait-fade {
+  -webkit-mask-image: linear-gradient(to bottom, #000 76%, transparent 100%), linear-gradient(to right, transparent 0, #000 13%, #000 87%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to bottom, #000 76%, transparent 100%), linear-gradient(to right, transparent 0, #000 13%, #000 87%, transparent 100%);
+  mask-composite: intersect;
+}
+
+/* ───── Care-steps vine: draws once when first seen, then rests. ───── */
+.vine .vine-stem { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.2s var(--ease-calm); }
+.vine[data-vine="in"] .vine-stem { stroke-dashoffset: 0; }
+.vine .vine-leaf { opacity: 0; transform-origin: 0 0; transform: rotate(var(--r)) scale(0); transition: transform 0.9s var(--ease-calm), opacity 0.6s ease; }
+.vine[data-vine="in"] .vine-leaf { opacity: 1; transform: rotate(var(--r)) scale(var(--s)); }
+@media (prefers-reduced-motion: reduce) {
+  .vine .vine-stem, .vine .vine-leaf { transition: none; }
+  .vine .vine-stem { stroke-dashoffset: 0; }
+  .vine .vine-leaf { opacity: 1; transform: rotate(var(--r)) scale(var(--s)); }
+}
