@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "motion/react";
 import { useMemo, useState } from "react";
+import { Icon } from "@/components/ui/primitives";
 
 export type TeamPerson = {
   slug: string | null;
@@ -19,6 +20,7 @@ export type TeamPerson = {
   bg: string;
   tags: string[];
   experience: string | null;
+  credentials?: string | null;
   excerpt?: string | null;
 };
 export type TeamGroup = { heading: string; anchor: string; people: TeamPerson[] };
@@ -108,7 +110,7 @@ function MemberCard({ p }: { p: TeamPerson }) {
             alt={`${p.name}, ${p.designation}`}
             fill
             sizes="(min-width:1280px) 230px, (min-width:1024px) 22vw, (min-width:640px) 30vw, 46vw"
-            className={clsx("object-cover transition-transform duration-500 ease-[var(--ease-calm)] group-hover:scale-[1.03]", p.cutout ? "object-bottom" : "object-[50%_30%]")}
+            className={clsx("object-cover transition-transform duration-500 ease-[var(--ease-calm)] group-hover:scale-[1.03]", p.cutout ? "portrait-fade object-bottom" : "object-[50%_30%]")}
           />
         )}
         {p.experience && (
@@ -119,6 +121,7 @@ function MemberCard({ p }: { p: TeamPerson }) {
         <Link href={href} className="hover:text-brand-700">{p.name}</Link>
       </h3>
       <p className="mt-1 text-sm leading-snug text-ink-soft">{p.designation}</p>
+      {p.credentials && <p className="mt-1 flex items-center gap-1.5 text-[0.8125rem] leading-snug font-medium text-sage-700"><Icon name="check" className="size-3.5 shrink-0" strokeWidth={2.2} /> {p.credentials}</p>}
       {p.excerpt && <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-ink-soft">{p.excerpt}</p>}
       {p.tags.length > 0 && (
         <ul className="mt-2.5 flex flex-wrap gap-1.5" aria-label="Areas of expertise">

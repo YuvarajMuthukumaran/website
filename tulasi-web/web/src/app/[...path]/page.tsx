@@ -14,7 +14,9 @@ import { Arrow, ButtonLink, Icon, JsonLd, Reveal } from "@/components/ui/primiti
 import { TrackedLink } from "@/components/layout/TrackedLink";
 import { TeamFilter } from "@/components/team/TeamFilter";
 import { structureTeamPage, teamLocationPaths } from "@/lib/team-location";
-import { TAG_LIST } from "@/lib/team-tags";
+import { credentialsOf, TAG_LIST } from "@/lib/team-tags";
+import { whatsappLink } from "@/lib/care";
+import Link from "next/link";
 import clsx from "clsx";
 
 // Routes with their own templates elsewhere.
@@ -193,6 +195,7 @@ function TeamPage({ page }: { page: Entry }) {
         bg: PASTELS[n++ % PASTELS.length],
         tags: TAGS.filter(([, re]) => re.test(text)).map(([t]) => t),
         experience: facts?.experience ?? null,
+        credentials: credentialsOf(d),
       };
     }),
   }));
@@ -200,7 +203,8 @@ function TeamPage({ page }: { page: Entry }) {
   return (
     <>
       <PageHero title={page.h1} crumbs={crumbsFor(page)} lead={intro.join(" ")}>
-        <nav aria-label="Team groups" className="mt-8 flex flex-wrap gap-2">
+        <p className="mt-6 text-[0.9375rem] text-ink-soft">Not sure who to see? <Link href="/find-a-specialist/" className="font-semibold text-brand-700 underline decoration-brand-200 underline-offset-4 hover:text-brand-900">Answer three quick questions</Link> and we’ll suggest the right specialist.</p>
+        <nav aria-label="Team groups" className="mt-6 flex flex-wrap gap-2">
           {groups.map((g) => (
             <a key={g.heading} href={`#${anchor(g.heading)}`} className="inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-ink ring-1 ring-line transition hover:text-brand-700 hover:ring-brand-300">
               {g.heading} <span className="rounded-full bg-sage-50 px-2 py-0.5 text-xs text-sage-700">{g.people.length}</span>
@@ -231,7 +235,7 @@ function ContactPage({ page }: { page: Entry }) {
     <>
       <PageHero title={page.h1} crumbs={crumbsFor(page)} lead="Get In Touch With Us" />
       <div className="container-page py-12 lg:py-16">
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Reveal>
             <TrackedLink event="call_click" eventLocation="contact" href={site.contact.phoneHref} className={card}>
               <span className="icon-tile size-12"><Icon name="phone" /></span>
@@ -239,6 +243,16 @@ function ContactPage({ page }: { page: Entry }) {
                 <span className="block text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Call us</span>
                 <span className="mt-2 block font-display text-2xl font-semibold tracking-[-0.02em] text-ink">{site.contact.phoneDisplay}</span>
                 <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-700">Tap to call <Arrow /></span>
+              </span>
+            </TrackedLink>
+          </Reveal>
+          <Reveal delay={40}>
+            <TrackedLink event="whatsapp_click" eventLocation="contact" href={whatsappLink(site.contact.phoneHref)} target="_blank" rel="noopener" className={card}>
+              <span className="icon-tile size-12"><Icon name="chat" /></span>
+              <span>
+                <span className="block text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">WhatsApp</span>
+                <span className="mt-2 block font-display text-lg font-semibold tracking-[-0.01em] text-ink">Message us</span>
+                <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-700">Open WhatsApp <Arrow /></span>
               </span>
             </TrackedLink>
           </Reveal>

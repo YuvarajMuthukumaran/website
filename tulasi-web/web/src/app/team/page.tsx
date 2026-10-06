@@ -5,8 +5,9 @@ import { getArchiveSeo, getDoctorFacts, getDoctors } from "@/lib/content";
 import { metadataFromArchive } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { PASTELS, portraitOf } from "@/components/team";
+
 import { TeamExplorer, type TeamGroup } from "@/components/team/TeamExplorer";
-import { expertiseTags, TAG_LIST } from "@/lib/team-tags";
+import { credentialsOf, expertiseTags, TAG_LIST } from "@/lib/team-tags";
 
 export function generateMetadata(): Metadata {
   return metadataFromArchive(getArchiveSeo("/team/"), { title: "Team - Tulasi Healthcare", path: "/team/" });
@@ -33,6 +34,7 @@ export default function TeamIndex() {
         bg: PASTELS[n++ % PASTELS.length],
         tags: expertiseTags([d.designation ?? "", ...(facts?.expertise ?? [])].join(" ")),
         experience: facts?.experience ?? null,
+        credentials: credentialsOf(d),
         excerpt: d.excerpt,
       };
     }),

@@ -3,6 +3,8 @@
 // Always same origin: the browser calls /api/* on this site and next.config.ts
 // forwards it to the hosted chat server (so there is no CORS to configure and no
 // environment variable to forget on a new deployment).
+import { fetchWithRetry, type RetryOptions } from "@/lib/resilientFetch";
+
 export const API_BASE = "";
 
 export class ApiError extends Error {
@@ -11,16 +13,20 @@ export class ApiError extends Error {
   }
 }
 
-async function call<T>(path: string, init: RequestInit & { auth?: boolean } = {}): Promise<T> {
+async function call<T>(path: string, init: RequestInit & { auth?: boolean } = {}, retry?: RetryOptions): Promise<T> {
   const { auth, ...rest } = init;
   let res: Response;
   try {
-    res = await fetch(`${API_BASE}/api${path}`, {
-      ...rest,
-      headers: { ...(rest.body ? { "Content-Type": "application/json" } : {}), ...rest.headers },
-      // The session cookie is only ever sent to the auth/portal endpoints.
-      credentials: auth ? "include" : "omit",
-    });
+    res = await fetchWithRetry(
+      `${API_BASE}/api${path}`,
+      {
+        ...rest,
+        headers: { ...(rest.body ? { "Content-Type": "application/json" } : {}), ...rest.headers },
+        // The session cookie is only ever sent to the auth/portal endpoints.
+        credentials: auth ? "include" : "omit",
+      },
+      retry
+    );
   } catch {
     throw new ApiError("We couldn’t reach our booking system. Please check your connection, or call us.", 0);
   }
@@ -46,16 +52,21 @@ export const logout = () => call<{ ok: true }>("/auth/logout", { method: "POST",
 export const myAppointments = () => call<{ appointments: Appointment[] }>("/me/appointments", { auth: true });
 export const cancelMyAppointment = (id: string) => call<{ ok: true }>(`/me/appointments/${encodeURIComponent(id)}/cancel`, { method: "PATCH", auth: true });
 
+// ───────────── Guided matching ─────────────
+export type MatchInput = { concern: string; who: "self" | "child" | "elder" | "loved"; support: "therapy" | "medication" | "unsure" };
+export type MatchResult = { relaxed: boolean; matches: { name: string; role: string; focus: string | null; photo: string | null; reasons: string[] }[]; fallback?: "call" };
+export const matchDoctors = (input: MatchInput) => call<MatchResult>("/match", { method: "POST", body: JSON.stringify(input) });
+
 // ───────────── Chat ─────────────
-export const startChatSession = (history?: { role: string; text: string }[]) =>
-  call<{ sessionId: string; crisisResources: unknown }>("/session", { method: "POST", body: JSON.stringify({ channel: "website", ...(history?.length ? { history } : {}) }) });
+export const startChatSession = (history?: { role: string; text: string }[], retry?: RetryOptions) =>
+  call<{ sessionId: string; crisisResources: unknown }>("/session", { method: "POST", body: JSON.stringify({ channel: "website", ...(history?.length ? { history } : {}) }) }, retry);
 export const endChatSession = (id: string) => fetch(`${API_BASE}/api/session/${encodeURIComponent(id)}`, { method: "DELETE" }).catch(() => {});
 
 export type ChatEvent = { text?: string; crisis?: boolean; error?: boolean; functional?: boolean; action?: "book" | "portal"; quickReplies?: string[]; doctors?: { name: string; role?: string; photo?: string | null }[] };
 
 /** Streams one reply (SSE over POST). Resolves when the stream ends. */
-export async function streamChat(sessionId: string, message: string, onEvent: (e: ChatEvent) => void, signal?: AbortSignal) {
-  const res = await fetch(`${API_BASE}/api/chat`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ sessionId, message }), signal });
+export async function streamChat(sessionId: string, message: string, onEvent: (e: ChatEvent) => void, signal?: AbortSignal, retry?: RetryOptions) {
+  const res = await fetchWithRetry(`${API_BASE}/api/chat`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ sessionId, message }), signal }, retry);
   if (res.status === 404) throw new ApiError("session-expired", 404);
   if (!res.ok || !res.body) {
     const data = await res.json().catch(() => ({}));

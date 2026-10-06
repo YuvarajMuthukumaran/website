@@ -16,3 +16,11 @@ const TAGS: [string, RegExp][] = [
 ];
 export const TAG_LIST = TAGS.map(([t]) => t);
 export const expertiseTags = (text: string) => TAGS.filter(([, re]) => re.test(text)).map(([t]) => t);
+
+/** "MBBS, MD · RCI licensed": only what the doctor's own published bio states. */
+export function credentialsOf(d?: { qualificationsMentioned: string[]; rciLicensed: boolean } | null): string | null {
+  if (!d) return null;
+  const quals = d.qualificationsMentioned.filter((q) => q !== "RCI").slice(0, 3).join(", ");
+  const parts = [quals || null, d.rciLicensed ? "RCI licensed" : null].filter(Boolean);
+  return parts.length ? parts.join(" · ") : null;
+}

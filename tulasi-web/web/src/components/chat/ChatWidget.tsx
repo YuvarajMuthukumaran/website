@@ -15,7 +15,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import { ApiError, endChatSession, startChatSession, streamChat, type ChatEvent } from "@/lib/api";
 import { detectMood, type Mood } from "@/lib/mood";
@@ -50,6 +50,7 @@ export function ChatWidget({ onClose, phone, doctorSlugs = {}, doctorPhotos = {}
   const [mood, setMood] = useState<Mood>("neutral");
   const [failedText, setFailedText] = useState<string | null>(null);
   const [announcement, setAnnouncement] = useState("");
+  const [waking, setWaking] = useState(false);
   const session = useRef<string | null>(null);
   const abort = useRef<AbortController | null>(null);
   const list = useRef<HTMLDivElement>(null);
@@ -107,13 +108,16 @@ export function ChatWidget({ onClose, phone, doctorSlugs = {}, doctorPhotos = {}
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
+  // The API host sleeps when idle; tell the visitor instead of leaving them staring at a spinner.
+  const wakingHooks = useMemo(() => ({ onSlow: () => setWaking(true), onRecovered: () => setWaking(false) }), []);
+
   const ensureSession = useCallback(async (restore = false) => {
     if (session.current && !restore) return session.current;
     const history = restore ? msgs.filter((m) => !m.crisis && m.text).slice(-20).map((m) => ({ role: m.role === "user" ? "user" : "model", text: m.text.slice(0, 1500) })) : undefined;
-    const { sessionId } = await startChatSession(history);
+    const { sessionId } = await startChatSession(history, wakingHooks);
     session.current = sessionId;
     return sessionId;
-  }, [msgs]);
+  }, [msgs, wakingHooks]);
 
   /** Sends `text` (adding a user bubble unless this is a retry) and streams the reply. */
   async function run(text: string, addUser: boolean) {
@@ -188,11 +192,11 @@ export function ChatWidget({ onClose, phone, doctorSlugs = {}, doctorPhotos = {}
     try {
       let id = await ensureSession();
       try {
-        await streamChat(id, text, onEvent, signal);
+        await streamChat(id, text, onEvent, signal, wakingHooks);
       } catch (err) {
         if (err instanceof ApiError && err.status === 404) {
           id = await ensureSession(true); // server restarted: carry the conversation over
-          await streamChat(id, text, onEvent, signal);
+          await streamChat(id, text, onEvent, signal, wakingHooks);
         } else throw err;
       }
       streamEnded = true;
@@ -286,7 +290,7 @@ export function ChatWidget({ onClose, phone, doctorSlugs = {}, doctorPhotos = {}
         </span>
         <div className="min-w-0 flex-1">
           <p className="font-display font-semibold leading-tight">Tulasi</p>
-          <p className="text-xs text-ink-soft">{busy ? "Thinking with you…" : "AI assistant · not a doctor"}</p>
+          <p className="text-xs text-ink-soft">{waking ? "Waking up, this can take up to a minute…" : busy ? "Thinking with you…" : "AI assistant · not a doctor"}</p>
         </div>
         {consented && msgs.length > 0 && (
           <button type="button" onClick={newChat} className="min-h-10 rounded-full px-3 text-xs font-semibold text-ink-soft hover:bg-mist hover:text-brand-700">New chat</button>

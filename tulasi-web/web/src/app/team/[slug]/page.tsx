@@ -43,7 +43,7 @@ export default async function DoctorPage({ params }: PageProps<"/team/[slug]">) 
           <Reveal variant="scale" className="mx-auto w-full max-w-[200px] sm:max-w-[280px] lg:max-w-none">
             <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] bg-sage-50 shadow-[0_0_0_1px_rgb(23_34_44/0.05)]">
               {portrait ? (
-                <Image src={portrait.src} alt={`${d.name}, ${d.designation ?? ""}`} fill priority sizes="(min-width:1024px) 340px, 300px" className={portrait.cutout ? "object-cover object-bottom" : "object-cover object-[50%_25%]"} />
+                <Image src={portrait.src} alt={`${d.name}, ${d.designation ?? ""}`} fill priority sizes="(min-width:1024px) 340px, 300px" className={portrait.cutout ? "portrait-fade object-cover object-bottom" : "object-cover object-[50%_25%]"} />
               ) : (
                 <span className="absolute inset-0 grid place-items-center font-display text-7xl font-semibold text-sage-300">{initials}</span>
               )}

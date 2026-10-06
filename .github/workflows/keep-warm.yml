@@ -1,0 +1,17 @@
+# Keeps the hosted chat/booking API awake while it runs on Render's free tier
+# (which sleeps after ~15 minutes idle and then takes 30-60s to wake).
+# A stopgap: scheduled runs can be delayed, and GitHub pauses them after 60 days
+# without repo activity. The real fix is Render's paid always-on plan.
+name: keep-api-warm
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: curl -fsS --retry 3 --retry-delay 20 --max-time 90 https://chatbot-6lzw.onrender.com/api/health

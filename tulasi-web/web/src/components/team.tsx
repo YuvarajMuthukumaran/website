@@ -11,6 +11,8 @@ import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
 import { localPath, type Doctor } from "@/lib/content";
+import { credentialsOf } from "@/lib/team-tags";
+import { Icon } from "@/components/ui/primitives";
 
 // Quiet tints (sage and pale blue) that sit well on white.
 export const PASTELS = ["#eef5f0", "#eaf1f8", "#f1f6ee", "#e8f0f5", "#eef4f1", "#ebf1f8"] as const;
@@ -48,7 +50,7 @@ export function PortraitCard({ d, index = 0, size = "md", tabbable = true, prior
           fill
           priority={priority}
           sizes={size === "lg" ? "(min-width:1024px) 280px, 50vw" : "220px"}
-          className={clsx("transition-transform duration-500 ease-[var(--ease-calm)] group-hover:scale-[1.03]", p.cutout ? "object-cover object-bottom" : "scale-[1.1] object-cover object-[50%_30%]")}
+          className={clsx("transition-transform duration-500 ease-[var(--ease-calm)] group-hover:scale-[1.03]", p.cutout ? "portrait-fade object-cover object-bottom" : "scale-[1.1] object-cover object-[50%_30%]")}
         />
       )}
       {p && !p.cutout && <span aria-hidden="true" className="absolute inset-x-0 top-0 h-[40%]" style={{ background: `linear-gradient(to bottom, ${bg} 20%, ${bg}cc 55%, transparent)` }} />}
@@ -65,6 +67,7 @@ export function TeamMember({ d, index, designation, excerpt, headingLevel: H = "
         <Link href={`/team/${d.slug}/`} className="hover:text-brand-700">{d.name}</Link>
       </H>
       <p className="mt-1 text-sm leading-snug text-ink-soft">{designation ?? d.designation}</p>
+      {credentialsOf(d) && <p className="mt-1 flex items-center gap-1.5 text-[0.8125rem] leading-snug font-medium text-sage-700"><Icon name="check" className="size-3.5 shrink-0" strokeWidth={2.2} /> {credentialsOf(d)}</p>}
       {excerpt && <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-ink-soft">{excerpt}</p>}
     </article>
   );

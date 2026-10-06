@@ -8,6 +8,7 @@ import { getDoctors, getHome, getPageByPath, getSite } from "@/lib/content";
 import { faqSchema, metadataFromSeo } from "@/lib/seo";
 import { Arrow, BrandIcon, btnClass, ButtonLink, Icon, JsonLd, Reveal, SectionHeading } from "@/components/ui/primitives";
 import { TeamMember } from "@/components/team";
+import { LeafVine } from "@/components/motion/LeafVine";
 import { TrackedLink } from "@/components/layout/TrackedLink";
 import { OpenChatButton } from "@/components/chat/OpenChatButton";
 import { CONCERN_ICON, CONCERNS, PATHWAYS, type Pathway } from "@/lib/care";
@@ -129,7 +130,11 @@ export default function Home() {
           </ul>
           <p className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.9375rem] text-ink-soft">
             Not sure where to start?
-            <OpenChatButton className="inline-flex items-center gap-2 font-semibold text-brand-700 hover:text-brand-900">Ask Tulasi</OpenChatButton>
+            <Link href="/find-a-specialist/" className="group/btn inline-flex min-h-10 items-center gap-1.5 font-semibold text-brand-700 hover:text-brand-900">Find the right specialist <Arrow className="size-4" /></Link>
+            <span aria-hidden="true" className="hidden text-line sm:inline">|</span>
+            <Link href="/mental-health-check/" className="inline-flex min-h-10 items-center font-semibold text-brand-700 hover:text-brand-900">Free 2-minute check-in</Link>
+            <span aria-hidden="true" className="hidden text-line sm:inline">|</span>
+            <OpenChatButton className="inline-flex min-h-10 items-center gap-2 font-semibold text-brand-700 hover:text-brand-900">Ask Tulasi</OpenChatButton>
             <span aria-hidden="true" className="hidden text-line sm:inline">|</span>
             <Link href="/services-2/" className="group/btn inline-flex items-center gap-1.5 font-semibold text-brand-700 hover:text-brand-900">All conditions &amp; treatments <Arrow className="size-4" /></Link>
           </p>
@@ -181,7 +186,9 @@ export default function Home() {
       <section className={`${sectionPad} bg-mist`}>
         <div className="container-page">
           <SectionHeading title="From the first conversation to life after treatment, we walk with you." className="max-w-3xl" />
-          <ol className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+          <div className="relative mt-10">
+          <LeafVine />
+          <ol className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
             {STEPS.map((s, i) => (
               <Reveal as="li" key={s.title} delay={i * 70} className="relative">
                 <span className="grid size-10 place-items-center rounded-full bg-white font-display text-sm font-semibold text-sage-700 shadow-[inset_0_0_0_1px_var(--color-sage-200)]">{i + 1}</span>
@@ -190,6 +197,7 @@ export default function Home() {
               </Reveal>
             ))}
           </ol>
+          </div>
         </div>
       </section>
 

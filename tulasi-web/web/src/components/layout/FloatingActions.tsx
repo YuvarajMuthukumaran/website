@@ -13,6 +13,7 @@ import { useEffect, useRef, useState, type ComponentType } from "react";
 import TulasiMascot from "@/components/chat/TulasiMascot";
 import { Icon } from "@/components/ui/primitives";
 import { track } from "@/lib/analytics";
+import { warmUp } from "@/lib/resilientFetch";
 
 type Phone = { display: string; href: string };
 type WidgetProps = { onClose: () => void; phone: Phone; doctorSlugs: Record<string, string>; doctorPhotos: Record<string, string> };
@@ -46,6 +47,8 @@ export function FloatingActions({ phone, doctorSlugs, doctorPhotos }: { phone: P
     window.addEventListener("thc:open-chat", openChat);
     // The mascot comes out shortly after the page loads (or is refreshed).
     const first = setTimeout(() => showMascot(PEEK_STAY_MS), PEEK_DELAY_MS);
+    // Wake the (sleeping) chat server now, so it is ready by the time someone taps the bubble.
+    warmUp("/api/health/");
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("thc:open-chat", openChat);
