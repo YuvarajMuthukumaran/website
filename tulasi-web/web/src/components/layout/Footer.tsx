@@ -38,8 +38,9 @@ const COMPANY = [
   { label: "Employee Assistance Program", href: "/employee-assistance-program/" },
   { label: "Find a specialist", href: "/find-a-specialist/" },
   { label: "Free check-in", href: "/mental-health-check/" },
-  { label: "Contact us", href: "/contact-us/" },
+  { label: "Locations", href: "/locations/" },
 ];
+
 
 const colHead = "text-[0.75rem] font-semibold tracking-[0.1em] text-ink uppercase";
 const colLink = "text-[0.9375rem] text-ink-soft transition-colors hover:text-brand-700";

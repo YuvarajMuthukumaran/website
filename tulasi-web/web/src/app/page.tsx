@@ -4,13 +4,15 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getDoctors, getHome, getPageByPath, getSite, polishText } from "@/lib/content";
+import { getHome, getPageByPath, getSite, polishText } from "@/lib/content";
 import { faqSchema, metadataFromSeo } from "@/lib/seo";
 import { Arrow, BrandIcon, btnClass, ButtonLink, Icon, JsonLd, Reveal, SectionHeading } from "@/components/ui/primitives";
-import { TeamMember } from "@/components/team";
+import { DoctorMarquee } from "@/components/DoctorMarquee";
+import { ReviewGrid } from "@/components/ReviewGrid";
 import { LeafVine } from "@/components/motion/LeafVine";
 import { TrackedLink } from "@/components/layout/TrackedLink";
 import { OpenChatButton } from "@/components/chat/OpenChatButton";
+import { HomeHeroSlideshow } from "@/components/HomeHeroSlideshow";
 import { CONCERN_ICON, CONCERNS, PATHWAYS, type Pathway } from "@/lib/care";
 
 export function generateMetadata(): Metadata {
@@ -29,7 +31,7 @@ const PATHWAY_ICON: Record<Pathway["icon"], string> = {
   briefcase: "workplace",
 };
 const HELP_WITH = ["Anxiety", "Depression", "OCD", "Bipolar disorder", "Alcohol addiction", "Drug addiction", "ADHD", "Dementia & memory"];
-const FEATURED_DOCTORS = ["Dr. Gorav Gupta", "Dr. Ratnarakshit Ingole", "Dr. Pooja Sharma", "Dr. Poorva Gupta"];
+
 const STEPS = [
   { title: "Assess", text: "Meet our psychiatrists and clinical psychologists for a careful evaluation." },
   { title: "Treat", text: "Medicine and therapy together, tailored to the person’s needs." },
@@ -42,12 +44,7 @@ const sectionPad = "py-14 sm:py-16 lg:py-20";
 export default function Home() {
   const h = getHome();
   const site = getSite();
-  const doctors = getDoctors();
   const phone = { display: site.contact.phoneDisplay, href: site.contact.phoneHref };
-
-  const picked = FEATURED_DOCTORS.map((n) => doctors.find((d) => d.name === n)).filter((d): d is NonNullable<typeof d> => !!d);
-  const team = [...picked, ...doctors.filter((d) => !picked.includes(d))].slice(0, 4);
-
   const since = h.intro.blocks.flatMap((b) => b.paragraphs).join(" ").match(/inauguration in (\d{4})/)?.[1];
   const experts = h.stats.find((s) => /expert/i.test(s.label))?.display ?? "100+";
   const beds = h.stats.find((s) => /bed/i.test(s.label))?.display ?? "200+";
@@ -60,7 +57,7 @@ export default function Home() {
 
   const faqIntro = "Families and patients often write to us with questions about mental illness, addiction and their treatment. Here are some of the most common ones.";
   const faqItems = h.faq.items.map((f) => ({ q: polishText(f.q), a: polishText(f.a) }));
-  const voices = h.testimonials.items.slice(0, 3);
+
   const cashless = h.insurance.text.match(/empanelled with (.+?) for cashless/i)?.[1] ?? null;
 
   const concerns = HELP_WITH.map((l) => CONCERNS.find((c) => c.label === l)).filter((c): c is NonNullable<typeof c> => !!c);
@@ -90,7 +87,7 @@ export default function Home() {
           </div>
           <div className="relative">
             <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] bg-sage-50 shadow-[0_0_0_1px_rgb(23_34_44/0.06),0_30px_60px_-36px_rgb(23_34_44/0.35)] lg:aspect-[5/4]">
-              <Image src="/wp-content/uploads/2022/12/lasi-healthcare-psychiatric-hospital.webp" alt="Tulasi Healthcare psychiatric hospital and rehabilitation centre, Gurugram" fill priority sizes="(min-width:1024px) 540px, 100vw" className="object-cover" />
+              <HomeHeroSlideshow />
             </div>
             <p className="absolute bottom-3 left-3 flex max-w-[calc(100%-1.5rem)] items-center gap-2 rounded-full bg-white/95 py-2 pr-4 pl-3 text-[0.8125rem] font-medium text-ink shadow-[0_8px_24px_-12px_rgb(23_34_44/0.4)] sm:bottom-4 sm:left-4">
               <Icon name="pin" className="size-4 shrink-0 text-sage-600" /> <span className="truncate">Gurugram &amp; Delhi · Delhi-NCR</span>
@@ -99,17 +96,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═════════════ Trust figures ═════════════ */}
-      <section aria-label="Tulasi Healthcare in numbers" className="border-y border-line bg-white">
-        <ul className="container-page grid grid-cols-2 lg:grid-cols-4">
-          {trust.map(([value, label], i) => (
-            <li key={label} className={`px-2 py-6 text-center sm:px-4 ${i % 2 ? "border-l border-line" : ""} ${i > 1 ? "border-t border-line lg:border-t-0" : ""} ${i === 2 ? "lg:border-l" : ""}`}>
-              <p className="font-display text-[1.75rem] leading-none font-semibold tracking-[-0.02em] text-ink sm:text-[2rem]">{value}</p>
-              <p className="mt-2 text-sm text-ink-soft">{label}</p>
-            </li>
-          ))}
-        </ul>
+      {/* ═════════════ Impact stats strip ═════════════ */}
+      <section aria-label="Tulasi Healthcare impact numbers" className="stats-strip">
+        <div className="container-page">
+          <ul className="stats-grid">
+            {[
+              { value: "15+",   unit: "Years",    label: "Delivering compassionate psychiatric care in Delhi-NCR" },
+              { value: "100+",  unit: "Experts",  label: "Psychiatrists, psychologists and rehabilitation specialists" },
+              { value: "200+",  unit: "Beds",     label: "Across our inpatient and rehabilitation centres" },
+              { value: "NABH",  unit: null,       label: "Accredited — the gold standard for hospital quality in India" },
+            ].map(({ value, unit, label }, i) => (
+              <li key={label} className="stats-item">
+                <p className="stats-value">
+                  {value}
+                  {unit && <span className="stats-unit">{unit}</span>}
+                </p>
+                <p className="stats-label">{label}</p>
+              </li>
+            ))}
+          </ul>
+          <p className="stats-footnote">Based on our operational records and accreditation status.</p>
+        </div>
       </section>
+
 
       {/* ═════════════ What would you like help with ═════════════ */}
       <section id="help" className={sectionPad}>
@@ -164,20 +173,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═════════════ Doctors ═════════════ */}
-      <section className={sectionPad}>
+      {/* ═════════════ Doctors marquee ═════════════ */}
+      <section className="py-14 sm:py-16 lg:py-20 overflow-hidden">
         <div className="container-page">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionHeading title="Meet our doctors" text="Highly qualified and dedicated psychiatrists and psychologists. Choose a profile to read more or book." />
             <div className="hidden sm:block"><ButtonLink href="/our-team/" variant="line">Meet the whole team <Arrow /></ButtonLink></div>
           </div>
-          <ul className="mt-8 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
-            {team.map((d, i) => (
-              <Reveal as="li" key={d.slug} delay={i * 60}>
-                <TeamMember d={d} index={i} />
-              </Reveal>
-            ))}
-          </ul>
+        </div>
+        {/* Marquee bleeds beyond container-page intentionally */}
+        <DoctorMarquee />
+        <div className="container-page">
           <div className="mt-8 sm:hidden"><ButtonLink href="/our-team/" variant="line" className="w-full">Meet the whole team <Arrow /></ButtonLink></div>
         </div>
       </section>
@@ -229,24 +235,42 @@ export default function Home() {
       </section>
 
       {/* ═════════════ Patient voices ═════════════ */}
-      {voices.length > 0 && (
-        <section aria-labelledby="voices" className={sectionPad}>
-          <div className="container-page">
-            <SectionHeading title="What patients say" text="From reviews shared by people we have treated." id="voices" />
-            <ul className="mt-8 grid gap-4 md:grid-cols-3">
-              {voices.map((v, i) => (
-                <Reveal as="li" key={v.name} delay={i * 70}>
-                  <figure className="flex h-full flex-col rounded-[var(--radius-card)] bg-white p-6 shadow-[0_0_0_1px_var(--color-line)]">
-                    <Icon name="quote" className="size-6 text-sage-500" />
-                    <blockquote className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-ink">{polishText(v.quote)}</blockquote>
-                    <figcaption className="mt-4 text-sm font-semibold text-ink-soft">{v.name}</figcaption>
-                  </figure>
-                </Reveal>
-              ))}
-            </ul>
+      <section aria-labelledby="reviews-heading" className="py-14 sm:py-16 lg:py-20" style={{ background: "linear-gradient(135deg, #0f2847 0%, #0b1d40 50%, #102a5a 100%)" }}>
+        <div className="container-page">
+          {/* Header row */}
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+            <Reveal as="header">
+              <p className="eyebrow mb-3" style={{ color: "rgb(163 200 176)" }}>What patients say</p>
+              <h2 id="reviews-heading" className="text-[length:var(--text-h2)] leading-[1.15] font-semibold tracking-[-0.02em] text-white">
+                Real stories, real recovery
+              </h2>
+            </Reveal>
+            {/* Google aggregate badge */}
+            <Reveal>
+              <div className="flex items-center gap-3 rounded-2xl px-5 py-3" style={{ background: "rgb(255 255 255 / 0.07)", border: "1px solid rgb(255 255 255 / 0.12)" }}>
+                <svg viewBox="0 0 24 24" className="size-5 shrink-0" aria-hidden="true">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <svg key={i} viewBox="0 0 16 16" className="size-3.5 fill-amber-400" aria-hidden="true">
+                        <path d="M8 1.5l1.8 3.6 4 .6-2.9 2.8.7 4L8 10.4l-3.6 1.9.7-4L2.2 5.7l4-.6L8 1.5z" />
+                      </svg>
+                    ))}
+                    <span className="ml-1 text-sm font-bold text-white">5.0</span>
+                  </div>
+                  <p className="mt-0.5 text-[0.7rem] font-medium" style={{ color: "rgb(255 255 255 / 0.5)" }}>Verified Google Reviews</p>
+                </div>
+              </div>
+            </Reveal>
           </div>
-        </section>
-      )}
+          <ReviewGrid />
+        </div>
+      </section>
 
       {/* ═════════════ Visit ═════════════ */}
       <section aria-labelledby="visit-title" className={sectionPad}>

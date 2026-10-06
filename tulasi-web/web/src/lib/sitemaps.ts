@@ -15,6 +15,7 @@ const RETIRED = new Set((JSON.parse(readFileSync(path.join(process.cwd(), "conte
 const imagesIn = (html: string) => [...html.matchAll(/<img[^>]+src="([^"]+)"/g)].map((m) => m[1]).filter((u) => !RETIRED.has(localPath(u)));
 const abs = (u: string) => absoluteUrl(localPath(u));
 const uniq = (a: string[]) => [...new Set(a)];
+const publicPagePath = (path: string) => (path === "/contact-us/" ? "/locations/" : path);
 
 // Tag archives are left out on purpose: they are noindex (thin lists of posts already in the post sitemap).
 export const SITEMAPS = ["post", "page", "team", "category", "author"] as const;
@@ -32,7 +33,7 @@ function entries(name: SitemapName): Url[] {
     case "page":
       return getPages()
         .filter((p) => p.path !== "/blog/")
-        .map((p) => ({ loc: absoluteUrl(p.path), lastmod: p.modified, images: uniq(imagesIn(p.contentHtml)).map(abs) }));
+        .map((p) => ({ loc: absoluteUrl(publicPagePath(p.path)), lastmod: p.modified, images: uniq(imagesIn(p.contentHtml)).map(abs) }));
     case "team":
       return [{ loc: absoluteUrl("/team/") }, ...getDoctors().map((d) => ({ loc: absoluteUrl(`/team/${d.slug}/`), images: d.photo ? [abs(d.photo)] : [] }))];
     case "category":

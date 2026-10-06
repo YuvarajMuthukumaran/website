@@ -120,16 +120,27 @@ const redirectLookup = (redirects: Redirect[]) => {
   }
   return m;
 };
+
+function locationsLink(l: Link): Link {
+  const href = l.href?.replace(LIVE_ORIGINS, "");
+  if (href === "/contact-us/" || href === "/contact-us") return { ...l, label: l.label === "Contact Us" ? "Locations" : l.label, href: "/locations/" };
+  return l.label === "Contact Us" ? { ...l, label: "Locations" } : l;
+}
+
 function withDirectLinks(site: Site, redirects: Redirect[]): Site {
   const map = redirectLookup(redirects);
   const fix = (l: Link): Link => {
     if (!l.href) return l;
     const p = l.href.replace(LIVE_ORIGINS, "");
-    return p.startsWith("/") && map.has(p) ? { ...l, href: map.get(p)! } : l;
+    const linked = p.startsWith("/") && map.has(p) ? { ...l, href: map.get(p)! } : l;
+    return locationsLink(linked);
   };
   return {
     ...site,
-    menu: site.menu.map((m) => ({ ...m, href: m.href ? (map.get(m.href) ?? m.href) : m.href, groups: m.groups.map((g) => ({ ...g, links: g.links.map(fix) })) })),
+    menu: site.menu.map((m) => {
+      const top = locationsLink({ label: m.label, href: m.href ? (map.get(m.href) ?? m.href) : m.href });
+      return { ...m, label: top.label, href: top.href, groups: m.groups.map((g) => ({ ...g, links: g.links.map(fix) })) };
+    }),
     footerColumns: site.footerColumns.map((c) => ({ ...c, links: c.links.map(fix) })),
   };
 }

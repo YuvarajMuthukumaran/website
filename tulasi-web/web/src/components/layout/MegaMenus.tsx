@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useState, type ReactNode } from "react";
 import type { Site } from "@/lib/content";
 import { CONCERNS } from "@/lib/care";
+import { CLINICS, HOSPITALS, LOCATIONS, type Location } from "@/lib/locations";
 import { Arrow, BrandIcon, Icon } from "@/components/ui/primitives";
 
 type Item = Site["menu"][number];
@@ -266,7 +267,120 @@ function TeamPanel({ id, item, open, team }: { id: string; item: Item; open: boo
   );
 }
 
-// ───────────────────────── Anything else (Contact Us) ─────────────────────────
+// ───────────────────────── Locations ─────────────────────────
+
+function LocationMiniCard({ loc, featured = false }: { loc: Location; featured?: boolean }) {
+  const isHospital = loc.type === "hospital";
+  return (
+    <Link
+      href={`/locations/#${loc.id}`}
+      className={clsx(
+        "group/location relative isolate flex min-w-0 overflow-hidden rounded-2xl bg-white text-ink shadow-[0_0_0_1px_var(--color-line)] transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_var(--color-brand-200),0_18px_40px_-28px_rgb(23_34_44/0.35)]",
+        featured ? "col-span-2 min-h-[182px]" : "min-h-[132px]"
+      )}
+    >
+      <div className={clsx("relative shrink-0 overflow-hidden bg-sage-50", featured ? "w-[230px]" : "w-[118px]")}>
+        <Image
+          src={loc.photo}
+          alt=""
+          fill
+          sizes={featured ? "230px" : "118px"}
+          className="object-cover transition-transform duration-700 ease-[var(--ease-calm)] group-hover/location:scale-105"
+        />
+        <span className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" aria-hidden="true" />
+      </div>
+      <div className="flex min-w-0 flex-1 flex-col p-4">
+        <div className="flex flex-wrap items-center gap-2">
+          <span
+            className={clsx(
+              "inline-flex min-h-6 items-center rounded-full px-2.5 text-[0.65rem] font-bold tracking-[0.09em] uppercase",
+              isHospital ? "bg-brand-600 text-white" : "bg-sage-100 text-sage-700"
+            )}
+          >
+            {isHospital ? "Hospital" : "Clinic"}
+          </span>
+          {isHospital && loc.emergency && <span className="inline-flex min-h-6 items-center rounded-full bg-alert-50 px-2.5 text-[0.65rem] font-bold tracking-[0.08em] text-alert-700 uppercase">24x7</span>}
+          {loc.beds && <span className="text-[0.72rem] font-semibold text-ink-soft">{loc.beds} beds</span>}
+        </div>
+        <p className={clsx("mt-3 line-clamp-2 font-display font-semibold leading-snug text-ink", featured ? "text-[1.1rem]" : "text-[0.98rem]")}>{loc.name}</p>
+        <p className="mt-1 flex items-center gap-1.5 truncate text-[0.78rem] font-medium text-ink-soft">
+          <Icon name="pin" className="size-3.5 shrink-0 text-sage-600" /> {loc.area}
+        </p>
+        {featured && <p className="mt-2 line-clamp-2 text-[0.82rem] leading-relaxed text-ink-soft">{loc.tagline}</p>}
+        <div className="mt-auto flex items-center justify-between gap-3 pt-3">
+          <span className="inline-flex min-w-0 items-center gap-1.5 truncate text-[0.75rem] text-ink-soft">
+            <Icon name="clock" className="size-3.5 shrink-0 text-sage-600" /> {isHospital ? "Open 24 hours" : loc.hours}
+          </span>
+          <span className="inline-flex shrink-0 items-center gap-1 text-[0.78rem] font-semibold text-brand-700">
+            Details <Arrow className="size-3.5" />
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function LocationsPanel({ id, item, open }: { id: string; item: Item; open: boolean }) {
+  return (
+    <Shell id={id} open={open} width="w-[min(980px,calc(100vw-2.5rem))]" align="right">
+      <div className="grid grid-cols-[285px_1fr]">
+        <div className="relative isolate flex flex-col overflow-hidden bg-brand-950 p-6 text-white">
+          <span className="absolute -top-24 -right-20 size-56 rounded-full bg-brand-400/30 blur-3xl" aria-hidden="true" />
+          <span className="absolute -bottom-24 -left-16 size-52 rounded-full bg-sage-300/25 blur-3xl" aria-hidden="true" />
+          <div className="relative">
+            <p className="text-[0.7rem] font-semibold tracking-[0.14em] text-sage-200 uppercase">Network at a glance</p>
+            <p className="mt-3 font-display text-2xl leading-tight font-semibold tracking-[-0.02em]">4 hospitals. 2 clinics. One connected care team.</p>
+            <p className="mt-3 text-sm leading-relaxed text-white/68">Explore Tulasi Healthcare locations across Delhi-NCR, from 24x7 inpatient hospitals to outpatient mind clinics.</p>
+          </div>
+
+          <div className="relative mt-6 grid grid-cols-2 gap-3">
+            {[
+              [HOSPITALS.length, "Hospitals"],
+              [CLINICS.length, "Clinics"],
+              [LOCATIONS.length, "Locations"],
+              ["24x7", "Emergency"],
+            ].map(([value, label]) => (
+              <div key={label} className="rounded-2xl bg-white/9 p-3 shadow-[inset_0_0_0_1px_rgb(255_255_255/0.12)]">
+                <p className="font-display text-2xl leading-none font-semibold tracking-[-0.03em] text-white">{value}</p>
+                <p className="mt-1 text-[0.68rem] font-semibold tracking-[0.1em] text-white/55 uppercase">{label}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="relative mt-auto space-y-2 pt-6">
+            <Link href={item.href ?? "/locations/"} className="group/btn flex min-h-11 items-center justify-center gap-1.5 rounded-full bg-white px-4 text-sm font-semibold text-brand-800 hover:bg-brand-50">
+              View locations page <Arrow className="size-3.5" />
+            </Link>
+            <Link href="/book-appointment/" className="flex min-h-11 items-center justify-center gap-2 rounded-full bg-white/10 px-4 text-sm font-semibold text-white shadow-[inset_0_0_0_1px_rgb(255_255_255/0.16)] hover:bg-white/15">
+              <Icon name="calendar" className="size-4" /> Book appointment
+            </Link>
+          </div>
+        </div>
+
+        <div className="max-h-[76vh] overflow-y-auto bg-white p-4">
+          <div className="mb-3 flex items-center justify-between gap-4 px-1">
+            <div>
+              <p className="font-display text-base font-semibold text-ink">Choose a location</p>
+              <p className="mt-0.5 text-xs text-ink-soft">Hospitals are highlighted with 24x7 and bed capacity cues.</p>
+            </div>
+            <Link href="/locations/" className="hidden shrink-0 items-center gap-1.5 rounded-full bg-brand-50 px-3 py-2 text-xs font-semibold text-brand-700 hover:bg-brand-100 xl:inline-flex">
+              <Icon name="pin" className="size-3.5" /> Full page
+            </Link>
+          </div>
+          <ul className="grid grid-cols-2 gap-3">
+            {LOCATIONS.map((loc, index) => (
+              <li key={loc.id} className={index === 0 ? "col-span-2" : undefined}>
+                <LocationMiniCard loc={loc} featured={index === 0} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </Shell>
+  );
+}
+
+// ───────────────────────── Anything else ─────────────────────────
 
 function SimplePanel({ id, item, open }: { id: string; item: Item; open: boolean }) {
   return (
@@ -287,5 +401,6 @@ export function NavPanel({ id, item, open, team }: { id: string; item: Item; ope
   if (item.label === "Services") return <ServicesPanel id={id} item={item} open={open} />;
   if (item.label === "Conditions") return <ConditionsPanel id={id} open={open} />;
   if (item.label === "Our Team") return <TeamPanel id={id} item={item} open={open} team={team} />;
+  if (item.label === "Locations") return <LocationsPanel id={id} item={item} open={open} />;
   return <SimplePanel id={id} item={item} open={open} />;
 }

@@ -56,6 +56,8 @@ const nextConfig: NextConfig = {
       ...retiredMedia.map((r) => ({ source: r.path, destination: r.to, permanent: true })),
       // Yoast answers /sitemap.xml with the index; keep that.
       { source: "/sitemap.xml", destination: "/sitemap_index.xml", permanent: true },
+      // Contact Us renamed to Locations; keep old URL alive with a 301.
+      { source: "/contact-us/", destination: "/locations/", permanent: true },
       // Profiles linked from live pages that no longer exist → the team page (see gap report).
       { source: "/team/dr-anil-kumar/", destination: "/our-team/", permanent: false },
       { source: "/team/ms-zarafshan-khan/", destination: "/our-team/", permanent: false },

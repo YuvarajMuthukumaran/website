@@ -16,6 +16,8 @@ import { TeamFilter } from "@/components/team/TeamFilter";
 import { structureTeamPage, teamLocationPaths } from "@/lib/team-location";
 import { credentialsOf, TAG_LIST } from "@/lib/team-tags";
 import { whatsappLink } from "@/lib/care";
+import { LOCATIONS } from "@/lib/locations";
+import { LocationsClient } from "@/components/locations/LocationsClient";
 import Link from "next/link";
 import clsx from "clsx";
 
@@ -27,20 +29,42 @@ const differs = (a: string, b: string) => a.replace(/\W+/g, "").toLowerCase() !=
 
 
 export function generateStaticParams() {
-  return getPages()
-    .filter((p) => !OWN_ROUTE.has(p.path))
-    .map((p) => ({ path: p.path.split("/").filter(Boolean).map(decodeURIComponent) }));
+  return [
+    ...getPages()
+      .filter((p) => !OWN_ROUTE.has(p.path))
+      .map((p) => ({ path: p.path.split("/").filter(Boolean).map(decodeURIComponent) })),
+    { path: ["locations"] }, // /locations/ aliases /contact-us/
+  ];
 }
 
 async function pageFor(params: Promise<{ path: string[] }>) {
   const { path } = await params;
   const p = `/${path.map((s) => encodeURIComponent(decodeURIComponent(s))).join("/")}/`;
+  if (p === "/locations/") return getPageByPath("/contact-us/");
   return getPageByPath(p) ?? getPageByPath(`/${path.join("/")}/`);
 }
 
 export async function generateMetadata({ params }: PageProps<"/[...path]">): Promise<Metadata> {
+  const { path } = await params;
+  const requestedPath = `/${path.map((s) => encodeURIComponent(decodeURIComponent(s))).join("/")}/`;
   const page = await pageFor(params);
   if (!page) return {};
+  if (requestedPath === "/locations/") {
+    const title = "Locations - Tulasi Healthcare";
+    const description = "Explore Tulasi Healthcare's network of 4 hospitals and 2 clinics across Delhi-NCR, with directions, phone numbers, timings and appointment options.";
+    return metadataFromSeo(
+      {
+        ...page.seo,
+        title,
+        description,
+        canonical: "/locations/",
+        og: page.seo.og
+          ? { ...page.seo.og, title, description, url: "/locations/" }
+          : page.seo.og,
+      },
+      { title, path: "/locations/", description }
+    );
+  }
   return metadataFromSeo(page.seo, { title: page.title, path: page.path, description: descriptionFrom(page.excerpt ?? page.contentHtml) });
 }
 
@@ -59,7 +83,7 @@ export default async function WpPage({ params }: PageProps<"/[...path]">) {
   const page = await pageFor(params);
   if (!page) notFound();
   if (page.path === "/our-team/") return <TeamPage page={page} />;
-  if (page.path === "/contact-us/") return <ContactPage page={page} />;
+  if (page.path === "/contact-us/" || page.path === "/locations/") return <LocationsPage page={page} />;
   if (teamLocationPaths().has(page.path)) return <TeamLocationPage page={page} />;
 
   const html = addHeadingIds(renderHtml(tidy(page.contentHtml)));
@@ -241,73 +265,111 @@ function TeamPage({ page }: { page: Entry }) {
   );
 }
 
-/** /contact-us/: the published contact details, a map of the published address, and booking. */
-function ContactPage({ page }: { page: Entry }) {
+/** /contact-us/ and /locations/: multi-location network showcase with flip cards. */
+function LocationsPage({ page }: { page: Entry }) {
   const site = getSite();
-  const mapQuery = encodeURIComponent(`Tulasi Healthcare, ${site.contact.address}`);
-  const card = "group flex h-full flex-col justify-between gap-8 rounded-[var(--radius-card)] bg-white p-6 shadow-[0_0_0_1px_var(--color-line)] transition-shadow duration-300 hover:shadow-[0_0_0_1px_var(--color-brand-200),var(--shadow-soft)]";
+  const hospitals = LOCATIONS.filter((l) => l.type === "hospital").length;
+  const clinics   = LOCATIONS.filter((l) => l.type === "clinic").length;
+  const cities    = [...new Set(LOCATIONS.map((l) => l.area.split(",")[0].trim()))].length;
+
   return (
     <>
-      <PageHero title={page.h1} crumbs={crumbsFor(page)} lead="Get In Touch With Us" />
-      <div className="container-page py-12 lg:py-16">
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Reveal>
-            <TrackedLink event="call_click" eventLocation="contact" href={site.contact.phoneHref} className={card}>
-              <span className="icon-tile size-12"><Icon name="phone" /></span>
-              <span>
-                <span className="block text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Call us</span>
-                <span className="mt-2 block font-display text-2xl font-semibold tracking-[-0.02em] text-ink">{site.contact.phoneDisplay}</span>
-                <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-700">Tap to call <Arrow /></span>
-              </span>
-            </TrackedLink>
+      {/* ── Hero ── */}
+      <section className="lp-hero">
+        <div className="lp-mesh" aria-hidden="true">
+          <span className="lp-blob lp-blob-1" />
+          <span className="lp-blob lp-blob-2" />
+          <span className="lp-blob lp-blob-3" />
+        </div>
+        <div className="container-page lp-hero-inner">
+          <p className="eyebrow lp-eyebrow">Our locations</p>
+          <h1 className="lp-hero-title">Care, closer to you.</h1>
+          <p className="lp-hero-sub">
+            A growing network of psychiatric hospitals and mind clinics across Delhi-NCR — so expert mental-health care is never far away.
+          </p>
+          <div className="lp-stats" aria-label="Network at a glance">
+            <div className="lp-stat">
+              <span className="lp-stat-num">{hospitals}</span>
+              <span className="lp-stat-label">Hospitals</span>
+            </div>
+            <span className="lp-stat-sep" aria-hidden="true" />
+            <div className="lp-stat">
+              <span className="lp-stat-num">{clinics}</span>
+              <span className="lp-stat-label">Clinics</span>
+            </div>
+            <span className="lp-stat-sep" aria-hidden="true" />
+            <div className="lp-stat">
+              <span className="lp-stat-num">{cities}</span>
+              <span className="lp-stat-label">Cities</span>
+            </div>
+            <span className="lp-stat-sep" aria-hidden="true" />
+            <div className="lp-stat">
+              <span className="lp-stat-num">NABH</span>
+              <span className="lp-stat-label">Accredited</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Flip card grid ── */}
+      <section className="container-page py-14 lg:py-20">
+        <LocationsClient locations={LOCATIONS} />
+      </section>
+
+      {/* ── Get in touch ── */}
+      <section aria-labelledby="contact-heading" className="lp-contact-section">
+        <div className="container-page">
+          <Reveal as="header" className="mb-10">
+            <p className="eyebrow mb-3">Get in touch</p>
+            <h2 id="contact-heading" className="text-[length:var(--text-h2)] font-semibold tracking-[-0.02em] text-ink leading-[1.15]">
+              We&rsquo;re here to help
+            </h2>
+            <p className="mt-3 max-w-[48ch] text-ink-soft leading-relaxed">
+              Call, WhatsApp or email our central team — or walk in to any location.
+            </p>
           </Reveal>
-          <Reveal delay={40}>
-            <TrackedLink event="whatsapp_click" eventLocation="contact" href={whatsappLink(site.contact.phoneHref)} target="_blank" rel="noopener" className={card}>
-              <span className="icon-tile size-12"><Icon name="chat" /></span>
-              <span>
-                <span className="block text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">WhatsApp</span>
-                <span className="mt-2 block font-display text-lg font-semibold tracking-[-0.01em] text-ink">Message us</span>
-                <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-700">Open WhatsApp <Arrow /></span>
-              </span>
-            </TrackedLink>
-          </Reveal>
-          <Reveal delay={80}>
-            <a href={`mailto:${site.contact.email}`} className={card}>
-              <span className="icon-tile size-12"><Icon name="mail" /></span>
-              <span>
-                <span className="block text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Email</span>
-                <span className="mt-2 block font-display text-lg font-semibold tracking-[-0.01em] break-all text-ink">{site.contact.email}</span>
-              </span>
-            </a>
-          </Reveal>
-          <Reveal delay={140}>
-            <a href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`} target="_blank" rel="noopener" className={card}>
-              <span className="icon-tile size-12"><Icon name="pin" /></span>
-              <span>
-                <span className="block text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">Visit</span>
-                <address className="mt-2 block font-display text-base leading-snug font-semibold text-ink not-italic">{site.contact.address}</address>
-              </span>
-            </a>
+
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              { icon: "phone",    label: "Call us",   value: site.contact.phoneDisplay,        href: site.contact.phoneHref,                       isTracked: true,  event: "call_click" as const },
+              { icon: "chat",     label: "WhatsApp",  value: "Message us",                     href: whatsappLink(site.contact.phoneHref),          isTracked: true,  event: "whatsapp_click" as const },
+              { icon: "mail",     label: "Email",     value: site.contact.email,               href: `mailto:${site.contact.email}`,               isTracked: false, event: "call_click" as const },
+              { icon: "calendar", label: "Book",      value: "Book an appointment",            href: "/book-appointment/",                          isTracked: false, event: "call_click" as const },
+            ].map(({ icon, label, value, href, isTracked, event }, i) => {
+              const cls = "group flex h-full flex-col justify-between gap-8 rounded-[var(--radius-card)] bg-white p-6 shadow-[0_0_0_1px_var(--color-line)] transition-shadow duration-300 hover:shadow-[0_0_0_1px_var(--color-brand-200),var(--shadow-soft)]";
+              const inner = (
+                <>
+                  <span className="icon-tile size-12"><Icon name={icon as never} /></span>
+                  <span>
+                    <span className="block text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">{label}</span>
+                    <span className="mt-2 block font-display text-lg font-semibold tracking-[-0.01em] break-all text-ink">{value}</span>
+                    <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-700">Open <Arrow /></span>
+                  </span>
+                </>
+              );
+              return (
+                <Reveal key={label} delay={i * 60}>
+                  {isTracked ? (
+                    <TrackedLink event={event} eventLocation="contact" href={href} {...(href.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})} className={cls}>{inner}</TrackedLink>
+                  ) : (
+                    <a href={href} className={cls}>{inner}</a>
+                  )}
+                </Reveal>
+              );
+            })}
+          </div>
+
+          <Reveal className="mt-6 flex items-start gap-3 rounded-2xl bg-alert-50 p-4 shadow-[inset_0_0_0_1px_var(--color-alert-100)]">
+            <Icon name="heart" className="mt-0.5 size-5 shrink-0 text-alert-600" />
+            <p className="text-sm leading-relaxed text-ink">
+              <strong className="font-semibold">In crisis?</strong> Call{" "}
+              <a href="tel:14416" className="font-semibold text-alert-700 underline underline-offset-2">Tele-MANAS 14416</a>{" "}
+              — free and 24×7.
+            </p>
           </Reveal>
         </div>
 
-        <div className="mt-4 grid gap-4 lg:grid-cols-[1.5fr_1fr]">
-          <Reveal className="overflow-hidden rounded-[var(--radius-card)] shadow-[0_0_0_1px_var(--color-line)]">
-            <iframe title="Map: Tulasi Healthcare, Gurugram" src={`https://www.google.com/maps?q=${mapQuery}&output=embed`} className="h-[360px] w-full sm:h-[420px]" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
-          </Reveal>
-          <Reveal delay={100} className="flex flex-col justify-between gap-8 rounded-[var(--radius-card)] bg-sage-50 p-7 shadow-[inset_0_0_0_1px_var(--color-sage-100)]">
-            <div>
-              <p className="font-display text-2xl leading-tight font-semibold tracking-[-0.02em] text-ink">Book an appointment</p>
-              <p className="mt-3 text-ink-soft">Choose a specialist, date and time in a few steps. We’ll confirm your appointment.</p>
-            </div>
-            <div className="grid gap-3">
-              <ButtonLink href="/book-appointment/">Book appointment <Arrow /></ButtonLink>
-              <ButtonLink href="/map-direction/" variant="line"><Icon name="pin" className="size-4" /> Map &amp; directions</ButtonLink>
-              <p className="mt-2 flex items-start gap-2 rounded-xl bg-alert-50 p-3 text-sm text-ink"><Icon name="heart" className="mt-0.5 size-4 shrink-0 text-alert-600" /><span><b className="font-semibold">In crisis?</b> Call <a href="tel:14416" className="font-semibold text-alert-700 underline underline-offset-2">Tele-MANAS 14416</a>, free and 24×7.</span></p>
-            </div>
-          </Reveal>
-        </div>
-      </div>
+      </section>
     </>
   );
 }

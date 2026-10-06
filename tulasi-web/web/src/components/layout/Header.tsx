@@ -35,7 +35,11 @@ const CONDITIONS: Item = {
 
 // Home is the logo; the Employee Assistance Program lives inside Services.
 const HIDDEN = new Set(["Home", "Employee Assistance Program"]);
-const ORDER = ["About Us", "Services", "Conditions", "Our Team", "Blog", "Contact Us"];
+const ORDER = ["About Us", "Services", "Conditions", "Our Team", "Blog", "Locations"];
+const orderRank = (label: string) => {
+  const rank = ORDER.indexOf(label);
+  return rank === -1 ? ORDER.length : rank;
+};
 
 export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { display: string; href: string }; logo: { src: string; alt: string }; team?: TeamTeaser }) {
   const [scrolled, setScrolled] = useState(false);
@@ -44,7 +48,7 @@ export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { displ
   const pathname = usePathname();
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
-  const items: Item[] = [...menu.filter((m) => !HIDDEN.has(m.label)), CONDITIONS].sort((a, b) => ORDER.indexOf(a.label) - ORDER.indexOf(b.label));
+  const items: Item[] = [...menu.filter((m) => !HIDDEN.has(m.label)), CONDITIONS].sort((a, b) => orderRank(a.label) - orderRank(b.label));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -97,7 +101,7 @@ export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { displ
           </span>
         </Link>
 
-        <nav aria-label="Main" className="hidden min-[1340px]:block">
+        <nav aria-label="Main" className="hidden lg:block">
           <ul className="flex items-center">
             {items.map((item, i) => {
               const hasPanel = item.groups.some((g) => g.links.length);
@@ -130,13 +134,13 @@ export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { displ
         </nav>
 
         <div className="flex items-center gap-2">
-          <a href={phone.href} onClick={() => track("call_click", { location: "header" })} className="hidden min-h-11 items-center gap-2 whitespace-nowrap rounded-full px-3 text-sm font-semibold text-ink hover:text-brand-700 md:inline-flex">
+          <a href={phone.href} onClick={() => track("call_click", { location: "header" })} className="hidden min-h-11 items-center gap-2 whitespace-nowrap rounded-full px-3 text-sm font-semibold text-ink hover:text-brand-700 lg:inline-flex">
             <Icon name="phone" className="size-4 text-sage-600" /> <span className="hidden 2xl:inline">{phone.display}</span><span className="2xl:hidden">Call us</span>
           </a>
-          <Link href="/book-appointment/" className="hidden min-h-11 items-center gap-2 whitespace-nowrap rounded-full bg-brand-600 px-5 text-[0.9375rem] font-semibold text-white transition-colors duration-300 hover:bg-brand-700 sm:inline-flex">
+          <Link href="/book-appointment/" className="hidden min-h-11 items-center gap-2 whitespace-nowrap rounded-full bg-brand-600 px-5 text-[0.9375rem] font-semibold text-white transition-colors duration-300 hover:bg-brand-700 lg:inline-flex">
             Book appointment
           </Link>
-          <button type="button" className="grid size-11 place-items-center rounded-full text-ink hover:bg-mist min-[1340px]:hidden" aria-expanded={mobile} aria-controls="mobile-menu" onClick={() => setMobile(true)}>
+          <button type="button" className="grid size-11 place-items-center rounded-full text-ink hover:bg-mist lg:hidden" aria-expanded={mobile} aria-controls="mobile-menu" onClick={() => setMobile(true)}>
             <Icon name="menu" className="size-6" />
             <span className="sr-only">Open menu</span>
           </button>
