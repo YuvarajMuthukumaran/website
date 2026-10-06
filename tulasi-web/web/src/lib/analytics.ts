@@ -18,7 +18,7 @@ const ADS_LABELS: Record<string, string | undefined> = {
   whatsapp_click: process.env.NEXT_PUBLIC_ADS_LABEL_WHATSAPP,
 };
 
-export type TrackEvent = "booking_complete" | "booking_start" | "call_click" | "whatsapp_click" | "chat_open" | "ebook_download";
+export type TrackEvent = "booking_complete" | "booking_start" | "call_click" | "whatsapp_click" | "chat_open" | "ebook_download" | "finder_complete" | "screener_complete";
 
 export function track(event: TrackEvent, params: Record<string, string | number> = {}) {
   if (typeof window === "undefined" || !window.gtag) return;

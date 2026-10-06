@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Site } from "@/lib/content";
 import { Icon } from "@/components/ui/primitives";
+import { whatsappLink } from "@/lib/care";
 import { ConsentSettingsButton } from "./Consent";
 import { TrackedLink } from "./TrackedLink";
 
@@ -35,6 +36,8 @@ const COMPANY = [
   { label: "Blog", href: "/blog/" },
   { label: "Careers", href: "/careers/" },
   { label: "Employee Assistance Program", href: "/employee-assistance-program/" },
+  { label: "Find a specialist", href: "/find-a-specialist/" },
+  { label: "Free check-in", href: "/mental-health-check/" },
   { label: "Contact us", href: "/contact-us/" },
 ];
 
@@ -90,6 +93,11 @@ export function Footer({ site }: { site: Site }) {
               <li>
                 <TrackedLink event="call_click" eventLocation="footer" href={site.contact.phoneHref} className="flex items-start gap-3 text-ink hover:text-brand-700">
                   <Icon name="phone" className="mt-0.5 size-4 shrink-0 text-sage-600" /> {site.contact.phoneDisplay}
+                </TrackedLink>
+              </li>
+              <li>
+                <TrackedLink event="whatsapp_click" eventLocation="footer" href={whatsappLink(site.contact.phoneHref)} target="_blank" rel="noopener" className="flex items-start gap-3 text-ink-soft hover:text-brand-700">
+                  <Icon name="chat" className="mt-0.5 size-4 shrink-0 text-sage-600" /> Message us on WhatsApp
                 </TrackedLink>
               </li>
               <li>

@@ -129,7 +129,11 @@ export default function Home() {
           </ul>
           <p className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.9375rem] text-ink-soft">
             Not sure where to start?
-            <OpenChatButton className="inline-flex items-center gap-2 font-semibold text-brand-700 hover:text-brand-900">Ask Tulasi</OpenChatButton>
+            <Link href="/find-a-specialist/" className="group/btn inline-flex min-h-10 items-center gap-1.5 font-semibold text-brand-700 hover:text-brand-900">Find the right specialist <Arrow className="size-4" /></Link>
+            <span aria-hidden="true" className="hidden text-line sm:inline">|</span>
+            <Link href="/mental-health-check/" className="inline-flex min-h-10 items-center font-semibold text-brand-700 hover:text-brand-900">Free 2-minute check-in</Link>
+            <span aria-hidden="true" className="hidden text-line sm:inline">|</span>
+            <OpenChatButton className="inline-flex min-h-10 items-center gap-2 font-semibold text-brand-700 hover:text-brand-900">Ask Tulasi</OpenChatButton>
             <span aria-hidden="true" className="hidden text-line sm:inline">|</span>
             <Link href="/services-2/" className="group/btn inline-flex items-center gap-1.5 font-semibold text-brand-700 hover:text-brand-900">All conditions &amp; treatments <Arrow className="size-4" /></Link>
           </p>

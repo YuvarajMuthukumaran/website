@@ -80,3 +80,10 @@ export const CARE_PATHWAY_ICON: Record<Pathway["icon"], string> = {
   wave: "M2 12h3l2-6 3 12 3-9 2 5 2-2h5",
   briefcase: "M4 7h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1zM9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18",
 };
+
+/** Click-to-chat link built from the clinic's phone number (tel:8800000255 -> wa.me/918800000255). */
+export function whatsappLink(phoneHref: string, text = "Hello Tulasi Healthcare, I would like some help.") {
+  const digits = phoneHref.replace(/\D/g, "").replace(/^0+/, "");
+  const number = digits.length === 10 ? `91${digits}` : digits;
+  return `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
+}

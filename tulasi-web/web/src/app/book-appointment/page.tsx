@@ -21,7 +21,8 @@ export default function BookAppointment() {
         lead="Choose a service, a specialist and a time that suits you. It takes about a minute."
         crumbs={[{ name: "Home", path: "/" }, { name: "Book an Appointment", path: "/book-appointment/" }]}
       >
-        <p className="mt-6 inline-flex items-center gap-2 text-sm text-ink-soft">
+        <p className="mt-6 text-sm text-ink-soft">Not sure who to see? <a href="/find-a-specialist/" className="font-semibold text-brand-700 underline decoration-brand-200 underline-offset-4 hover:text-brand-900">Find the right specialist</a></p>
+        <p className="mt-3 inline-flex items-center gap-2 text-sm text-ink-soft">
           <Icon name="phone" className="size-4" /> Prefer to talk? Call <a href={site.contact.phoneHref} className="font-semibold text-ink underline underline-offset-2">{site.contact.phoneDisplay}</a>
         </p>
       </PageHero>
