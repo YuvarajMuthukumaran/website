@@ -66,6 +66,11 @@ CARDS6 = ['ms-apoorva-khanna', 'ms-ekta-kashyap', 'dr-ichpreet-singh']
 for _s in CARDS6:
     SOURCES[_s] = f"{SUP2}/{_s}.png"
 
+# Seventh batch: a clean headshot on a pastel backdrop
+CARDS7 = ["ms-hardika"]
+for _s in CARDS7:
+    SOURCES[_s] = f"{SUP2}/{_s}.webp"
+
 TW, TH = 640, 800  # 4:5
 cascades = [
     cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml"),
@@ -285,8 +290,8 @@ def portrait(img, alpha, face, slug=None):
     return out
 
 
-SUPPLIED = set(CARDS5) | set(CARDS6) | {"dr-kritika-soni", "ms-angshruta-mahanta", "inderjeet-singh", "dr-anu-yadav", "ms-ira-gupta", "ms-deliaka-ghanghass"}
-PREPARED = set(CARDS5) | set(CARDS6) | {"ms-ira-gupta", "ms-deliaka-ghanghass"}  # already cropped out of a screenshot of two cards: no corner trim or sparkle
+SUPPLIED = set(CARDS5) | set(CARDS6) | set(CARDS7) | {"dr-kritika-soni", "ms-angshruta-mahanta", "inderjeet-singh", "dr-anu-yadav", "ms-ira-gupta", "ms-deliaka-ghanghass"}
+PREPARED = set(CARDS5) | set(CARDS6) | set(CARDS7) | {"ms-ira-gupta", "ms-deliaka-ghanghass"}  # already cropped out of a screenshot of two cards: no corner trim or sparkle
 
 
 def clean_supplied(img, slug):
