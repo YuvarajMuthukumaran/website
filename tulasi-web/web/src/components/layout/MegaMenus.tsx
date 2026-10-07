@@ -216,7 +216,8 @@ function ConditionsPanel(p: PanelProps) {
             <Head className="mt-[0.4rem]" /> Talk to Tulasi
           </OpenChatButton>
         </li>
-        <li><MainLink href="/services-2/">All conditions &amp; treatments</MainLink></li>
+        <li><MainLink href="/conditions/" sub="Find any condition by letter or search">Conditions A to Z</MainLink></li>
+        <li><MainLink href="/services-2/">All treatments</MainLink></li>
       </ul>
       <div>
         <Heading>Common conditions</Heading>

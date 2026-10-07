@@ -155,7 +155,7 @@ export default function Home() {
               </Reveal>
             ))}
             <Reveal as="li" delay={(concerns.length % 6) * 40}>
-              <Link href="/services-2/" className="group flex flex-col items-center gap-3 text-center">
+              <Link href="/conditions/" className="group flex flex-col items-center gap-3 text-center">
                 <span className="grid size-[5.5rem] place-items-center rounded-full bg-white text-brand-700 shadow-[inset_0_0_0_1.5px_var(--color-brand-200)] transition-[transform,box-shadow] duration-300 group-hover:-translate-y-1 group-hover:shadow-[inset_0_0_0_1.5px_var(--color-brand-500)] sm:size-28 lg:size-[7.25rem]">
                   <Icon name="arrow" className="size-8" />
                 </span>
