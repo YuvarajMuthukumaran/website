@@ -38,6 +38,7 @@ const PATHWAY_ICON: Record<Pathway["icon"], string> = {
   elder: "memory",
   wave: "waves",
   briefcase: "workplace",
+  clipboard: "assessment",
 };
 const HELP_WITH = ["Anxiety", "Depression", "OCD", "Bipolar disorder", "Schizophrenia & psychosis", "Child & teen mental health", "ADHD", "Autism", "Alcohol addiction", "Drug addiction", "Dementia & memory"];
 

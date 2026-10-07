@@ -7,7 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import type { Site } from "@/lib/content";
-import { CONCERNS, whatsappLink } from "@/lib/care";
+import { CONCERNS, PSYCH_SERVICES, whatsappLink } from "@/lib/care";
 import { Icon } from "@/components/ui/primitives";
 import { track } from "@/lib/analytics";
 import { NavPanel, roleInPlace, type TeamTeaser } from "./MegaMenus";
@@ -33,6 +33,10 @@ const CONDITIONS: Item = {
   groups: [{ label: null, links: CONCERNS.map((c) => ({ label: c.label, href: c.href })) }],
 };
 
+// Psychological services (psychometric testing and so on) get their own group inside Services.
+const PSYCH_GROUP = { label: "Psychological services", href: "/psychological-services/", links: PSYCH_SERVICES.map((s) => ({ label: s.title, href: `/psychological-services/#${s.id}` })) };
+const withPsych = (item: Item): Item => (item.label === "Services" && !item.groups.some((g) => g.label === PSYCH_GROUP.label) ? { ...item, groups: [PSYCH_GROUP as Item["groups"][number], ...item.groups] } : item);
+
 // Home is the logo; the Employee Assistance Program lives inside Services.
 const HIDDEN = new Set(["Home", "Employee Assistance Program"]);
 // Like Amaha's bar: the care menus sit next to the logo, the rest are pushed to the right.
@@ -49,7 +53,7 @@ export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { displ
   const pathname = usePathname();
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
-  const items: Item[] = [...menu.filter((m) => !HIDDEN.has(m.label)), CONDITIONS].sort((a, b) => orderRank(a.label) - orderRank(b.label));
+  const items: Item[] = [...menu.filter((m) => !HIDDEN.has(m.label)).map(withPsych), CONDITIONS].sort((a, b) => orderRank(a.label) - orderRank(b.label));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -93,7 +97,7 @@ export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { displ
   // While the menu is open the header rises above the floating buttons (z-55).
   return (
     <header className={clsx("sticky top-0 border-b border-line bg-white transition-shadow duration-300", mobile ? "z-[80]" : "z-50", scrolled && "shadow-[0_6px_20px_-14px_rgb(23_34_44/0.25)]")}>
-      <div className="container-page relative flex h-[var(--header-h)] items-center justify-between gap-4">
+      <div className="container-page relative flex h-[var(--header-h)] items-center lg:px-6! xl:px-10! justify-between gap-4">
         <Link href="/" onClick={(e) => scrollTopIfCurrent(e, "/", pathname)} className="flex shrink-0 items-center gap-3 rounded-xl" aria-label="Tulasi Healthcare home">
           <Image src={logo.src} alt={logo.alt || "Tulasi Healthcare"} width={44} height={44} priority className="h-10 w-10 object-contain" />
           <span className="flex flex-col leading-none">
@@ -102,12 +106,12 @@ export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { displ
           </span>
         </Link>
 
-        <nav aria-label="Main" className="ml-4 hidden flex-1 xl:flex 2xl:ml-8">
+        <nav aria-label="Main" className="ml-3 hidden flex-1 lg:flex xl:ml-6 2xl:ml-8">
           <ul className="flex w-full items-center">
             {items.map((item, i) => {
               const hasPanel = item.groups.some((g) => g.links.length);
               const active = item.href && (pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href)));
-              const base = "whitespace-nowrap rounded-full px-2.5 py-2 2xl:px-3.5 text-[0.9375rem] font-medium transition-colors duration-200";
+              const base = "whitespace-nowrap rounded-full px-2 py-2 text-[0.875rem] font-medium xl:px-2.5 xl:text-[0.9375rem] 2xl:px-3.5 transition-colors duration-200";
               return (
                 <li key={item.label} className={item.label === "About Us" ? "ml-auto" : undefined} onMouseEnter={() => hasPanel && enter(i)} onMouseLeave={leave}>
                   <div className="flex items-center">
@@ -137,15 +141,15 @@ export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { displ
           <a href={phone.href} onClick={() => track("call_click", { location: "header" })} className="hidden size-11 place-items-center rounded-full text-brand-600 shadow-[inset_0_0_0_1px_var(--color-line)] transition-colors hover:bg-brand-50 2xl:grid" aria-label={`Call us on ${phone.display}`}>
             <Icon name="phone" className="size-[1.15rem]" />
           </a>
-          <a href={whatsappLink(phone.href)} target="_blank" rel="noopener" onClick={() => track("whatsapp_click", { location: "header" })} className="hidden size-11 place-items-center rounded-full bg-[#25a244] text-white transition-colors hover:bg-[#1f8c3b] xl:grid" aria-label="Message us on WhatsApp">
+          <a href={whatsappLink(phone.href)} target="_blank" rel="noopener" onClick={() => track("whatsapp_click", { location: "header" })} className="hidden size-10 place-items-center rounded-full bg-[#25a244] text-white transition-colors hover:bg-[#1f8c3b] lg:grid xl:size-11" aria-label="Message us on WhatsApp">
             <svg viewBox="0 0 24 24" className="size-[1.3rem]" fill="currentColor" aria-hidden="true">
               <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.200s.9 2.500 1.100 2.700c.1.2 1.900 2.900 4.600 4 1.700.7 2.300.7 3.200.6.5-.1 1.500-.6 1.700-1.200.2-.6.2-1.100.1-1.200-.1-.1-.2-.2-.5-.3z" />
             </svg>
           </a>
-          <Link href="/book-appointment/" className="hidden min-h-11 items-center gap-2 whitespace-nowrap rounded-full bg-brand-600 px-5 text-[0.9375rem] font-semibold text-white transition-colors duration-300 hover:bg-brand-700 xl:inline-flex">
+          <Link href="/book-appointment/" className="hidden min-h-11 items-center gap-2 whitespace-nowrap rounded-full bg-brand-600 px-4 text-sm font-semibold text-white transition-colors duration-300 hover:bg-brand-700 lg:inline-flex xl:px-5 xl:text-[0.9375rem]">
             Book appointment
           </Link>
-          <button type="button" className="grid size-11 place-items-center rounded-full text-ink hover:bg-mist xl:hidden" aria-expanded={mobile} aria-controls="mobile-menu" onClick={() => setMobile(true)}>
+          <button type="button" className="grid size-11 place-items-center rounded-full text-ink hover:bg-mist lg:hidden" aria-expanded={mobile} aria-controls="mobile-menu" onClick={() => setMobile(true)}>
             <Icon name="menu" className="size-6" />
             <span className="sr-only">Open menu</span>
           </button>
@@ -153,7 +157,7 @@ export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { displ
       </div>
 
       {/* Full-width dropdown panels (see MegaMenus.tsx). They hang from the header, so they span the page. */}
-      <div className="hidden xl:block">
+      <div className="hidden lg:block">
         {items.map((item, i) =>
           item.groups.some((g) => g.links.length) && (built.includes(i) || open === i) ? (
             <NavPanel key={item.label} id={`menu-panel-${i}`} item={item} open={open === i} phone={phone} team={item.label === "Our Team" ? team : undefined} onEnter={() => enter(i)} onLeave={leave} />

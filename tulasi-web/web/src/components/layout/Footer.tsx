@@ -23,6 +23,7 @@ const GLYPH: Record<string, string> = {
 const CARE = [
   { label: "Psychiatry", href: "/best-psychiatrist-in-delhi/" },
   { label: "Therapy & counselling", href: "/psychologist-in-delhi/" },
+  { label: "Psychological assessment & testing", href: "/psychological-services/" },
   { label: "Inpatient & rehabilitation", href: "/rehabilitation-centre/" },
   { label: "De-addiction", href: "/deaddiction-centre/" },
   { label: "Child & adolescent", href: "/child-psychiatry-hospital-services/" },

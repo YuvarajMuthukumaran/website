@@ -52,10 +52,11 @@ export const CONCERN_ICON: Record<string, string> = {
   "Stress & burnout": "sunrise",
 };
 
-export type Pathway = { title: string; href: string; text: string; icon: "stethoscope" | "talk" | "home" | "leaf" | "child" | "elder" | "wave" | "briefcase" };
+export type Pathway = { title: string; href: string; text: string; icon: "stethoscope" | "clipboard" | "talk" | "home" | "leaf" | "child" | "elder" | "wave" | "briefcase" };
 
 export const PATHWAYS: Pathway[] = [
   { title: "Psychiatry", href: "/best-psychiatrist-in-delhi/", icon: "stethoscope", text: "Personalized mental health care from psychiatrists with decades of experience." },
+  { title: "Psychological assessment & testing", href: "/psychological-services/", icon: "clipboard", text: "Psychometric testing, neuropsychological and developmental assessments, with a written report and feedback." },
   { title: "Therapy & counselling", href: "/psychologist-in-delhi/", icon: "talk", text: "RCI-registered psychologists for therapy, counselling, emotional well-being and mental health support." },
   { title: "Inpatient & rehabilitation", href: "/rehabilitation-centre/", icon: "home", text: "Residential treatment and psychosocial rehabilitation by a highly trained team of professionals." },
   { title: "De-addiction", href: "/deaddiction-centre/", icon: "leaf", text: "De-addiction treatment in Delhi NCR and Gurgaon for alcohol, drugs and other addictions." },
@@ -73,6 +74,7 @@ export const INTENSITY = [
 ] as const;
 
 export const CARE_PATHWAY_ICON: Record<Pathway["icon"], string> = {
+  clipboard: "M9 4h6a1 1 0 0 1 1 1v1H8V5a1 1 0 0 1 1-1zM6 6h12a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zM9 12h6M9 16h4",
   stethoscope: "M6 3v6a4 4 0 0 0 8 0V3M10 13v3a5 5 0 0 0 10 0v-2m0 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z",
   talk: "M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12zM8.5 11h.01M12 11h.01M15.5 11h.01",
   home: "M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z",
@@ -89,3 +91,63 @@ export function whatsappLink(phoneHref: string, text = "Hello Tulasi Healthcare,
   const number = digits.length === 10 ? `91${digits}` : digits;
   return `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
 }
+
+/** Psychological services (clinical psychologists). Shown on /psychological-services/ and in the Services menu. */
+export const PSYCH_SERVICES: { id: string; title: string; text: string; who: string; covers: string[] }[] = [
+  {
+    id: "psychometric-testing",
+    title: "Psychometric testing",
+    text: "Standardised tests, given and interpreted by a clinical psychologist, that measure how a person thinks, feels and behaves.",
+    who: "Adults, teens and children; schools, families and employers",
+    covers: ["Intelligence (IQ) and cognitive ability", "Personality and emotional functioning", "Aptitude, interests and career guidance", "Behaviour and emotional screening"],
+  },
+  {
+    id: "neuropsychological-assessment",
+    title: "Neuropsychological assessment",
+    text: "A detailed look at memory, attention, planning and thinking speed, often alongside a psychiatrist’s or neurologist’s assessment.",
+    who: "Memory complaints, head injury, concentration problems, older adults",
+    covers: ["Memory and attention", "Planning and problem solving", "Changes with age or illness", "Baseline and follow-up testing"],
+  },
+  {
+    id: "developmental-assessment",
+    title: "ADHD, autism and learning assessment",
+    text: "Structured assessment of children and adults when attention, social communication or learning is a concern.",
+    who: "Children, teens and adults",
+    covers: ["ADHD and attention", "Autism and social communication", "Learning difficulties", "Reports for school or workplace support"],
+  },
+  {
+    id: "psychotherapy",
+    title: "Individual therapy",
+    text: "Regular one-to-one sessions with an RCI-registered psychologist, using evidence-based approaches such as CBT.",
+    who: "Anxiety, low mood, trauma, OCD, stress and more",
+    covers: ["Cognitive behavioural therapy (CBT)", "Trauma-focused therapy", "Stress and anger management", "Relapse-prevention therapy"],
+  },
+  {
+    id: "couple-family-counselling",
+    title: "Couple and family counselling",
+    text: "A calm space to work through conflict, communication and caring for someone with a mental illness.",
+    who: "Couples and families",
+    covers: ["Marriage and relationship counselling", "Family sessions", "Caregiver support and psychoeducation"],
+  },
+  {
+    id: "child-adolescent-counselling",
+    title: "Child and teen counselling",
+    text: "Age-appropriate sessions, with parents involved, for emotional, behavioural and school-related difficulties.",
+    who: "Children and teens",
+    covers: ["Anxiety and school stress", "Behaviour and anger", "Social and screen-use concerns", "Parent guidance"],
+  },
+  {
+    id: "addiction-counselling",
+    title: "Addiction counselling",
+    text: "Motivational and relapse-prevention counselling for the person and their family, alongside medical treatment.",
+    who: "People recovering from alcohol, drug or behavioural addiction, and their families",
+    covers: ["Motivation and readiness to change", "Relapse prevention", "Family counselling"],
+  },
+  {
+    id: "workplace-wellbeing",
+    title: "Workplace and career wellbeing",
+    text: "Counselling and assessments for stress, burnout and career decisions, including our Employee Assistance Program.",
+    who: "Employees and organisations",
+    covers: ["Stress and burnout", "Career counselling", "Employee Assistance Program"],
+  },
+];
