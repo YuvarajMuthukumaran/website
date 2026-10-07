@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: PageProps<"/[...path]">): Pro
   if (!page) return {};
   if (requestedPath === "/locations/") {
     const title = "Locations - Tulasi Healthcare";
-    const description = "Explore Tulasi Healthcare's network of 4 hospitals and 2 clinics across Delhi-NCR, with directions, phone numbers, timings and appointment options.";
+    const description = `Explore Tulasi Healthcare's network of ${locationSummary()} across Delhi-NCR, with directions, phone numbers and appointment options.`;
     return metadataFromSeo(
       {
         ...page.seo,
@@ -101,7 +101,7 @@ export default async function WpPage({ params }: PageProps<"/[...path]">) {
               <Icon name="pin" className="mt-0.5 size-5 shrink-0 text-sage-600" />
               <span>
                 <strong className="font-semibold">Where to find us.</strong> Our hospital and rehabilitation centre is at {getSite().contact.address}, with a centre in South Delhi. We welcome patients travelling from {cityName(page.path)}.{" "}
-                <Link href="/map-direction/" className="font-semibold text-brand-700 underline underline-offset-2">Map &amp; directions</Link>
+                <Link href="/locations/" className="font-semibold text-brand-700 underline underline-offset-2">Map &amp; directions</Link>
               </span>
             </p>
           )}

@@ -9,14 +9,15 @@
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, type ReactNode } from "react";
+import { createContext, useContext, useState, type ReactNode } from "react";
 import type { Site } from "@/lib/content";
-import { CONCERNS } from "@/lib/care";
+import { CONCERNS, roleInPlace, whatsappLink } from "@/lib/care";
 import { LOCATIONS, locationSummary } from "@/lib/locations";
 import { OpenChatButton } from "@/components/chat/OpenChatButton";
 
 type Item = Site["menu"][number];
 type Phone = { display: string; href: string };
+const PhoneCtx = createContext<Phone | null>(null);
 export type TeamTeaser = { faces: string[]; count: number };
 type PanelProps = { id: string; item: Item; open: boolean; phone: Phone; team?: TeamTeaser; onEnter: () => void; onLeave: () => void };
 
@@ -50,6 +51,31 @@ function Heading({ children }: { children: ReactNode }) {
   return <p className="mb-2 text-[0.9375rem] font-semibold text-ink">{children}</p>;
 }
 
+/** Apollo-style "Quick links" card at the right of every panel: the number and the main next steps. */
+function QuickLinks() {
+  const phone = useContext(PhoneCtx);
+  const row = "group flex min-h-11 items-center justify-between gap-3 rounded-xl bg-white px-4 text-[0.9375rem] font-semibold text-ink shadow-[inset_0_0_0_1px_var(--color-line)] transition-colors hover:bg-brand-50 hover:text-brand-700";
+  const arrow = <span aria-hidden="true" className="text-brand-600 transition-transform group-hover:translate-x-0.5">→</span>;
+  return (
+    <aside aria-label="Quick links" className="hidden rounded-2xl bg-sage-50 p-5 shadow-[inset_0_0_0_1px_var(--color-sage-100)] lg:block">
+      <p className="text-[0.9375rem] font-semibold text-ink">Quick links</p>
+      {phone && (
+        <a href={phone.href} className="mt-3 block rounded-xl bg-white p-3 shadow-[inset_0_0_0_1px_var(--color-line)] transition-colors hover:bg-brand-50">
+          <span className="block text-xs text-ink-soft">Call our care team</span>
+          <span className="block font-display text-[1.125rem] font-semibold text-brand-700">{phone.display}</span>
+        </a>
+      )}
+      <ul className="mt-3 grid gap-2">
+        <li><Link href="/book-appointment/" className={clsx(row, "!bg-brand-600 !text-white hover:!bg-brand-700 !shadow-none")}>Book appointment {arrow}</Link></li>
+        <li><Link href="/find-a-specialist/" className={row}>Find a specialist {arrow}</Link></li>
+        <li><Link href="/mental-health-check/" className={row}>Free 2-minute check-in {arrow}</Link></li>
+        <li><Link href="/locations/" className={row}>Locations &amp; directions {arrow}</Link></li>
+        {phone && <li><a href={whatsappLink(phone.href)} target="_blank" rel="noopener noreferrer" className={row}>Chat on WhatsApp {arrow}</a></li>}
+      </ul>
+    </aside>
+  );
+}
+
 /** The frame: full-width white sheet under the header; `lead` is the left zone, children are the middle and right zones. */
 function Frame({ id, open, onEnter, onLeave, title, text, cta, extra, cols = "lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]", children }: {
   id: string;
@@ -74,7 +100,7 @@ function Frame({ id, open, onEnter, onLeave, title, text, cta, extra, cols = "lg
       )}
     >
       <div className="border-t border-line bg-white shadow-[0_30px_40px_-30px_rgb(23_34_44/0.35)]">
-        <div className="container-page grid max-h-[calc(100dvh-var(--header-h)-4rem)] gap-x-12 gap-y-6 overflow-y-auto py-9 lg:grid-cols-[minmax(0,17.5rem)_minmax(0,1fr)]">
+        <div className="container-page grid max-h-[calc(100dvh-var(--header-h)-4rem)] gap-x-12 gap-y-6 overflow-y-auto py-9 lg:grid-cols-[minmax(0,16rem)_minmax(0,1fr)_15rem] lg:gap-x-10">
           <div className="lg:border-r lg:border-line lg:pr-10">
             <p className="font-display text-[1.75rem] leading-[1.15] font-semibold tracking-[-0.02em] text-ink">{title}</p>
             {text && <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink-soft">{text}</p>}
@@ -85,7 +111,8 @@ function Frame({ id, open, onEnter, onLeave, title, text, cta, extra, cols = "lg
               </Link>
             )}
           </div>
-          <div className={clsx("grid gap-x-12 gap-y-6", cols)}>{children}</div>
+          <div className={clsx("grid gap-x-10 gap-y-6", cols)}>{children}</div>
+          <QuickLinks />
         </div>
       </div>
     </div>
@@ -117,8 +144,8 @@ function AboutPanel(p: PanelProps) {
       <div>
         <Heading>More about us</Heading>
         <ul>
-          {more.map((l) => (
-            <li key={l.href}><Link href={l.href!} className={quietLink}>{l.label}</Link></li>
+          {more.map((l, i) => (
+            <li key={`${i}-${l.href}`}><Link href={l.href!} className={quietLink}>{l.label}</Link></li>
           ))}
         </ul>
       </div>
@@ -163,8 +190,8 @@ function ServicesPanel(p: PanelProps) {
           <div key={gi} role="tabpanel" id={`${p.id}-pane-${gi}`} aria-labelledby={`${p.id}-tab-${gi}`} hidden={g !== on}>
             <Heading>{g.label}</Heading>
             <ul className={clsx(g.links.length > 7 && "sm:columns-2 sm:gap-x-10")}>
-              {g.links.map((l) => (
-                <li key={l.href ?? l.label} className="break-inside-avoid">
+              {g.links.map((l, i) => (
+                <li key={`${i}-${l.href ?? l.label}`} className="break-inside-avoid">
                   <Link href={l.href ?? "#"} className={quietLink}>{l.label}</Link>
                 </li>
               ))}
@@ -207,14 +234,6 @@ function ConditionsPanel(p: PanelProps) {
 
 // ───────────────────────── Our Team ─────────────────────────
 
-/** "Best Psychiatrist in Delhi for Therapy ..." becomes "Psychiatrist in Delhi": role + place, nothing else. */
-export function roleInPlace(label: string) {
-  const m = label.match(/^(?:best\s+)?((?:child\s+)?(?:psychiatrist|psychologist|counsellor))\s+(?:in\s+([A-Za-z]+)|near\s+me)/i);
-  if (!m) return label;
-  const role = m[1].charAt(0).toUpperCase() + m[1].slice(1).toLowerCase();
-  return m[2] ? `${role} in ${m[2]}` : `${role} near me`;
-}
-
 function TeamPanel(p: PanelProps) {
   const groups = p.item.groups.filter((g) => g.links.length);
   return (
@@ -252,8 +271,8 @@ function TeamPanel(p: PanelProps) {
           <div key={gi}>
             {g.label && <Heading>{g.label}s by city</Heading>}
             <ul>
-              {g.links.map((l) => (
-                <li key={l.href ?? l.label}><Link href={l.href ?? "#"} className={quietLink}>{roleInPlace(l.label)}</Link></li>
+              {g.links.map((l, i) => (
+                <li key={`${i}-${l.href ?? l.label}`}><Link href={l.href ?? "#"} className={quietLink}>{roleInPlace(l.label)}</Link></li>
               ))}
             </ul>
           </div>
@@ -281,7 +300,7 @@ function LocationsPanel(p: PanelProps) {
       <div>
         <Heading>Plan your visit</Heading>
         <ul>
-          <li><Link href="/map-direction/" className={quietLink}>Map &amp; directions</Link></li>
+          <li><Link href="/locations/" className={quietLink}>Map &amp; directions</Link></li>
           <li><Link href="/admission/" className={quietLink}>Admission</Link></li>
           <li><Link href="/international-patient-services/" className={quietLink}>International patients</Link></li>
           <li><Link href="/book-appointment/" className={quietLink}>Book an appointment</Link></li>
@@ -299,8 +318,8 @@ function GenericPanel(p: PanelProps) {
   return (
     <Frame id={p.id} open={p.open} onEnter={p.onEnter} onLeave={p.onLeave} title={p.item.label} cta={p.item.href ? { href: p.item.href, label: `All ${p.item.label.toLowerCase()}` } : undefined}>
       <ul className="sm:columns-2 sm:gap-x-10 lg:col-span-2">
-        {links.map((l) => (
-          <li key={l.href} className="break-inside-avoid"><Link href={l.href!} className={quietLink}>{l.label}</Link></li>
+        {links.map((l, i) => (
+          <li key={`${i}-${l.href}`} className="break-inside-avoid"><Link href={l.href!} className={quietLink}>{l.label}</Link></li>
         ))}
       </ul>
       <span />
@@ -308,12 +327,20 @@ function GenericPanel(p: PanelProps) {
   );
 }
 
-export function NavPanel(p: PanelProps) {
+function PanelFor(p: PanelProps) {
   if (p.item.label === "About Us") return <AboutPanel {...p} />;
   if (p.item.label === "Services") return <ServicesPanel {...p} />;
   if (p.item.label === "Conditions") return <ConditionsPanel {...p} />;
   if (p.item.label === "Our Team") return <TeamPanel {...p} />;
   if (p.item.label === "Locations") return <LocationsPanel {...p} />;
   return <GenericPanel {...p} />;
+}
+
+export function NavPanel(p: PanelProps) {
+  return (
+    <PhoneCtx.Provider value={p.phone}>
+      <PanelFor {...p} />
+    </PhoneCtx.Provider>
+  );
 }
 

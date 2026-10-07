@@ -151,3 +151,11 @@ export const PSYCH_SERVICES: { id: string; title: string; text: string; who: str
     covers: ["Stress and burnout", "Career counselling", "Employee Assistance Program"],
   },
 ];
+
+/** "Best Psychiatrist in Delhi for Therapy ..." becomes "Psychiatrist in Delhi": role + place, nothing else. */
+export function roleInPlace(label: string) {
+  const m = label.match(/^(?:best\s+)?((?:child\s+)?(?:psychiatrist|psychologist|counsellor))\s+(?:in\s+([A-Za-z]+)|near\s+me)/i);
+  if (!m) return label;
+  const role = m[1].charAt(0).toUpperCase() + m[1].slice(1).toLowerCase();
+  return m[2] ? `${role} in ${m[2]}` : `${role} near me`;
+}

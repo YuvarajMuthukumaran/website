@@ -10,21 +10,9 @@ type HeroSlide = {
 };
 
 const HERO_SLIDES: HeroSlide[] = [
-  {
-    src: "/hero/gurugram.webp",
-    alt: "Tulasi Healthcare hospital building, Gurugram",
-    position: "50% 50%",
-  },
-  {
-    src: "/hero/mehrauli.webp",
-    alt: "Tulasi Healthcare centre and garden, Mehrauli, Delhi",
-    position: "50% 50%",
-  },
-  {
-    src: "/wp-content/uploads/2022/12/47-1024x768-1.webp",
-    alt: "Tulasi Healthcare hospital courtyard",
-    position: "50% 50%",
-  },
+  { src: "/hero/hero-family-1.webp", alt: "A grandmother, mother and children smiling together", position: "50% 40%" },
+  { src: "/hero/hero-family-2.webp", alt: "A family together", position: "50% 35%" },
+  { src: "/hero/hero-family-3.webp", alt: "A mother holding her baby", position: "50% 40%" },
 ];
 
 const SLIDE_MS = 3200;

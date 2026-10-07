@@ -7,10 +7,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import type { Site } from "@/lib/content";
-import { CONCERNS, PSYCH_SERVICES, whatsappLink } from "@/lib/care";
+import { CONCERNS, PSYCH_SERVICES, roleInPlace, whatsappLink } from "@/lib/care";
+import { TAGLINE } from "@/lib/brand";
+import { SiteSearch, type SearchItem } from "./SiteSearch";
 import { Icon } from "@/components/ui/primitives";
 import { track } from "@/lib/analytics";
-import { NavPanel, roleInPlace, type TeamTeaser } from "./MegaMenus";
+import { NavPanel, type TeamTeaser } from "./MegaMenus";
 
 export type { TeamTeaser };
 type Menu = Site["menu"];
@@ -46,7 +48,7 @@ const orderRank = (label: string) => {
   return rank === -1 ? ORDER.length : rank;
 };
 
-export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { display: string; href: string }; logo: { src: string; alt: string }; team?: TeamTeaser }) {
+export function Header({ menu, searchItems, popular, phone, logo, team }: { menu: Menu; searchItems: SearchItem[]; popular: SearchItem[]; phone: { display: string; href: string }; logo: { src: string; alt: string }; team?: TeamTeaser }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState<number | null>(null);
   const [mobile, setMobile] = useState(false);
@@ -97,12 +99,12 @@ export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { displ
   // While the menu is open the header rises above the floating buttons (z-55).
   return (
     <header className={clsx("sticky top-0 border-b border-line bg-white transition-shadow duration-300", mobile ? "z-[80]" : "z-50", scrolled && "shadow-[0_6px_20px_-14px_rgb(23_34_44/0.25)]")}>
-      <div className="container-page relative flex h-[var(--header-h)] items-center lg:px-6! xl:px-10! justify-between gap-4">
+      <div className={clsx("container-page relative flex h-[var(--header-h)] items-center transition-[height] duration-300 lg:px-6! xl:px-10! justify-between gap-4", scrolled && "lg:h-16")}>
         <Link href="/" onClick={(e) => scrollTopIfCurrent(e, "/", pathname)} className="flex shrink-0 items-center gap-3 rounded-xl" aria-label="Tulasi Healthcare home">
           <Image src={logo.src} alt={logo.alt || "Tulasi Healthcare"} width={44} height={44} priority className="h-10 w-10 object-contain" />
           <span className="flex flex-col leading-none">
             <span className="font-display text-[1.0625rem] font-semibold tracking-[-0.015em] text-ink">Tulasi Healthcare</span>
-            <span className="mt-1 hidden text-[0.6875rem] font-medium tracking-[0.04em] text-ink-soft 2xl:block">Psychiatric hospital &amp; mental health care</span>
+            <span className="mt-1 hidden text-[0.6875rem] font-medium tracking-[0.04em] text-ink-soft 2xl:block">{TAGLINE || "Psychiatric hospital & mental health care"}</span>
           </span>
         </Link>
 
@@ -111,16 +113,16 @@ export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { displ
             {items.map((item, i) => {
               const hasPanel = item.groups.some((g) => g.links.length);
               const active = item.href && (pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href)));
-              const base = "whitespace-nowrap rounded-full px-2 py-2 text-[0.875rem] font-medium xl:px-2.5 xl:text-[0.9375rem] 2xl:px-3.5 transition-colors duration-200";
+              const base = "relative whitespace-nowrap rounded-full px-2 py-2 text-[0.875rem] font-medium transition-colors duration-200 after:absolute after:inset-x-2.5 after:bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-brand-600 after:transition-transform after:duration-300 hover:after:scale-x-100 xl:px-2.5 xl:text-[0.9375rem] 2xl:px-3.5";
               return (
                 <li key={item.label} className={item.label === "About Us" ? "ml-auto" : undefined} onMouseEnter={() => hasPanel && enter(i)} onMouseLeave={leave}>
                   <div className="flex items-center">
                     {item.href ? (
-                      <Link href={item.href} onClick={(e) => scrollTopIfCurrent(e, item.href, pathname)} className={clsx(base, active ? "text-brand-700" : "text-ink hover:text-brand-700")}>
+                      <Link href={item.href} onClick={(e) => scrollTopIfCurrent(e, item.href, pathname)} className={clsx(base, active ? "text-brand-700 after:scale-x-100" : "text-ink hover:text-brand-700")}>
                         {item.label}
                       </Link>
                     ) : (
-                      <button type="button" onClick={() => setOpen(open === i ? null : i)} className={clsx(base, open === i ? "text-brand-700" : "text-ink hover:text-brand-700")} aria-expanded={open === i} aria-controls={`menu-panel-${i}`}>
+                      <button type="button" onClick={() => setOpen(open === i ? null : i)} className={clsx(base, open === i ? "text-brand-700 after:scale-x-100" : "text-ink hover:text-brand-700")} aria-expanded={open === i} aria-controls={`menu-panel-${i}`}>
                         {item.label}
                       </button>
                     )}
@@ -138,6 +140,7 @@ export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { displ
         </nav>
 
         <div className="flex items-center gap-2">
+          <SiteSearch items={searchItems} popular={popular} />
           <a href={phone.href} onClick={() => track("call_click", { location: "header" })} className="hidden size-11 place-items-center rounded-full text-brand-600 shadow-[inset_0_0_0_1px_var(--color-line)] transition-colors hover:bg-brand-50 2xl:grid" aria-label={`Call us on ${phone.display}`}>
             <Icon name="phone" className="size-[1.15rem]" />
           </a>
@@ -217,8 +220,8 @@ function MobileMenu({ open, onClose, items, phone, pathname, logo }: { open: boo
                       <div key={gi} className="mt-3">
                         {g.label && <p className="mb-1 text-[0.7rem] font-semibold tracking-[0.12em] text-ink-soft uppercase">{g.label}</p>}
                         <ul>
-                          {g.links.map((l) => (
-                            <li key={l.href ?? l.label}>
+                          {g.links.map((l, li) => (
+                            <li key={`${li}-${l.href ?? l.label}`}>
                               <Link href={l.href ?? "#"} onClick={onClose} className="block rounded-lg py-2.5 text-[0.9375rem] leading-snug text-ink-soft hover:text-brand-700">{roleInPlace(l.label)}</Link>
                             </li>
                           ))}

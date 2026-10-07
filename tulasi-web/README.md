@@ -43,10 +43,10 @@ Old stock decorations were removed and 301 to the page they decorated
   `scraper/12-uniform-portraits.py` and run `python scraper/12-uniform-portraits.py`; the result lands in
   `web/public/team-portraits/<slug>.webp`. People without a new headshot use `data/portrait-sources/legacy/`.
   Review `reports/portraits-contact-sheet.jpg` after a run. The script needs only OpenCV and downloads nothing.
-- **Locations.** `web/src/lib/locations.ts` holds the six centres exactly as published on `/map-direction/`
-  (3 hospital/rehabilitation centres, 3 clinics, 4 cities). Counts on the home page, `/locations/` and in the
+- **Locations.** `web/src/lib/locations.ts` holds the centres as listed on the clinic's Google Business Profiles
+  (5 hospital and care-home sites, 2 clinics; addresses as Google shows them, directions open Google Maps). Counts on the home page, `/locations/` and in the
   menu are derived from it. Add a `photo` to an entry to show a real photo of that centre on its card.
-- **Crisis help** shows the clinic's own number and 112 (no third-party helpline) in the strip, menu, footer,
+- **Crisis help** shows the clinic's own number (no third-party helpline) in the strip, menu, footer,
   contact page, booking page, finder, screener and chat widget.
 
 ## Layout

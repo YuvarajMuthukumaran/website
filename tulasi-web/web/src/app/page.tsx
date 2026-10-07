@@ -19,6 +19,7 @@ import { LocationsShowcase } from "@/components/locations/LocationsShowcase";
 import { PASTELS } from "@/components/team";
 import { CITIES, CLINICS, HOSPITALS, locationSummary } from "@/lib/locations";
 import { HomeHeroSlideshow } from "@/components/HomeHeroSlideshow";
+import { InstagramVideos } from "@/components/InstagramVideos";
 import { CONCERN_ICON, CONCERNS, PATHWAYS, type Pathway } from "@/lib/care";
 
 export function generateMetadata(): Metadata {
@@ -46,7 +47,7 @@ const HELP_WITH = ["Anxiety", "Depression", "OCD", "Bipolar disorder", "Schizoph
 const conditionSlug = (label: string) => label.toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "");
 const conditionPhoto = (label: string) => ["webp", "jpg", "jpeg", "png"].map((e) => `/conditions/${conditionSlug(label)}.${e}`).find((p) => existsSync(path.join(process.cwd(), "public", p))) ?? null;
 
-const sectionPad = "py-14 sm:py-16 lg:py-20";
+const sectionPad = "py-10 sm:py-12 lg:py-14";
 
 export default function Home() {
   const h = getHome();
@@ -75,7 +76,7 @@ export default function Home() {
     <>
       {/* ═════════════ Hero ═════════════ */}
       <section className="bg-white">
-        <div className="container-page grid items-center gap-8 py-10 sm:py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.95fr)] lg:gap-14 lg:py-16">
+        <div className="container-page grid items-center gap-8 py-8 sm:py-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.95fr)] lg:gap-14 lg:py-10">
           <div>
             <p className="eyebrow">Psychiatric hospital &amp; mental health care</p>
             <h1 className="mt-4 max-w-[19ch] text-[length:var(--text-display)] leading-[1.12] font-semibold tracking-[-0.025em] text-ink">
@@ -128,6 +129,13 @@ export default function Home() {
         </div>
       </section>
 
+
+      {/* ═════════════ Videos from Instagram ═════════════ */}
+      <section aria-label="Videos from Instagram" className="bg-mist py-10 sm:py-12 lg:py-14">
+        <div className="container-page">
+          <InstagramVideos />
+        </div>
+      </section>
 
       {/* ═════════════ What would you like help with ═════════════ */}
       <section id="help" className={sectionPad}>
@@ -190,10 +198,10 @@ export default function Home() {
       </section>
 
       {/* ═════════════ Doctors marquee ═════════════ */}
-      <section className="cv py-14 sm:py-16 lg:py-20 overflow-hidden">
+      <section className="cv py-10 sm:py-12 lg:py-14 overflow-hidden">
         <div className="container-page">
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <SectionHeading title="Meet our doctors" text="Highly qualified and dedicated psychiatrists and psychologists. Choose a profile to read more or book." />
+            <SectionHeading title="Meet our team" text="Highly qualified and dedicated psychiatrists and psychologists. Choose a profile to read more or book." />
             <div className="hidden sm:block"><ButtonLink href="/our-team/" variant="line">Meet the whole team <Arrow /></ButtonLink></div>
           </div>
         </div>
@@ -236,7 +244,7 @@ export default function Home() {
       </section>
 
       {/* ═════════════ Patient voices ═════════════ */}
-      <section aria-labelledby="reviews-heading" className="cv py-14 sm:py-16 lg:py-20" style={{ background: "linear-gradient(135deg, #0f2847 0%, #0b1d40 50%, #102a5a 100%)" }}>
+      <section aria-labelledby="reviews-heading" className="cv py-10 sm:py-12 lg:py-14" style={{ background: "linear-gradient(135deg, #0f2847 0%, #0b1d40 50%, #102a5a 100%)" }}>
         <div className="container-page">
           {/* Header row */}
           <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">

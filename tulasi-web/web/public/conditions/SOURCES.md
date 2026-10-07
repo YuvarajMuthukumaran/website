@@ -24,3 +24,14 @@ Second round (replaced the watermarked and dark picks; Unsplash photos, free to 
 - `schizophrenia-psychosis.webp`: https://unsplash.com/photos/photo-1592489427434-fd9696f768b0
 - `adhd.webp`: https://unsplash.com/photos/photo-1758612898181-d7c92f0e21d5
 - `alcohol-addiction.webp`: https://unsplash.com/photos/photo-1617820915076-5f3163127e3d
+
+Third round, Indian people only (client request; Unsplash photos, free to use):
+- `anxiety.webp`: https://unsplash.com/photos/photo-1559216790-af02a223d74f
+- `depression.webp`: https://unsplash.com/photos/photo-1499171138085-a60c4e752ff7
+- `adhd.webp`: https://unsplash.com/photos/photo-1757841336140-63bb8d353346
+- `autism.webp`: https://unsplash.com/photos/photo-1585588053728-f8477beb4a8b
+- `child-teen-mental-health.webp`: https://unsplash.com/photos/photo-1659352784823-8150c51ab8d4
+- `bipolar-disorder.webp`: https://unsplash.com/photos/photo-1742361480875-fd510bcc211a
+- `schizophrenia-psychosis.webp`: https://unsplash.com/photos/photo-1601639362577-65e3e3b5316d
+- `alcohol-addiction.webp`: https://unsplash.com/photos/photo-1634320498259-852775e5e8b2
+`ocd.webp` (hands), `drug-addiction.webp` (pills) and `dementia-memory.webp` (puzzle head) carry no identifiable people.

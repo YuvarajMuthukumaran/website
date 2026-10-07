@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import { CONCERNS, PSYCH_SERVICES, roleInPlace } from "@/lib/care";
+import { LOCATIONS } from "@/lib/locations";
+import type { SearchItem } from "@/components/layout/SiteSearch";
 import { getDoctors, getSite, SITE_URL } from "@/lib/content";
 import { Header } from "@/components/layout/Header";
 import { portraitOf } from "@/components/team";
@@ -40,6 +43,26 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   const phone = { display: site.contact.phoneDisplay, href: site.contact.phoneHref };
   const logo = site.logo ?? { src: "/brand/tulasi-logo-600.webp", alt: "Tulasi Healthcare" };
   const doctors = getDoctors();
+  const seen = new Set<string>();
+  const searchItems: SearchItem[] = [
+    ...site.menu.flatMap((m) => m.groups.flatMap((g) => g.links.filter((l) => l.href).map((l) => ({ label: roleInPlace(l.label), href: l.href as string, group: m.label })))),
+    ...CONCERNS.map((c) => ({ label: c.label, href: c.href, group: "Conditions" })),
+    ...PSYCH_SERVICES.map((s) => ({ label: s.title, href: `/psychological-services/#${s.id}`, group: "Services", hint: s.text })),
+    ...LOCATIONS.map((l) => ({ label: l.name, href: `/locations/#${l.id}`, group: "Locations", hint: l.address })),
+    ...doctors.map((d) => ({ label: d.name, href: `/team/${d.slug}/`, group: "Team", hint: d.designation ?? undefined })),
+    { label: "Book an appointment", href: "/book-appointment/", group: "Book" },
+    { label: "Find the right specialist", href: "/find-a-specialist/", group: "Tools", hint: "Three quick questions" },
+    { label: "Free 2-minute mental health check-in", href: "/mental-health-check/", group: "Tools" },
+    { label: "Patient login", href: "/patient-login/", group: "Account", hint: "See or cancel your appointments" },
+  ].filter((i) => (seen.has(i.href + i.label) ? false : (seen.add(i.href + i.label), true)));
+  const popular: SearchItem[] = [
+    { label: "Book an appointment", href: "/book-appointment/", group: "Book" },
+    { label: "Find the right specialist", href: "/find-a-specialist/", group: "Tools", hint: "Three quick questions" },
+    { label: "Psychometric testing", href: "/psychological-services/#psychometric-testing", group: "Services" },
+    { label: "Anxiety", href: "/anxiety/", group: "Conditions" },
+    { label: "Depression", href: "/depression/", group: "Conditions" },
+    { label: "Locations", href: "/locations/", group: "Locations" },
+  ];
   const team = { count: doctors.length, faces: doctors.map(portraitOf).filter((p) => p?.cutout).map((p) => p!.src).slice(0, 5) };
   return (
     <html lang="en-IN" className={`${jakarta.variable} ${inter.variable}`}>
@@ -49,7 +72,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <CrisisStrip phone={phone} />
-        <Header menu={site.menu} phone={phone} logo={{ src: logo.src, alt: "Tulasi Healthcare logo" }} team={team} />
+        <Header menu={site.menu} searchItems={searchItems} popular={popular} phone={phone} logo={{ src: logo.src, alt: "Tulasi Healthcare logo" }} team={team} />
         <main id="main" tabIndex={-1} className="flex-1 outline-none">
           {children}
         </main>

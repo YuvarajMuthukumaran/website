@@ -23,7 +23,7 @@ const csp = [
   "img-src 'self' data: blob: https://www.google-analytics.com https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.google.com https://www.google.co.in https://i.ytimg.com",
   "font-src 'self'",
   "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com https://googleads.g.doubleclick.net",
-  "frame-src https://www.youtube.com https://www.youtube-nocookie.com https://www.google.com https://maps.google.com https://td.doubleclick.net",
+  "frame-src https://www.instagram.com https://www.youtube.com https://www.youtube-nocookie.com https://www.google.com https://maps.google.com https://td.doubleclick.net",
   "media-src 'self'",
   "object-src 'none'",
   "base-uri 'self'",
@@ -58,6 +58,8 @@ const nextConfig: NextConfig = {
       { source: "/sitemap.xml", destination: "/sitemap_index.xml", permanent: true },
       // Contact Us renamed to Locations; keep old URL alive with a 301.
       { source: "/contact-us/", destination: "/locations/", permanent: true },
+      // The old map page listed the previous centre list; /locations/ is the maintained one.
+      { source: "/map-direction/", destination: "/locations/", permanent: false },
       // Profiles linked from live pages that no longer exist → the team page (see gap report).
       { source: "/team/dr-anil-kumar/", destination: "/our-team/", permanent: false },
       { source: "/team/ms-zarafshan-khan/", destination: "/our-team/", permanent: false },
