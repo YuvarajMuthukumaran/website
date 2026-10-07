@@ -135,16 +135,15 @@ html.nav-ready .page-enter:not(.page-static) { animation: page-in 0.4s var(--eas
 }
 .home-hero-slide {
   object-fit: cover;
-  visibility: hidden;
+  opacity: 0;
+  will-change: opacity;
 }
-/* The new photo wipes in from the right (quick), over the one that is leaving. */
-.home-hero-slide.is-prev { visibility: visible; z-index: 1; }
-.home-hero-slide.is-active { visibility: visible; z-index: 2; }
-.home-hero-slide.is-anim { animation: hero-wipe 420ms cubic-bezier(0.65, 0, 0.2, 1) both; }
-@keyframes hero-wipe {
-  from { clip-path: inset(0 0 0 100%); transform: scale(1.06); }
-  to { clip-path: inset(0 0 0 0); transform: scale(1); }
-}
+/* Cross-fade: the new photo fades in over the one that is leaving, which stays put until it is covered.
+   Every photo is loaded up front, so nothing pops in half way. */
+.home-hero-slide.is-prev { opacity: 1; z-index: 1; }
+.home-hero-slide.is-active { opacity: 1; z-index: 2; }
+.home-hero-slide.is-anim { animation: hero-fade 750ms cubic-bezier(0.4, 0, 0.2, 1) both; }
+@keyframes hero-fade { from { opacity: 0; } to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .home-hero-slide.is-anim { animation: none; } }
 .home-hero-dots { position: absolute; z-index: 3; right: 1rem; top: 1rem; display: flex; gap: 0.4rem; padding: 0.45rem 0.6rem; border-radius: 999px; background: rgb(255 255 255 / 0.85); backdrop-filter: blur(6px); }
 .home-hero-dots button { position: relative; width: 0.5rem; height: 0.5rem; border-radius: 999px; background: rgb(23 34 44 / 0.28); transition: width 350ms var(--ease-calm), background-color 250ms; }
@@ -817,8 +816,10 @@ details.acc > summary::-webkit-details-marker { display: none; }
   grid-template-columns: repeat(2, 1fr);
   gap: 0;
 }
+.stats-grid > :last-child:nth-child(odd) { grid-column: 1 / -1; }
 @media (min-width: 768px) {
-  .stats-grid { grid-template-columns: repeat(4, 1fr); }
+  .stats-grid { grid-template-columns: repeat(5, 1fr); }
+  .stats-grid > :last-child:nth-child(odd) { grid-column: auto; }
 }
 
 /* Individual stat cell */

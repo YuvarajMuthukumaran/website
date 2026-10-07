@@ -239,7 +239,7 @@ function MobileMenu({ open, onClose, items, phone, pathname, logo }: { open: boo
       <div className="container-page grid shrink-0 gap-3 border-t border-line bg-white pt-3 pb-[max(1rem,env(safe-area-inset-bottom))]">
         {/* The crisis bar is hidden behind this full-screen menu, so help stays one tap away here. */}
         <a href={phone.href} className="flex min-h-11 items-center justify-center gap-2 rounded-full bg-alert-50 text-sm font-semibold text-alert-700 shadow-[inset_0_0_0_1px_var(--color-alert-100)]">
-          <Icon name="heart" className="size-4" /> In crisis? Call us on {phone.display}
+          <Icon name="heart" className="size-4" /> Need support? Call us on {phone.display}
         </a>
         <Link href="/book-appointment/" onClick={onClose} className="flex min-h-[3.25rem] items-center justify-center gap-2 rounded-full bg-brand-600 font-semibold text-white hover:bg-brand-700">
           <Icon name="calendar" className="size-5" /> Book appointment

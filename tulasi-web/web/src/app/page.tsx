@@ -109,6 +109,7 @@ export default function Home() {
           <ul className="stats-grid">
             {[
               { value: "15+",   unit: "Years",    label: "Delivering compassionate psychiatric care in Delhi-NCR" },
+              { value: "50,000+", unit: "Patients", label: "Treated and supported, helping people rebuild their lives" },
               { value: "100+",  unit: "Experts",  label: "Psychiatrists, psychologists and rehabilitation specialists" },
               { value: "200+",  unit: "Beds",     label: "Across our inpatient and rehabilitation centres" },
               { value: "NABH",  unit: null,       label: "Accredited — the gold standard for hospital quality in India" },

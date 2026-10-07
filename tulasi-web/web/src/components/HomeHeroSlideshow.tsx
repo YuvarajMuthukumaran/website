@@ -27,7 +27,7 @@ const HERO_SLIDES: HeroSlide[] = [
   },
 ];
 
-const SLIDE_MS = 2600;
+const SLIDE_MS = 3200;
 
 export function HomeHeroSlideshow() {
   const [active, setActive] = useState(0);
@@ -65,6 +65,7 @@ export function HomeHeroSlideshow() {
           alt={index === active ? slide.alt : ""}
           fill
           priority={index === 0}
+          loading={index === 0 ? undefined : "eager"}
           sizes="(min-width:1024px) 540px, 100vw"
           className={`home-hero-slide${index === active ? (prev === null ? " is-active" : " is-active is-anim") : ""}${index === prev && index !== active ? " is-prev" : ""}`}
           style={{ objectPosition: slide.position }}

@@ -337,7 +337,7 @@ function LocationsPage({ page }: { page: Entry }) {
           <Reveal className="mt-6 flex items-start gap-3 rounded-2xl bg-alert-50 p-4 shadow-[inset_0_0_0_1px_var(--color-alert-100)]">
             <Icon name="heart" className="mt-0.5 size-5 shrink-0 text-alert-600" />
             <p className="text-sm leading-relaxed text-ink">
-              <strong className="font-semibold">In crisis?</strong> Call us on{" "}
+              <strong className="font-semibold">Need support?</strong> Call us on{" "}
               <a href={site.contact.phoneHref} className="font-semibold text-alert-700 underline underline-offset-2">{site.contact.phoneDisplay}</a>.
             </p>
           </Reveal>

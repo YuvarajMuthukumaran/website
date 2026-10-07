@@ -166,7 +166,7 @@ export function Footer({ site }: { site: Site }) {
         <div className="mx-auto mt-12 flex max-w-5xl flex-col gap-3 rounded-2xl bg-white/10 p-5 sm:flex-row sm:items-center sm:justify-between">
           <p className="flex items-start gap-3 text-[0.9375rem]">
             <Icon name="heart" className="mt-0.5 size-5 shrink-0 text-white/80" />
-            <span><strong className="font-semibold">In crisis or thinking of harming yourself?</strong> You are not alone. Help is available right now.</span>
+            <span><strong className="font-semibold">Need to talk to someone?</strong> Call our care team and we will help you find the right doctor or counsellor.</span>
           </p>
           <a href={site.contact.phoneHref} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-brand-900 hover:bg-white/90">
             <Icon name="phone" className="size-4" /> Call {site.contact.phoneDisplay}

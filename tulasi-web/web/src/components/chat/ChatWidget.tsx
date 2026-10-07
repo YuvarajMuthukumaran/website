@@ -446,7 +446,7 @@ export function ChatWidget({ onClose, phone, doctorSlugs = {}, doctorPhotos = {}
               </motion.button>
             </div>
             <p className="mt-2 px-2 text-center text-[0.6875rem] text-ink-soft">
-              AI assistant, not a doctor. In crisis? Call <a href={phone.href} className="font-semibold underline">{phone.display}</a>.
+              AI assistant, not a doctor. Need support? Call <a href={phone.href} className="font-semibold underline">{phone.display}</a>.
             </p>
           </form>
         </>
