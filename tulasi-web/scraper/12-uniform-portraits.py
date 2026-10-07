@@ -61,6 +61,11 @@ CARDS5 = ['dr-ratnarakshit-ingole', 'ms-titiksha-agnihotri', 'dr-ram-chander-jil
 for _s in CARDS5:
     SOURCES[_s] = f"{SUP2}/{_s}.png"
 
+# Sixth batch: three cards from one screenshot
+CARDS6 = ['ms-apoorva-khanna', 'ms-ekta-kashyap', 'dr-ichpreet-singh']
+for _s in CARDS6:
+    SOURCES[_s] = f"{SUP2}/{_s}.png"
+
 TW, TH = 640, 800  # 4:5
 cascades = [
     cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml"),
@@ -85,8 +90,8 @@ CLEAN = {"dr-gorav-gupta": (0.62, 40, 1.0)}
 # Turban + black beard + black shirt on a dark backdrop: the face detector is off-centre here, so the
 # face box is given by hand (full-resolution x, y, w, h) and near-black pixels are kept only where they
 # are beard or shirt. Everything else that dark above the shoulders is backdrop.
-FACE_BOX = {"dr-ram-chander-jiloha": (340, 320, 350, 380), "dr-ichpreet-singh": (365, 540, 330, 460), "ms-ira-gupta": (158, 150, 136, 150)}
-KEEP_DARK = {"dr-ichpreet-singh": {"ellipse": (530, 760, 175, 195), "rect": (430, 820, 650, 1536), "ymax": 850}}
+FACE_BOX = {"dr-ram-chander-jiloha": (340, 320, 350, 380), "ms-ira-gupta": (158, 150, 136, 150)}
+KEEP_DARK = {}
 
 
 def matte(img, slug=None):
@@ -239,7 +244,7 @@ def matte(img, slug=None):
 FACE_TOP, FACE_H = 0.215, 0.225  # where the face sits in the portrait, as fractions of its height
 
 
-FACE_TOP_FOR = {"dr-ichpreet-singh": 0.31, "ms-ira-gupta": 0.27}  # tall turban: more headroom
+FACE_TOP_FOR = {"ms-ira-gupta": 0.27}  # tall turban: more headroom
 # These photos have the person small in the frame, so their heads came out smaller than everyone else's.
 FACE_H_FOR = {"ms-ira-gupta": 0.2, "dr-gorav-gupta": 0.275, "dr-sameer-guliani": 0.262, "dr-ratnarakshit-ingole": 0.26}
 
@@ -280,8 +285,8 @@ def portrait(img, alpha, face, slug=None):
     return out
 
 
-SUPPLIED = set(CARDS5) | {"dr-kritika-soni", "ms-angshruta-mahanta", "inderjeet-singh", "dr-anu-yadav", "ms-ira-gupta", "ms-deliaka-ghanghass"}
-PREPARED = set(CARDS5) | {"ms-ira-gupta", "ms-deliaka-ghanghass"}  # already cropped out of a screenshot of two cards: no corner trim or sparkle
+SUPPLIED = set(CARDS5) | set(CARDS6) | {"dr-kritika-soni", "ms-angshruta-mahanta", "inderjeet-singh", "dr-anu-yadav", "ms-ira-gupta", "ms-deliaka-ghanghass"}
+PREPARED = set(CARDS5) | set(CARDS6) | {"ms-ira-gupta", "ms-deliaka-ghanghass"}  # already cropped out of a screenshot of two cards: no corner trim or sparkle
 
 
 def clean_supplied(img, slug):
