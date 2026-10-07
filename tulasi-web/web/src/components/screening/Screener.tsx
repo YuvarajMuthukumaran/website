@@ -76,10 +76,9 @@ export function Screener({ phone }: { phone: { display: string; href: string } }
             <p className="font-semibold text-ink">You said you’ve had thoughts of harming yourself. Thank you for being honest.</p>
             <p className="mt-2 leading-relaxed text-ink-soft">You don’t have to carry this alone. Please talk to someone today:</p>
             <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-              <a href="tel:14416" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-5 font-semibold text-alert-700 shadow-[inset_0_0_0_1px_var(--color-alert-100)] hover:bg-alert-100"><Icon name="phone" className="size-4" /> Tele-MANAS 14416 (free, 24×7)</a>
               <a href={phone.href} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-5 font-semibold text-alert-700 shadow-[inset_0_0_0_1px_var(--color-alert-100)] hover:bg-alert-100"><Icon name="phone" className="size-4" /> Tulasi {phone.display}</a>
             </div>
-            <p className="mt-3 text-sm text-ink-soft">If you are in immediate danger, call 112 or go to the nearest emergency department.</p>
+            <p className="mt-3 text-sm text-ink-soft">If you are in immediate danger, go to the nearest emergency department.</p>
           </div>
         )}
         <h2 ref={focusHeading} tabIndex={-1} className="font-display text-[1.5rem] leading-tight font-semibold tracking-[-0.015em] text-ink outline-none sm:text-[1.75rem]">Your {inst.title.toLowerCase()} result</h2>

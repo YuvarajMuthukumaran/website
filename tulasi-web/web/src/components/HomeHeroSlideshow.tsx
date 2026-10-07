@@ -27,10 +27,11 @@ const HERO_SLIDES: HeroSlide[] = [
   },
 ];
 
-const SLIDE_MS = 4600;
+const SLIDE_MS = 3600;
 
 export function HomeHeroSlideshow() {
   const [active, setActive] = useState(0);
+  const [prev, setPrev] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
 
@@ -42,27 +43,22 @@ export function HomeHeroSlideshow() {
     return () => query.removeEventListener("change", sync);
   }, []);
 
-  useEffect(() => {
-    HERO_SLIDES.slice(1).forEach((slide) => {
-      const img = new window.Image();
-      img.src = slide.src;
-    });
-  }, []);
+  const go = (next: number) => {
+    setPrev(active);
+    setActive(next);
+  };
 
   useEffect(() => {
     if (paused || reducedMotion || HERO_SLIDES.length < 2) return;
-    const id = window.setInterval(() => {
-      setActive((current) => (current + 1) % HERO_SLIDES.length);
+    const id = window.setTimeout(() => {
+      setPrev(active);
+      setActive((active + 1) % HERO_SLIDES.length);
     }, SLIDE_MS);
-    return () => window.clearInterval(id);
-  }, [paused, reducedMotion]);
+    return () => window.clearTimeout(id);
+  }, [active, paused, reducedMotion]);
 
   return (
-    <div
-      className={`home-hero-slideshow${paused ? " is-paused" : ""}`}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
+    <div className="home-hero-slideshow" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
       {HERO_SLIDES.map((slide, index) => (
         <Image
           key={slide.src}
@@ -71,11 +67,16 @@ export function HomeHeroSlideshow() {
           fill
           priority={index === 0}
           sizes="(min-width:1024px) 540px, 100vw"
-          className={`home-hero-slide${index === active ? " is-active" : ""}`}
+          className={`home-hero-slide${index === active ? (prev === null ? " is-active" : " is-active is-anim") : ""}${index === prev && index !== active ? " is-prev" : ""}`}
           style={{ objectPosition: slide.position }}
           aria-hidden={index === active ? undefined : true}
         />
       ))}
+      <div className="home-hero-dots" role="group" aria-label="Choose a photo">
+        {HERO_SLIDES.map((slide, index) => (
+          <button key={slide.src} type="button" aria-label={`Photo ${index + 1} of ${HERO_SLIDES.length}`} aria-current={index === active} className={index === active ? "is-on" : ""} onClick={() => go(index)} />
+        ))}
+      </div>
     </div>
   );
 }

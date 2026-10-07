@@ -8,8 +8,9 @@ For each photo:
   3. refine: face = certain foreground, banner above the head = certain background,
   4. keep only the main silhouette, feather the edge,
   5. crop a 4:5 portrait with the face in the upper third,
-and save web/public/team-cutouts/<slug>.webp (transparent). The site uses these
-automatically (components/team.tsx); delete a file to fall back to the original.
+and save data/portrait-sources/legacy/<slug>.webp (transparent). Step 12
+(12-uniform-portraits.py) gives these the same head size and position as the new headshots
+and writes the portraits the site uses (web/public/team-portraits/).
 Also writes reports/cutouts-contact-sheet.jpg to review the results at a glance.
 
     python 11-cutout-portraits.py
@@ -20,7 +21,7 @@ import numpy as np
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WEB = os.path.join(ROOT, "web")
-OUT = os.path.join(WEB, "public", "team-cutouts")
+OUT = os.path.join(ROOT, "data", "portrait-sources", "legacy")
 os.makedirs(OUT, exist_ok=True)
 
 doctors = json.load(open(os.path.join(WEB, "content", "doctors.json"), encoding="utf8"))

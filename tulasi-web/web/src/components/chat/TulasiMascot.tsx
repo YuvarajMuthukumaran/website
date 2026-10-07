@@ -1,6 +1,6 @@
 "use client";
 // The Tulasi leaf mascot (ported from the chatbot app): its face and motion react to `mood`.
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import { useId } from "react";
 import type { Mood } from "@/lib/mood";
 
@@ -70,7 +70,7 @@ const BODY_MOTION: Record<Mood, { animate: Record<string, number[]>; transition:
 
 function Sparkle({ x, y, delay }: { x: number; y: number; delay: number }) {
   return (
-    <motion.path
+    <m.path
       d={`M${x},${y - 6} L${x + 2},${y - 2} L${x + 6},${y} L${x + 2},${y + 2} L${x},${y + 6} L${x - 2},${y + 2} L${x - 6},${y} L${x - 2},${y - 2} Z`}
       fill="#FFD54D"
       initial={{ opacity: 0.3, scale: 0.8 }}
@@ -225,7 +225,7 @@ export default function TulasiMascot({ mood = "neutral", streaming = false, doct
       aria-label={`Tulasi mascot — mood: ${MOOD_LABELS[safeMood]}${doctorMode ? ", doctor mode" : ""}`}
       className={className}
     >
-      <motion.svg viewBox="0 0 120 120" className="h-full w-full" animate={body.animate} transition={body.transition} aria-hidden="true">
+      <m.svg viewBox="0 0 120 120" className="h-full w-full" animate={body.animate} transition={body.transition} aria-hidden="true">
         <defs>
           <radialGradient id={glowId} cx="50%" cy="42%" r="60%">
             <stop offset="0%" stopColor={GLOWS[safeMood]} stopOpacity="0.9" />
@@ -235,7 +235,7 @@ export default function TulasiMascot({ mood = "neutral", streaming = false, doct
 
         <circle cx="60" cy="55" r="52" fill={`url(#${glowId})`} />
 
-        <motion.path
+        <m.path
           d="M60,8 C92,24 104,46 104,62 C104,90 82,110 60,116 C38,110 16,90 16,62 C16,46 28,24 60,8 Z"
           animate={{ fill: LEAF_TINTS[safeMood] }}
           transition={{ duration: 0.4, ease: "easeInOut" }}
@@ -248,7 +248,7 @@ export default function TulasiMascot({ mood = "neutral", streaming = false, doct
         <path d="M60,42 Q48,46 40,54" stroke="#3E6B4C" strokeWidth="1.2" strokeOpacity="0.4" fill="none" />
 
         <AnimatePresence>
-          <motion.g
+          <m.g
             key={safeMood}
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -256,12 +256,12 @@ export default function TulasiMascot({ mood = "neutral", streaming = false, doct
             transition={{ duration: 0.35, ease: "easeInOut" }}
           >
             <Face mood={safeMood} />
-          </motion.g>
+          </m.g>
         </AnimatePresence>
 
         <AnimatePresence>
           {doctorMode && (
-            <motion.g
+            <m.g
               key="doctor-accessories"
               initial={{ opacity: 0, scale: 0.7 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -271,10 +271,10 @@ export default function TulasiMascot({ mood = "neutral", streaming = false, doct
               <DoctorCoat />
               <Stethoscope />
               <Clipboard />
-            </motion.g>
+            </m.g>
           )}
         </AnimatePresence>
-      </motion.svg>
+      </m.svg>
     </div>
   );
 }

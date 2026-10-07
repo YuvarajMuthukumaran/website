@@ -13,6 +13,7 @@ import * as cheerio from "cheerio";
 import type { AnyNode, Element, Text } from "domhandler";
 import { getDoctors, getSite, localPath } from "./content";
 import { expertiseTags } from "./team-tags";
+import { pastelFor } from "@/components/team";
 
 /** The pages listed under "Our Team" in the live menu. */
 export function teamLocationPaths() {
@@ -54,7 +55,7 @@ export function structureTeamPage(html: string) {
   const byPhoto = new Map(getDoctors().filter((d) => d.photo).map((d) => [localPath(d.photo!), d.slug]));
   const cutoutOf = (slug: string | null) => {
     if (!slug) return null;
-    const p = `/team-cutouts/${slug}.webp`;
+    const p = `/team-portraits/${slug}.webp`;
     return existsSync(path.join(process.cwd(), "public", p)) ? p : null;
   };
 
@@ -356,8 +357,14 @@ function buildCard($: cheerio.CheerioAPI, nodes: Element[], { byPhoto, cutoutOf 
   const fact = (inner: string) => {
     const m = inner.match(/^\s*<(strong|b)>([\s\S]*?)<\/\1>\s*([\s\S]*)$/i);
     if (!m) return notes.push(`<p class="dr-note">${inner}</p>`);
-    const label = norm(stripTags(m[2])).replace(/[:\s]+$/, "");
-    const value = m[3].replace(/^(?:\s|&nbsp;|:)+/, "").replace(/<br\s*\/?>(?:\s|&nbsp;)*/gi, "<br>").trim();
+    let label = norm(stripTags(m[2]).replace(/&nbsp;/gi, " ").replace(/&amp;/gi, "&")).replace(/[:\s]+$/, "");
+    let value = m[3].replace(/^(?:\s|&nbsp;|:)+/, "").replace(/<br\s*\/?>(?:\s|&nbsp;)*/gi, "<br>").trim();
+    // "<strong>Experience: 8</strong>+ Years": the number belongs with the value, not the label
+    const split = label.match(/^([^:]+):\s*(\S.*)$/);
+    if (split) {
+      label = split[1].trim();
+      value = `${split[2]}${value}`.trim();
+    }
     const key = /experience/i.test(label) ? "exp" : /online/i.test(label) ? "online" : /opd|timing/i.test(label) ? "opd" : /fee/i.test(label) ? "fee" : "other";
     if (/subject expert|expertise|speciali/i.test(label) && !norm(stripTags(value))) skillsLabel = label;
     else facts.push({ key, label, value });
@@ -395,7 +402,7 @@ function buildCard($: cheerio.CheerioAPI, nodes: Element[], { byPhoto, cutoutOf 
   h.addClass("dr-name");
   tel.addClass("dr-call").prepend(ICON.phone);
   const html = `<article class="dr-card" data-kind="${kind ?? ""}" data-tags="${esc(tags.join("|"))}">
-<div class="dr-photo">${imgHtml}${years ? `<span class="dr-badge" aria-hidden="true">${ICON.exp}${esc(years)} yrs</span>` : ""}</div>
+<div class="dr-photo"${slug ? ` style="--tint:${pastelFor(slug)}"` : ""}>${imgHtml}${years ? `<span class="dr-badge" aria-hidden="true">${ICON.exp}${esc(years)} yrs</span>` : ""}</div>
 <div class="dr-body">
 <div class="dr-id">${$.html(h)}${role ? `<p class="dr-role">${role}</p>` : ""}</div>
 ${skills ? `<div class="dr-skills">${skillsLabel ? `<p class="dr-label">${esc(skillsLabel)}:</p>` : ""}${skills}</div>` : ""}

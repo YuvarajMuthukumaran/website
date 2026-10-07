@@ -17,11 +17,8 @@ export function CrisisStrip({ phone }: { phone: { display: string; href: string 
           </span>
         </p>
         <p className="flex shrink-0 items-center gap-2">
-          <a href="tel:14416" className={pill} aria-label="Call Tele-MANAS on 14416, free, 24 hours a day">
-            <Icon name="phone" className="size-3.5" /> 14416<span className="hidden font-normal text-ink-soft md:inline">&nbsp;Tele-MANAS (free, 24×7)</span>
-          </a>
-          <a href={phone.href} className={pill} aria-label={`Call Tulasi Healthcare on ${phone.display}`}>
-            <Icon name="phone" className="size-3.5" /> <span className="sm:hidden">Tulasi</span><span className="hidden sm:inline">Tulasi Healthcare {phone.display}</span>
+          <a href={phone.href} className={pill}>
+            <Icon name="phone" className="size-3.5" /> <span className="sm:hidden">Call us</span><span className="hidden sm:inline">Call Tulasi Healthcare {phone.display}</span>
           </a>
         </p>
       </div>

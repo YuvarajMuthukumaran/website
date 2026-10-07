@@ -31,7 +31,7 @@ export default function BookAppointment() {
         <div className="container-page">
           <BookingForm siteDoctors={siteDoctors} clinicPhone={{ display: site.contact.phoneDisplay, href: site.contact.phoneHref }} />
           <p className="mx-auto mt-8 max-w-2xl text-center text-sm text-ink-soft">
-            If you or someone you know is in immediate danger, call <a href="tel:14416" className="font-semibold text-alert-700 underline">Tele-MANAS 14416</a> or <a href="tel:112" className="font-semibold text-alert-700 underline">112</a> now. Online booking is not for emergencies.
+            If you or someone you know is in immediate danger, call <a href={site.contact.phoneHref} className="font-semibold text-alert-700 underline">Tulasi Healthcare on {site.contact.phoneDisplay}</a> now. Online booking is not for emergencies.
           </p>
         </div>
       </div>

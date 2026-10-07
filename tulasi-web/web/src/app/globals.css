@@ -61,7 +61,7 @@
   --ease-settle: cubic-bezier(0.32, 0.72, 0, 1);
 
   /* Type scale: modest, never shouting */
-  --text-display: clamp(2rem, 1.65rem + 2.1vw, 3.25rem);
+  --text-display: clamp(1.625rem, 1.25rem + 1.4vw, 2.375rem);
   --text-h1: clamp(2rem, 1.55rem + 1.8vw, 3rem);
   --text-h2: clamp(1.625rem, 1.35rem + 1.15vw, 2.25rem);
   --text-h3: clamp(1.15rem, 1.08rem + 0.3vw, 1.35rem);
@@ -135,19 +135,21 @@ html.nav-ready .page-enter:not(.page-static) { animation: page-in 0.4s var(--eas
 }
 .home-hero-slide {
   object-fit: cover;
-  opacity: 0;
-  transform: scale(1.035);
-  transition: opacity 1100ms var(--ease-calm), transform 5200ms linear;
-  will-change: opacity, transform;
+  visibility: hidden;
 }
-.home-hero-slide.is-active {
-  z-index: 1;
-  opacity: 1;
-  animation: hero-ken-burns 5200ms linear both;
+/* The new photo wipes in from the right (quick), over the one that is leaving. */
+.home-hero-slide.is-prev { visibility: visible; z-index: 1; }
+.home-hero-slide.is-active { visibility: visible; z-index: 2; }
+.home-hero-slide.is-anim { animation: hero-wipe 650ms cubic-bezier(0.65, 0, 0.2, 1) both; }
+@keyframes hero-wipe {
+  from { clip-path: inset(0 0 0 100%); transform: scale(1.06); }
+  to { clip-path: inset(0 0 0 0); transform: scale(1); }
 }
-.home-hero-slideshow.is-paused .home-hero-slide {
-  animation-play-state: paused;
-}
+@media (prefers-reduced-motion: reduce) { .home-hero-slide.is-anim { animation: none; } }
+.home-hero-dots { position: absolute; z-index: 3; right: 1rem; top: 1rem; display: flex; gap: 0.4rem; padding: 0.45rem 0.6rem; border-radius: 999px; background: rgb(255 255 255 / 0.85); backdrop-filter: blur(6px); }
+.home-hero-dots button { position: relative; width: 0.5rem; height: 0.5rem; border-radius: 999px; background: rgb(23 34 44 / 0.28); transition: width 350ms var(--ease-calm), background-color 250ms; }
+.home-hero-dots button::after { content: ""; position: absolute; inset: -0.6rem -0.2rem; }
+.home-hero-dots button.is-on { width: 1.4rem; background: var(--color-brand-600); }
 
 /* ═══════════════ Utilities ═══════════════ */
 @utility container-page {
@@ -243,7 +245,7 @@ details.acc > summary::-webkit-details-marker { display: none; }
 .dr-card:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px var(--color-brand-200), var(--shadow-lift); }
 .dr-card[hidden] { display: none; }
 .dr-card.dr-in { animation: rise-in 400ms var(--ease-calm) both; }
-.dr-photo { position: relative; isolation: isolate; height: 15rem; overflow: hidden; background: linear-gradient(180deg, var(--color-sage-50), var(--color-sage-100)); }
+.dr-photo { position: relative; isolation: isolate; height: 15.5rem; overflow: hidden; background: var(--tint, var(--color-sage-50)); }
 .dr-photo img { display: block; }
 .dr-photo .dr-cut { position: absolute; left: 50%; bottom: 0; height: 104%; width: auto; max-width: none; translate: -50% 0; transform-origin: 50% 100%; transition: transform 600ms var(--ease-calm); }
 .dr-card:hover .dr-cut { transform: scale(1.03); }
@@ -367,14 +369,7 @@ details.acc > summary::-webkit-details-marker { display: none; }
 .prose-tulasi .lt-avatar { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--color-sage-100); font-size: 0.8rem; font-weight: 600; color: var(--color-sage-700); }
 .prose-tulasi .lt-quote h6 { margin: 0; font-size: 0.95rem; }
 
-/* ───── Doctor cut-outs: the source photos are tight crops, so jackets end in hard
-   vertical edges. Fade the sides and bottom into the card colour instead. ───── */
-.portrait-fade {
-  -webkit-mask-image: linear-gradient(to bottom, #000 76%, transparent 100%), linear-gradient(to right, transparent 0, #000 13%, #000 87%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(to bottom, #000 76%, transparent 100%), linear-gradient(to right, transparent 0, #000 13%, #000 87%, transparent 100%);
-  mask-composite: intersect;
-}
+/* Doctor portraits are uniform transparent cut-outs (scraper/12-uniform-portraits.py): no edge fades needed. */
 
 /* ───── Care-steps vine: draws once when first seen, then rests. ───── */
 .vine .vine-stem { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.2s var(--ease-calm); }
@@ -488,13 +483,6 @@ details.acc > summary::-webkit-details-marker { display: none; }
   object-fit: cover;
   object-position: 50% 20%;
   transition: transform 500ms var(--ease-calm);
-}
-.marquee-photo.portrait-fade {
-  /* override mask so it fades bottom only in marquee context */
-  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
-  -webkit-mask-composite: unset;
-  mask-composite: unset;
 }
 
 /* Initials placeholder (no photo) */
@@ -880,7 +868,7 @@ details.acc > summary::-webkit-details-marker { display: none; }
   font-size: clamp(0.95rem, 0.8rem + 0.5vw, 1.2rem);
   font-weight: 600;
   letter-spacing: -0.01em;
-  color: var(--color-brand-400);
+  color: var(--color-brand-600);
 }
 
 /* Description below the number */
@@ -898,320 +886,79 @@ details.acc > summary::-webkit-details-marker { display: none; }
   border-top: 1px solid var(--color-line);
   font-size: 0.75rem;
   color: var(--color-ink-soft);
-  opacity: 0.7;
   font-style: italic;
 }
 
 
-/* ════════════════════════════════════════════════════════════════
-   Locations page – hero, flip cards, filter tabs, contact section
-   ════════════════════════════════════════════════════════════════ */
-
-/* ── Hero ── */
-.lp-hero {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(135deg, #f0f7f4 0%, #eaf3ff 50%, #f5f0ff 100%);
-  padding-block: 5rem 4rem;
-}
-.lp-mesh { position: absolute; inset: 0; pointer-events: none; }
-.lp-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.35;
-  animation: lp-float 12s ease-in-out infinite;
-}
-.lp-blob-1 { width: 520px; height: 520px; background: var(--color-brand-200); top: -160px; right: -80px; animation-delay: 0s; }
-.lp-blob-2 { width: 380px; height: 380px; background: #c7d8ff; bottom: -100px; left: -60px; animation-delay: -4s; }
-.lp-blob-3 { width: 280px; height: 280px; background: #e4c6f5; top: 40%; left: 45%; animation-delay: -8s; }
-
-@keyframes lp-float {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33%       { transform: translate(20px, -20px) scale(1.04); }
-  66%       { transform: translate(-15px, 10px) scale(0.97); }
-}
-@media (prefers-reduced-motion: reduce) { .lp-blob { animation: none; } }
-
-.lp-hero-inner { position: relative; z-index: 1; max-width: 680px; }
-.lp-eyebrow { color: var(--color-brand-600); }
-
-.lp-hero-title {
-  margin-top: 1rem;
-  font-family: var(--font-display);
-  font-size: clamp(2.4rem, 1.6rem + 4vw, 4rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  color: var(--color-ink);
-}
-.lp-hero-sub {
-  margin-top: 1.25rem;
-  font-size: 1.0625rem;
-  line-height: 1.7;
-  color: var(--color-ink-soft);
-  max-width: 52ch;
-}
-
-/* Hero stat pills */
-.lp-stats {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem 1.5rem;
-  margin-top: 2.25rem;
-  padding: 1rem 1.5rem;
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.9);
-  border-radius: 1.25rem;
-  width: fit-content;
-  box-shadow: 0 4px 24px -8px rgba(0,0,0,0.10);
-}
-.lp-stat { display: flex; flex-direction: column; align-items: center; gap: 0.15rem; }
-.lp-stat-num {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: var(--color-brand-600);
-  line-height: 1;
-}
-.lp-stat-label { font-size: 0.72rem; font-weight: 600; color: var(--color-ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
-.lp-stat-sep { width: 1px; height: 2.5rem; background: var(--color-line); }
-
-/* ── Filter tabs ── */
-.loc-tabs {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  margin-bottom: 2rem;
-  padding: 0.25rem;
-  background: var(--color-mist, #f7f8f6);
-  border-radius: 999px;
-  width: fit-content;
-  border: 1px solid var(--color-line);
-}
-.loc-tab {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.45rem 1.1rem;
-  border-radius: 999px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--color-ink-soft);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: background 200ms, color 200ms, box-shadow 200ms;
-  white-space: nowrap;
-}
-.loc-tab:hover { color: var(--color-ink); }
-.loc-tab-active {
-  background: #fff;
-  color: var(--color-brand-700);
-  box-shadow: 0 1px 8px -2px rgba(0,0,0,0.12);
-}
-.loc-tab-count {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 1.4rem;
-  height: 1.4rem;
-  padding: 0 0.35rem;
-  border-radius: 999px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  background: var(--color-brand-50, #eaf4ef);
-  color: var(--color-brand-700);
-}
-.loc-tab-active .loc-tab-count { background: var(--color-brand-600); color: #fff; }
-
-/* ── Card grid ── */
-.loc-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-@media (min-width: 640px)  { .loc-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1024px) { .loc-grid { grid-template-columns: repeat(3, 1fr); } }
-
-/* ── Flip card wrapper ── */
-.loc-card-wrap {
-  perspective: 1200px;
-  opacity: 0;
-  transform: translateY(24px);
-  animation: loc-fadein 0.55s cubic-bezier(0.34,1,0.56,1) both;
-  animation-delay: var(--loc-delay, 0ms);
-}
-@keyframes loc-fadein {
-  to { opacity: 1; transform: translateY(0); }
-}
+/* ═══════════════════════════════════════
+   Locations: cards that turn over (LocationCard.tsx)
+   ═══════════════════════════════════════ */
+.lc-grid { display: grid; gap: 1rem; grid-template-columns: minmax(0, 1fr); list-style: none; padding: 0; margin: 0; }
+@media (width >= 640px) { .lc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (width >= 1024px) { .lc-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.lc-wrap { perspective: 1400px; height: 17.5rem; }
+.lc-card { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 700ms var(--ease-calm); }
+.lc-flipped .lc-card { transform: rotateY(180deg); }
+.lc-face { position: absolute; inset: 0; border-radius: var(--radius-blob); overflow: hidden; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.lc-front { box-shadow: 0 0 0 1px rgb(23 34 44 / 0.05); }
+.lc-photo { object-fit: cover; }
+.lc-turn { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; width: 100%; height: 100%; padding: 1.4rem; text-align: left; cursor: pointer; border-radius: inherit; transition: background-color 300ms; }
+.lc-turn:hover { background-color: rgb(255 255 255 / 0.25); }
+.lc-turn:focus-visible { outline: 2px solid var(--color-brand-600); outline-offset: -4px; }
+.lc-photo + .lc-turn { background: linear-gradient(to top, rgb(0 0 0 / 0.65), transparent 65%); }
+.lc-photo + .lc-turn :is(.lc-title, .lc-area, .lc-hint) { color: #fff; }
+.lc-badge { padding: 0.3rem 0.7rem; border-radius: 999px; background: rgb(255 255 255 / 0.78); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink); }
+.lc-title { margin-top: auto; font-family: var(--font-display); font-size: 1.65rem; line-height: 1.1; font-weight: 600; letter-spacing: -0.02em; color: var(--color-ink); }
+.lc-area { margin-top: 0.4rem; font-size: 0.9rem; line-height: 1.4; color: rgb(23 34 44 / 0.72); }
+.lc-hint { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1.1rem; font-size: 0.85rem; font-weight: 600; color: var(--color-brand-700); }
+.lc-hint svg { transition: translate 300ms var(--ease-calm); }
+.lc-turn:hover .lc-hint svg { translate: 3px 0; }
+.lc-back { display: flex; flex-direction: column; gap: 0.65rem; padding: 1.35rem; background: #fff; transform: rotateY(180deg); box-shadow: 0 0 0 1px var(--color-line), var(--shadow-soft); }
+.lc-back-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-sage-700); }
+.lc-back-name { font-family: var(--font-display); font-size: 1.1rem; line-height: 1.25; font-weight: 600; letter-spacing: -0.01em; color: var(--color-ink); }
+.lc-address { display: flex; gap: 0.5rem; font-size: 0.875rem; line-height: 1.5; font-style: normal; color: var(--color-ink-soft); }
+.lc-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; }
+.lc-btn { display: inline-flex; align-items: center; gap: 0.4rem; min-height: 2.5rem; padding: 0 0.95rem; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1px var(--color-line); font-size: 0.8125rem; font-weight: 600; color: var(--color-ink); text-decoration: none; transition: box-shadow 200ms, color 200ms, background-color 200ms; }
+.lc-btn:hover { color: var(--color-brand-700); box-shadow: inset 0 0 0 1px var(--color-brand-300); }
+.lc-btn-primary { background: var(--color-brand-600); color: #fff; box-shadow: none; }
+.lc-btn-primary:hover { background: var(--color-brand-700); color: #fff; box-shadow: none; }
+.lc-back-btn { display: inline-flex; align-items: center; gap: 0.35rem; align-self: flex-start; min-height: 2rem; font-size: 0.78rem; font-weight: 600; color: var(--color-ink-soft); }
+.lc-back-btn:hover { color: var(--color-brand-700); }
 @media (prefers-reduced-motion: reduce) {
-  .loc-card-wrap { animation: none; opacity: 1; transform: none; }
+  .lc-card { transform: none !important; transition: none; }
+  .lc-face { transition: opacity 250ms; }
+  .lc-back { transform: none; opacity: 0; }
+  .lc-flipped .lc-front { opacity: 0; }
+  .lc-flipped .lc-back { opacity: 1; }
 }
-
-/* ── Flip card ── */
-.loc-card {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 3/4;
-  transform-style: preserve-3d;
-  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 1.5rem;
-  cursor: pointer;
-  outline: none;
-}
-.loc-card:focus-visible { box-shadow: 0 0 0 3px var(--color-brand-400); }
-.loc-card.loc-flipped { transform: rotateY(180deg); }
-
-@media (prefers-reduced-motion: reduce) {
-  .loc-card { transition: opacity 0.3s; }
-  .loc-card.loc-flipped { transform: none; }
-  .loc-card.loc-flipped .loc-front { opacity: 0; pointer-events: none; }
-  .loc-card.loc-flipped .loc-back  { opacity: 1; pointer-events: auto; }
-}
-
-/* ── Shared face ── */
-.loc-face {
-  position: absolute;
-  inset: 0;
-  border-radius: 1.5rem;
-  overflow: hidden;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-/* ── FRONT ── */
-.loc-front { background: #1a2035; }
-.loc-photo { object-fit: cover; object-position: center 20%; transition: transform 0.4s; }
-.loc-card:hover .loc-photo { transform: scale(1.04); }
-.loc-gradient {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(10,14,30,0.92) 35%, rgba(10,14,30,0.2) 70%, transparent 100%);
-  z-index: 1;
-}
-.loc-ribbon {
-  position: absolute;
-  top: 1rem;
-  right: -0.5rem;
-  z-index: 3;
-  padding: 0.3rem 1rem 0.3rem 0.75rem;
-  border-radius: 0.4rem 0 0 0.4rem;
-  background: #ef4444;
-  color: #fff;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-}
-.loc-badge {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  z-index: 3;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.3rem 0.7rem;
-  border-radius: 999px;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.loc-badge-hospital { background: var(--color-brand-600); color: #fff; }
-.loc-badge-clinic   { background: #7c3aed; color: #fff; }
-.loc-badge-sm { font-size: 0.6rem; padding: 0.2rem 0.55rem; }
-.loc-badge-beds { font-weight: 500; letter-spacing: 0; opacity: 0.85; }
-.loc-front-info {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  z-index: 2;
-  padding: 1.5rem;
-}
-.loc-area  { font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.08em; }
-.loc-name  { margin-top: 0.35rem; font-size: 1.1rem; font-weight: 700; color: #fff; line-height: 1.25; }
-.loc-flip-hint { display: block; margin-top: 0.75rem; font-size: 0.72rem; color: rgba(255,255,255,0.5); font-style: italic; }
-
-/* ── BACK ── */
-.loc-back {
-  transform: rotateY(180deg);
-  background: linear-gradient(145deg, #0f2847 0%, #0b1d40 100%);
-  display: flex;
-  flex-direction: column;
-}
-@media (prefers-reduced-motion: reduce) {
-  .loc-back { transform: none; opacity: 0; pointer-events: none; }
-}
-.loc-back-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-  padding: 1.4rem;
-  height: 100%;
-  overflow-y: auto;
-}
-.loc-back-header { display: flex; flex-direction: column; gap: 0.4rem; }
-.loc-back-name   { font-size: 1rem; font-weight: 700; color: #fff; line-height: 1.3; }
-.loc-back-tagline { font-size: 0.8rem; line-height: 1.5; color: rgba(255,255,255,0.55); }
-
-.loc-details { display: flex; flex-direction: column; gap: 0.55rem; list-style: none; padding: 0; margin: 0; }
-.loc-detail-row { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.8rem; color: rgba(255,255,255,0.75); line-height: 1.45; }
-.loc-detail-row svg { flex-shrink: 0; margin-top: 0.1rem; color: #6ee7b7; }
-.loc-detail-link { color: rgba(255,255,255,0.9); text-decoration: underline; text-underline-offset: 3px; }
-
-.loc-open-pill   { margin-left: 0.4rem; display: inline-block; padding: 0.1rem 0.55rem; border-radius: 999px; background: #16a34a; color: #fff; font-size: 0.65rem; font-weight: 700; }
-.loc-closed-pill { margin-left: 0.4rem; display: inline-block; padding: 0.1rem 0.55rem; border-radius: 999px; background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); font-size: 0.65rem; font-weight: 700; }
-
-.loc-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-.loc-chip {
-  padding: 0.2rem 0.65rem;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: rgba(255,255,255,0.75);
-  font-size: 0.68rem;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.loc-ctas { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: auto; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.10); }
-.loc-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.45rem 0.85rem;
-  border-radius: 0.6rem;
-  font-size: 0.78rem;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  transition: opacity 150ms, transform 150ms;
-  white-space: nowrap;
-}
-.loc-btn:hover { opacity: 0.85; transform: translateY(-1px); }
-.loc-btn-primary   { background: var(--color-brand-600); color: #fff; }
-.loc-btn-secondary { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.18); }
-
-.loc-tap-hint {
-  text-align: center;
-  font-size: 0.72rem;
-  color: var(--color-ink-soft);
-  margin-top: 0.4rem;
-  opacity: 0.7;
-}
-@media (hover: hover) { .loc-tap-hint { display: none; } }
 
 /* ── "Get in touch" section ── */
 .lp-contact-section {
   background: var(--color-mist, #f7f8f6);
   border-top: 1px solid var(--color-line);
   padding-block: 4rem 5rem;
+}
+
+/* The phone finder bar (FinderBar.tsx) pushes the floating Book / chat buttons up while it is showing. */
+@media (width < 640px) { html[data-finder-bar] .floating-actions { bottom: calc(5.75rem + env(safe-area-inset-bottom)); } }
+
+/* Location cards: a calm lift, slow photo zoom, light sheen and a growing glow on hover (pointer devices only). */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .lc-wrap { transition: translate 500ms var(--ease-calm); }
+  .lc-front { transition: box-shadow 500ms var(--ease-calm); }
+  .lc-wrap:not(.lc-flipped):hover { translate: 0 -8px; }
+  .lc-wrap:not(.lc-flipped):hover .lc-front { box-shadow: 0 26px 44px -24px rgb(23 34 44 / 0.55); }
+  .lc-photo { transition: transform 1400ms var(--ease-calm); }
+  .lc-wrap:not(.lc-flipped):hover .lc-photo { transform: scale(1.1); }
+  .lc-badge, .lc-title, .lc-area, .lc-hint { transition: translate 500ms var(--ease-calm), background-color 300ms; }
+  .lc-wrap:not(.lc-flipped):hover .lc-title { translate: 0 -8px; }
+  .lc-wrap:not(.lc-flipped):hover .lc-area { translate: 0 -8px; }
+  .lc-wrap:not(.lc-flipped):hover .lc-hint { translate: 4px 0; }
+  .lc-wrap:not(.lc-flipped):hover .lc-badge { background-color: #fff; }
+  /* a soft diagonal sheen sweeps across the card */
+  .lc-turn::after { content: ""; position: absolute; inset: -20% auto -20% -60%; width: 40%; rotate: 18deg; pointer-events: none; background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.38), transparent); transition: translate 900ms var(--ease-calm); }
+  .lc-wrap:not(.lc-flipped):hover .lc-turn::after { translate: 420% 0; }
+  /* cards without a photo: a light glow grows from the corner */
+  .lc-front:not(:has(.lc-photo))::before { content: ""; position: absolute; right: -25%; bottom: -35%; width: 90%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgb(255 255 255 / 0.65), transparent 65%); scale: 0.35; opacity: 0; transition: scale 900ms var(--ease-calm), opacity 700ms; pointer-events: none; }
+  .lc-wrap:not(.lc-flipped):hover .lc-front:not(:has(.lc-photo))::before { scale: 1; opacity: 1; }
 }

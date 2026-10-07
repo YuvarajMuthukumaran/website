@@ -12,7 +12,7 @@ export type Review = {
 
 function Stars({ n }: { n: number }) {
   return (
-    <span className="rg-stars" aria-label={`${n} out of 5 stars`}>
+    <span className="rg-stars" role="img" aria-label={`${n} out of 5 stars`}>
       {Array.from({ length: 5 }).map((_, i) => (
         <svg key={i} viewBox="0 0 16 16" className={`rg-star${i < n ? " rg-star-on" : ""}`} aria-hidden="true">
           <path d="M8 1.5l1.8 3.6 4 .6-2.9 2.8.7 4L8 10.4l-3.6 1.9.7-4L2.2 5.7l4-.6L8 1.5z" />

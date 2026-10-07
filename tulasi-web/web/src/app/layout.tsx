@@ -8,6 +8,7 @@ import { Footer } from "@/components/layout/Footer";
 import { CrisisStrip } from "@/components/layout/CrisisStrip";
 import { FloatingActions } from "@/components/layout/FloatingActions";
 import { Consent } from "@/components/layout/Consent";
+import { LazyMotionRoot } from "@/components/motion/LazyMotionRoot";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import { ScrollProgress } from "@/components/motion/ScrollProgress";
 import { JsonLd } from "@/components/ui/primitives";
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en-IN" className={`${jakarta.variable} ${inter.variable}`}>
       <body className="flex min-h-dvh flex-col">
+        <LazyMotionRoot>
         <a href="#main" className="sr-only z-[100] rounded-full bg-brand-600 px-5 py-3 font-semibold text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3">
           Skip to content
         </a>
@@ -57,6 +59,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <MotionProvider />
         <ScrollProgress />
         <JsonLd data={[hospitalSchema(), websiteSchema()]} />
+        </LazyMotionRoot>
       </body>
     </html>
   );

@@ -35,6 +35,20 @@ https://claude.ai/artifact/5vR1mWEarUUTvbLbouZjsx
 Old stock decorations were removed and 301 to the page they decorated
 (`web/content/retired-media.json`); every image inside migrated content is kept.
 
+## Team portraits and locations
+
+- **Portraits.** Every team photo is a transparent cut-out with the same head size and position, so the
+  site can put each person on their own soft pastel (`pastelFor()` in `web/src/components/team.tsx`).
+  Drop the original headshot into `extracted_photos/` or `extracted_doctors/`, add it to `SOURCES` in
+  `scraper/12-uniform-portraits.py` and run `python scraper/12-uniform-portraits.py`; the result lands in
+  `web/public/team-portraits/<slug>.webp`. People without a new headshot use `data/portrait-sources/legacy/`.
+  Review `reports/portraits-contact-sheet.jpg` after a run. The script needs only OpenCV and downloads nothing.
+- **Locations.** `web/src/lib/locations.ts` holds the six centres exactly as published on `/map-direction/`
+  (3 hospital/rehabilitation centres, 3 clinics, 4 cities). Counts on the home page, `/locations/` and in the
+  menu are derived from it. Add a `photo` to an entry to show a real photo of that centre on its card.
+- **Crisis help** shows the clinic's own number and 112 (no third-party helpline) in the strip, menu, footer,
+  contact page, booking page, finder, screener and chat widget.
+
 ## Layout
 
 ```

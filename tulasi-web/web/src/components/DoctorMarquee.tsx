@@ -6,7 +6,7 @@ import "server-only";
 import Link from "next/link";
 import Image from "next/image";
 import { getDoctors } from "@/lib/content";
-import { portraitOf, PASTELS } from "@/components/team";
+import { pastelFor, portraitOf } from "@/components/team";
 import { MarqueePause } from "@/components/MarqueePause";
 import type { Doctor } from "@/lib/content";
 
@@ -38,12 +38,13 @@ function MarqueeCard({
   tabbable?: boolean;
 }) {
   const portrait = portraitOf(d);
-  const bg = PASTELS[index % PASTELS.length];
+  const bg = pastelFor(d.slug);
+  void index;
 
   return (
     <Link
       href={`/team/${d.slug}/`}
-      aria-label={`${d.name} – ${shortDesignation(d)}`}
+      aria-label={`${d.name} ${shortDesignation(d)}`}
       tabIndex={tabbable ? undefined : -1}
       aria-hidden={tabbable ? undefined : true}
       className="marquee-card group"

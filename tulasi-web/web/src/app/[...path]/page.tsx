@@ -8,7 +8,7 @@ import { addHeadingIds, extractFaq, headingsOf, teamGroups, tidy } from "@/lib/h
 import { faqSchema, medicalPageSchema, metadataFromSeo, descriptionFrom } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { Aside } from "@/components/Aside";
-import { PASTELS, portraitOf } from "@/components/team";
+import { pastelFor, portraitOf } from "@/components/team";
 import { TeamExplorer, type TeamGroup } from "@/components/team/TeamExplorer";
 import { Arrow, ButtonLink, Icon, JsonLd, Reveal } from "@/components/ui/primitives";
 import { TrackedLink } from "@/components/layout/TrackedLink";
@@ -16,8 +16,8 @@ import { TeamFilter } from "@/components/team/TeamFilter";
 import { structureTeamPage, teamLocationPaths } from "@/lib/team-location";
 import { credentialsOf, TAG_LIST } from "@/lib/team-tags";
 import { whatsappLink } from "@/lib/care";
-import { LOCATIONS } from "@/lib/locations";
-import { LocationsClient } from "@/components/locations/LocationsClient";
+import { CITIES, CLINICS, HOSPITALS, locationSummary } from "@/lib/locations";
+import { LocationsShowcase } from "@/components/locations/LocationsShowcase";
 import Link from "next/link";
 import clsx from "clsx";
 
@@ -231,7 +231,7 @@ function TeamPage({ page }: { page: Entry }) {
         src: portrait?.src ?? person.photo,
         alt: person.alt,
         cutout: !!portrait?.cutout,
-        bg: PASTELS[n++ % PASTELS.length],
+        bg: pastelFor(person.slug ?? person.name),
         tags: TAGS.filter(([, re]) => re.test(text)).map(([t]) => t),
         experience: /years?\s+of\s+experience/i.test(person.designation || d?.designation || "") ? null : facts?.experience ?? null,
         credentials: credentialsOf(d),
@@ -265,55 +265,30 @@ function TeamPage({ page }: { page: Entry }) {
   );
 }
 
-/** /contact-us/ and /locations/: multi-location network showcase with flip cards. */
+/** /contact-us/ and /locations/: every centre as a card that turns over, then ways to get in touch. */
 function LocationsPage({ page }: { page: Entry }) {
   const site = getSite();
-  const hospitals = LOCATIONS.filter((l) => l.type === "hospital").length;
-  const clinics   = LOCATIONS.filter((l) => l.type === "clinic").length;
-  const cities    = [...new Set(LOCATIONS.map((l) => l.area.split(",")[0].trim()))].length;
-
+  void page;
   return (
     <>
-      {/* ── Hero ── */}
-      <section className="lp-hero">
-        <div className="lp-mesh" aria-hidden="true">
-          <span className="lp-blob lp-blob-1" />
-          <span className="lp-blob lp-blob-2" />
-          <span className="lp-blob lp-blob-3" />
-        </div>
-        <div className="container-page lp-hero-inner">
-          <p className="eyebrow lp-eyebrow">Our locations</p>
-          <h1 className="lp-hero-title">Care, closer to you.</h1>
-          <p className="lp-hero-sub">
-            A growing network of psychiatric hospitals and mind clinics across Delhi-NCR — so expert mental-health care is never far away.
+      <section className="border-b border-line bg-gradient-to-b from-mist to-white">
+        <div className="container-page py-12 lg:py-16">
+          <p className="eyebrow">Our locations</p>
+          <h1 className="mt-3 max-w-[22ch] text-[length:var(--text-h1)] leading-[1.1] font-semibold tracking-[-0.025em] text-ink">Care, closer to you</h1>
+          <p className="mt-4 max-w-[56ch] text-[length:var(--text-lead)] leading-relaxed text-ink-soft">
+            Tulasi Healthcare has {locationSummary()}. Choose a centre to see its address and get directions.
           </p>
-          <div className="lp-stats" aria-label="Network at a glance">
-            <div className="lp-stat">
-              <span className="lp-stat-num">{hospitals}</span>
-              <span className="lp-stat-label">Hospitals</span>
-            </div>
-            <span className="lp-stat-sep" aria-hidden="true" />
-            <div className="lp-stat">
-              <span className="lp-stat-num">{clinics}</span>
-              <span className="lp-stat-label">Clinics</span>
-            </div>
-            <span className="lp-stat-sep" aria-hidden="true" />
-            <div className="lp-stat">
-              <span className="lp-stat-num">{cities}</span>
-              <span className="lp-stat-label">Cities</span>
-            </div>
-            <span className="lp-stat-sep" aria-hidden="true" />
-            <div className="lp-stat">
-              <span className="lp-stat-num">NABH</span>
-              <span className="lp-stat-label">Accredited</span>
-            </div>
-          </div>
+          <ul className="mt-6 flex flex-wrap gap-2 text-sm font-semibold text-ink" aria-label="Our centres at a glance">
+            <li className="rounded-full bg-white px-4 py-2 shadow-[inset_0_0_0_1px_var(--color-line)]">{HOSPITALS.length} hospitals</li>
+            <li className="rounded-full bg-white px-4 py-2 shadow-[inset_0_0_0_1px_var(--color-line)]">{CLINICS.length} clinics</li>
+            <li className="rounded-full bg-white px-4 py-2 shadow-[inset_0_0_0_1px_var(--color-line)]">{CITIES.length} cities</li>
+            <li className="rounded-full bg-white px-4 py-2 shadow-[inset_0_0_0_1px_var(--color-line)]">NABH accredited</li>
+          </ul>
         </div>
       </section>
 
-      {/* ── Flip card grid ── */}
-      <section className="container-page py-14 lg:py-20">
-        <LocationsClient locations={LOCATIONS} />
+      <section className="container-page py-12 lg:py-16">
+        <LocationsShowcase filters />
       </section>
 
       {/* ── Get in touch ── */}
@@ -362,9 +337,8 @@ function LocationsPage({ page }: { page: Entry }) {
           <Reveal className="mt-6 flex items-start gap-3 rounded-2xl bg-alert-50 p-4 shadow-[inset_0_0_0_1px_var(--color-alert-100)]">
             <Icon name="heart" className="mt-0.5 size-5 shrink-0 text-alert-600" />
             <p className="text-sm leading-relaxed text-ink">
-              <strong className="font-semibold">In crisis?</strong> Call{" "}
-              <a href="tel:14416" className="font-semibold text-alert-700 underline underline-offset-2">Tele-MANAS 14416</a>{" "}
-              — free and 24×7.
+              <strong className="font-semibold">In crisis?</strong> Call us on{" "}
+              <a href={site.contact.phoneHref} className="font-semibold text-alert-700 underline underline-offset-2">{site.contact.phoneDisplay}</a>.
             </p>
           </Reveal>
         </div>

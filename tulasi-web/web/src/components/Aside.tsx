@@ -8,7 +8,7 @@ import { TrackedLink } from "@/components/layout/TrackedLink";
 export function Aside({ path, toc }: { path: string; toc?: { id: string; text: string }[] }) {
   const site = getSite();
   const group = site.menu.flatMap((m) => m.groups).find((g) => g.links.some((l) => l.href === path));
-  const related = group?.links.filter((l) => l.href && l.href !== path).slice(0, 8) ?? [];
+  const related = [...new Map((group?.links ?? []).filter((l) => l.href && l.href !== path).map((l) => [l.href, l])).values()].slice(0, 8);
   return (
     <aside className="space-y-5 lg:sticky lg:top-28" aria-label="Page tools">
       <div className="hidden rounded-[var(--radius-card)] bg-sage-50 p-6 shadow-[inset_0_0_0_1px_var(--color-sage-100)] lg:block">

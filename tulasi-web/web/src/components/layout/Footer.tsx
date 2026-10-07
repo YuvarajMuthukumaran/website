@@ -42,34 +42,36 @@ const COMPANY = [
 ];
 
 
-const colHead = "text-[0.75rem] font-semibold tracking-[0.1em] text-ink uppercase";
-const colLink = "text-[0.9375rem] text-ink-soft transition-colors hover:text-brand-700";
+const colHead = "text-[0.8125rem] font-semibold tracking-[0.08em] text-white uppercase";
+const colLink = "text-[0.9375rem] text-white/72 transition-colors hover:text-white";
 
 export function Footer({ site }: { site: Site }) {
   const year = new Date().getFullYear();
   return (
-    <footer className="cv border-t border-line bg-mist">
-      <div className="container-page py-14 lg:py-16">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:gap-12">
-          <div>
-            <Link href="/" className="inline-flex items-center gap-3 rounded-xl">
-              {site.logo && <Image src={site.logo.src} alt="" width={44} height={44} className="h-11 w-11 object-contain" />}
-              <span className="font-display text-lg font-semibold tracking-[-0.015em] text-ink">Tulasi Healthcare</span>
-            </Link>
-            <p className="mt-4 max-w-sm text-[0.9375rem] leading-relaxed text-ink-soft">{site.footerAbout}</p>
-            <ul className="mt-5 flex gap-2" aria-label="Social media">
-              {site.social.map((s) => (
-                <li key={s}>
-                  <a href={s} target="_blank" rel="noopener" className="grid size-10 place-items-center rounded-full bg-white text-ink-soft shadow-[inset_0_0_0_1px_var(--color-line)] transition-colors hover:text-brand-700 hover:shadow-[inset_0_0_0_1px_var(--color-brand-300)]" aria-label={`Tulasi Healthcare on ${socialName(s)}`}>
-                    <svg viewBox="0 0 24 24" className="size-[18px]" fill="currentColor" aria-hidden="true">
-                      <path d={GLYPH[socialName(s)] ?? GLYPH.Facebook} fillRule="evenodd" />
-                    </svg>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+    <footer className="cv mt-6 rounded-t-[2rem] bg-[#173f2e] text-white">
+      <div className="container-page pt-12 pb-8 lg:pt-16">
+        {/* brand */}
+        <div className="flex flex-col items-center text-center">
+          <Link href="/" className="grid size-16 place-items-center rounded-full bg-white" aria-label="Tulasi Healthcare home">
+            {site.logo && <Image src={site.logo.src} alt="" width={44} height={44} className="size-11 object-contain" />}
+          </Link>
+          <p className="mt-4 font-display text-[1.75rem] leading-none font-semibold tracking-[-0.02em] sm:text-3xl">Tulasi Healthcare</p>
+          <p className="mt-2 text-[0.9375rem] text-white/72">Psychiatric hospital &amp; mental health care</p>
+          <ul className="mt-6 flex gap-3" aria-label="Social media">
+            {site.social.map((s) => (
+              <li key={s}>
+                <a href={s} target="_blank" rel="noopener" className="grid size-10 place-items-center rounded-md border border-white/55 text-white transition-colors hover:bg-white hover:text-[#173f2e]" aria-label={`Tulasi Healthcare on ${socialName(s)}`}>
+                  <svg viewBox="0 0 24 24" className="size-[18px]" fill="currentColor" aria-hidden="true">
+                    <path d={GLYPH[socialName(s)] ?? GLYPH.Facebook} fillRule="evenodd" />
+                  </svg>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
 
+        {/* links */}
+        <div className="mx-auto mt-12 grid max-w-5xl grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4 lg:gap-x-10">
           <div>
             <h2 className={colHead}>Care</h2>
             <ul className="mt-4 space-y-2.5">
@@ -80,7 +82,7 @@ export function Footer({ site }: { site: Site }) {
           </div>
 
           <div>
-            <h2 className={colHead}>Tulasi</h2>
+            <h2 className={colHead}>Important links</h2>
             <ul className="mt-4 space-y-2.5">
               {COMPANY.map((l) => (
                 <li key={l.href}><Link href={l.href} className={colLink}>{l.label}</Link></li>
@@ -89,55 +91,54 @@ export function Footer({ site }: { site: Site }) {
           </div>
 
           <div>
+            <h2 className={colHead}>Legal</h2>
+            <ul className="mt-4 space-y-2.5">
+              <li><Link href="/privacy-policy/" className={colLink}>Privacy Policy</Link></li>
+              <li><Link href="/terms-of-use/" className={colLink}>Terms &amp; Conditions</Link></li>
+              <li><Link href="/sitemap/" className={colLink}>Site map</Link></li>
+              <li><ConsentSettingsButton className={colLink} /></li>
+            </ul>
+          </div>
+
+          <div className="col-span-2 lg:col-span-1">
             <h2 className={colHead}>Visit &amp; contact</h2>
-            <ul className="mt-4 space-y-3.5 text-[0.9375rem]">
+            <ul className="mt-4 space-y-3 text-[0.9375rem]">
               <li>
-                <TrackedLink event="call_click" eventLocation="footer" href={site.contact.phoneHref} className="flex items-start gap-3 text-ink hover:text-brand-700">
-                  <Icon name="phone" className="mt-0.5 size-4 shrink-0 text-sage-600" /> {site.contact.phoneDisplay}
+                <TrackedLink event="call_click" eventLocation="footer" href={site.contact.phoneHref} className="flex items-start gap-3 text-white hover:underline">
+                  <Icon name="phone" className="mt-0.5 size-4 shrink-0 text-white/70" /> {site.contact.phoneDisplay}
                 </TrackedLink>
               </li>
               <li>
-                <TrackedLink event="whatsapp_click" eventLocation="footer" href={whatsappLink(site.contact.phoneHref)} target="_blank" rel="noopener" className="flex items-start gap-3 text-ink-soft hover:text-brand-700">
-                  <Icon name="chat" className="mt-0.5 size-4 shrink-0 text-sage-600" /> Message us on WhatsApp
+                <TrackedLink event="whatsapp_click" eventLocation="footer" href={whatsappLink(site.contact.phoneHref)} target="_blank" rel="noopener" className={`flex items-start gap-3 ${colLink}`}>
+                  <Icon name="chat" className="mt-0.5 size-4 shrink-0 text-white/70" /> WhatsApp us
                 </TrackedLink>
               </li>
               <li>
-                <a href={`mailto:${site.contact.email}`} className="flex items-start gap-3 break-all text-ink-soft hover:text-brand-700">
-                  <Icon name="mail" className="mt-0.5 size-4 shrink-0 text-sage-600" /> {site.contact.email}
+                <a href={`mailto:${site.contact.email}`} className={`flex items-start gap-3 break-all ${colLink}`}>
+                  <Icon name="mail" className="mt-0.5 size-4 shrink-0 text-white/70" /> {site.contact.email}
                 </a>
               </li>
-              <li className="flex items-start gap-3 text-ink-soft">
-                <Icon name="pin" className="mt-0.5 size-4 shrink-0 text-sage-600" />
+              <li className="flex items-start gap-3 text-white/72">
+                <Icon name="pin" className="mt-0.5 size-4 shrink-0 text-white/70" />
                 <address className="not-italic">{site.contact.address}</address>
               </li>
-              <li>
-                <Link href="/map-direction/" className="inline-flex items-center gap-1.5 font-semibold text-brand-700 hover:text-brand-900">Map &amp; directions <Icon name="arrow" className="size-4" /></Link>
-              </li>
+              <li><Link href="/locations/" className="inline-flex items-center gap-1.5 font-semibold text-white hover:underline">All locations <Icon name="arrow" className="size-4" /></Link></li>
             </ul>
           </div>
         </div>
 
         {/* crisis help: gentle, but always there */}
-        <div className="mt-12 flex flex-col gap-3 rounded-[var(--radius-card)] border border-alert-100 bg-alert-50 p-5 sm:flex-row sm:items-center sm:justify-between">
-          <p className="flex items-start gap-3 text-[0.9375rem] text-ink">
-            <Icon name="heart" className="mt-0.5 size-5 shrink-0 text-alert-600" />
+        <div className="mx-auto mt-12 flex max-w-5xl flex-col gap-3 rounded-2xl bg-white/10 p-5 sm:flex-row sm:items-center sm:justify-between">
+          <p className="flex items-start gap-3 text-[0.9375rem]">
+            <Icon name="heart" className="mt-0.5 size-5 shrink-0 text-white/80" />
             <span><strong className="font-semibold">In crisis or thinking of harming yourself?</strong> You are not alone. Help is available right now.</span>
           </p>
-          <ul className="flex flex-wrap gap-2 text-sm">
-            <li><a href="tel:14416" className="inline-flex min-h-10 items-center gap-1.5 rounded-full bg-white px-4 font-semibold text-alert-700 shadow-[inset_0_0_0_1px_var(--color-alert-100)] hover:bg-alert-100">Tele-MANAS 14416 <span className="font-normal text-ink-soft">free, 24×7</span></a></li>
-            <li><a href="tel:112" className="inline-flex min-h-10 items-center rounded-full bg-white px-4 font-semibold text-alert-700 shadow-[inset_0_0_0_1px_var(--color-alert-100)] hover:bg-alert-100">Emergency 112</a></li>
-          </ul>
+          <a href={site.contact.phoneHref} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-[#173f2e] hover:bg-white/90">
+            <Icon name="phone" className="size-4" /> Call {site.contact.phoneDisplay}
+          </a>
         </div>
 
-        <div className="mt-8 flex flex-col gap-3 border-t border-line pt-6 text-[0.8125rem] text-ink-soft md:flex-row md:items-center md:justify-between">
-          <p>{site.copyright.replace(/\d{4}/, String(year))}</p>
-          <ul className="flex flex-wrap gap-x-5 gap-y-2">
-            <li><Link href="/privacy-policy/" className="hover:text-brand-700">Privacy Policy</Link></li>
-            <li><Link href="/terms-of-use/" className="hover:text-brand-700">Terms</Link></li>
-            <li><Link href="/sitemap/" className="hover:text-brand-700">Site map</Link></li>
-            <li><ConsentSettingsButton className="hover:text-brand-700" /></li>
-          </ul>
-        </div>
+        <p className="mt-10 text-center text-[0.8125rem] text-white/60">{site.copyright.replace(/\d{4}/, String(year))}</p>
       </div>
     </footer>
   );

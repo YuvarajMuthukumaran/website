@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { getArchiveSeo, getDoctorFacts, getDoctors } from "@/lib/content";
 import { metadataFromArchive } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
-import { PASTELS, portraitOf } from "@/components/team";
+import { pastelFor, portraitOf } from "@/components/team";
 
 import { TeamExplorer, type TeamGroup } from "@/components/team/TeamExplorer";
 import { credentialsOf, expertiseTags, TAG_LIST } from "@/lib/team-tags";
@@ -31,7 +31,7 @@ export default function TeamIndex() {
         src: p?.src ?? null,
         alt: d.name,
         cutout: !!p?.cutout,
-        bg: PASTELS[n++ % PASTELS.length],
+        bg: pastelFor(d.slug),
         tags: expertiseTags([d.designation ?? "", ...(facts?.expertise ?? [])].join(" ")),
         experience: /years?\s+of\s+experience/i.test(d.designation ?? "") ? null : facts?.experience ?? null,
         credentials: credentialsOf(d),

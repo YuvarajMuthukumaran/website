@@ -6,7 +6,7 @@
 // bubble and says "Click here to have a chat", then tucks back in after a few
 // seconds. Hovering the bubble brings it out again.
 import clsx from "clsx";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, m, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ComponentType } from "react";
@@ -72,7 +72,7 @@ export function FloatingActions({ phone, doctorSlugs, doctorPhotos }: { phone: P
 
   return (
     <>
-      <div className="fixed right-4 bottom-4 z-[55] flex flex-col items-end gap-3 sm:right-6 sm:bottom-6">
+      <div className="floating-actions fixed right-4 bottom-4 z-[55] flex flex-col items-end gap-3 transition-[bottom] duration-300 sm:right-6 sm:bottom-6">
         {!onBookingPage && (
           <Link
             href="/book-appointment/"
@@ -92,7 +92,7 @@ export function FloatingActions({ phone, doctorSlugs, doctorPhotos }: { phone: P
           {/* The mascot sits BEHIND the bubble (z-0 vs z-10) so it appears to come out of it. */}
           <AnimatePresence>
             {peek && !open && (
-              <motion.div
+              <m.div
                 key="mascot-peek"
                 className="absolute right-9 bottom-1 z-0 flex items-end"
                 initial={reduce ? { opacity: 0 } : { x: 54, opacity: 0, scale: 0.5, rotate: 14 }}
@@ -100,7 +100,7 @@ export function FloatingActions({ phone, doctorSlugs, doctorPhotos }: { phone: P
                 exit={reduce ? { opacity: 0 } : { x: 54, opacity: 0, scale: 0.5, rotate: 14, transition: { duration: 0.35, ease: "easeIn" } }}
                 transition={{ type: "spring", stiffness: 230, damping: 15 }}
               >
-                <motion.button
+                <m.button
                   type="button"
                   onClick={launch}
                   initial={reduce ? false : { opacity: 0, scale: 0.6, x: 14 }}
@@ -111,8 +111,8 @@ export function FloatingActions({ phone, doctorSlugs, doctorPhotos }: { phone: P
                 >
                   Click here to have a chat
                   <span aria-hidden="true" className="absolute top-1/2 -right-1 size-2.5 -translate-y-1/2 rotate-45 rounded-[2px] bg-white" />
-                </motion.button>
-                <motion.div
+                </m.button>
+                <m.div
                   aria-hidden="true"
                   onClick={launch}
                   className="size-[4.5rem] cursor-pointer drop-shadow-[0_8px_10px_rgb(23_34_44/0.2)]"
@@ -121,8 +121,8 @@ export function FloatingActions({ phone, doctorSlugs, doctorPhotos }: { phone: P
                   style={{ transformOrigin: "50% 90%" }}
                 >
                   <TulasiMascot mood="happy" className="size-full" />
-                </motion.div>
-              </motion.div>
+                </m.div>
+              </m.div>
             )}
           </AnimatePresence>
 

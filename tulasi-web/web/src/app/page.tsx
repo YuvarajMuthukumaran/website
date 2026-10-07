@@ -4,6 +4,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { getHome, getPageByPath, getSite, polishText } from "@/lib/content";
 import { faqSchema, metadataFromSeo } from "@/lib/seo";
 import { Arrow, BrandIcon, btnClass, ButtonLink, Icon, JsonLd, Reveal, SectionHeading } from "@/components/ui/primitives";
@@ -12,12 +14,19 @@ import { ReviewGrid } from "@/components/ReviewGrid";
 import { LeafVine } from "@/components/motion/LeafVine";
 import { TrackedLink } from "@/components/layout/TrackedLink";
 import { OpenChatButton } from "@/components/chat/OpenChatButton";
+import { FinderBar } from "@/components/FinderBar";
+import { LocationsShowcase } from "@/components/locations/LocationsShowcase";
+import { PASTELS } from "@/components/team";
+import { CITIES, CLINICS, HOSPITALS, locationSummary } from "@/lib/locations";
 import { HomeHeroSlideshow } from "@/components/HomeHeroSlideshow";
 import { CONCERN_ICON, CONCERNS, PATHWAYS, type Pathway } from "@/lib/care";
 
 export function generateMetadata(): Metadata {
   const page = getPageByPath("/")!;
-  return metadataFromSeo(page.seo, { title: page.title, path: "/", image: "/wp-content/uploads/2022/12/lasi-healthcare-psychiatric-hospital.webp" });
+  // The live title and description lead with "Rehab"; the hospital is much more than that.
+  const title = "Tulasi Healthcare | Psychiatric Hospital & Mental Health Care in Gurugram, Delhi NCR";
+  const description = "NABH-accredited psychiatric hospital in Gurugram and Delhi NCR: psychiatrists, psychologists and de-addiction care for anxiety, depression, addiction and all mental health conditions.";
+  return metadataFromSeo({ ...page.seo, title, description, og: page.seo.og ? { ...page.seo.og, title, description } : page.seo.og }, { title, path: "/", image: "/wp-content/uploads/2022/12/lasi-healthcare-psychiatric-hospital.webp" });
 }
 
 const PATHWAY_ICON: Record<Pathway["icon"], string> = {
@@ -30,14 +39,11 @@ const PATHWAY_ICON: Record<Pathway["icon"], string> = {
   wave: "waves",
   briefcase: "workplace",
 };
-const HELP_WITH = ["Anxiety", "Depression", "OCD", "Bipolar disorder", "Alcohol addiction", "Drug addiction", "ADHD", "Dementia & memory"];
+const HELP_WITH = ["Anxiety", "Depression", "OCD", "Bipolar disorder", "Schizophrenia & psychosis", "Child & teen mental health", "ADHD", "Autism", "Alcohol addiction", "Drug addiction", "Dementia & memory"];
 
-const STEPS = [
-  { title: "Assess", text: "Meet our psychiatrists and clinical psychologists for a careful evaluation." },
-  { title: "Treat", text: "Medicine and therapy together, tailored to the person’s needs." },
-  { title: "Heal", text: "Psychosocial rehabilitation, residential care and supported living." },
-  { title: "Thrive", text: "Continued support and day-care programmes after inpatient treatment." },
-];
+/** Photo for a condition tile: `public/conditions/<slug>.webp` (see SOURCES.md there). Without a file the tile shows its icon. */
+const conditionSlug = (label: string) => label.toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "");
+const conditionPhoto = (label: string) => ["webp", "jpg", "jpeg", "png"].map((e) => `/conditions/${conditionSlug(label)}.${e}`).find((p) => existsSync(path.join(process.cwd(), "public", p))) ?? null;
 
 const sectionPad = "py-14 sm:py-16 lg:py-20";
 
@@ -62,6 +68,7 @@ export default function Home() {
 
   const concerns = HELP_WITH.map((l) => CONCERNS.find((c) => c.label === l)).filter((c): c is NonNullable<typeof c> => !!c);
   const services = PATHWAYS.slice(0, 6);
+  const photos = Object.fromEntries(concerns.map((c) => [c.label, conditionPhoto(c.label)]));
 
   return (
     <>
@@ -69,7 +76,7 @@ export default function Home() {
       <section className="bg-white">
         <div className="container-page grid items-center gap-8 py-10 sm:py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.95fr)] lg:gap-14 lg:py-16">
           <div>
-            <p className="eyebrow">Psychiatric hospital &amp; rehabilitation centre</p>
+            <p className="eyebrow">Psychiatric hospital &amp; mental health care</p>
             <h1 className="mt-4 max-w-[19ch] text-[length:var(--text-display)] leading-[1.12] font-semibold tracking-[-0.025em] text-ink">
               Get better care for your <span className="text-brand-600">mental and behavioural health</span>
             </h1>
@@ -124,18 +131,25 @@ export default function Home() {
       <section id="help" className={sectionPad}>
         <div className="container-page">
           <SectionHeading title="What would you like help with?" text="Choose what feels closest. Each page explains how we treat it." />
-          <ul className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          <ul className="mt-10 grid grid-cols-3 gap-x-3 gap-y-8 sm:grid-cols-4 lg:grid-cols-6 lg:gap-x-4">
             {concerns.map((c, i) => (
-              <Reveal as="li" key={c.href} delay={(i % 4) * 50}>
-                <Link href={c.href} className="group flex h-full min-h-[4.5rem] items-center gap-3 rounded-[var(--radius-card)] bg-white p-3.5 shadow-[inset_0_0_0_1px_var(--color-line)] transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-[inset_0_0_0_1px_var(--color-brand-300),var(--shadow-soft)] sm:gap-4 sm:p-4">
-                  <span className="icon-tile size-11 shrink-0">
-                    {CONCERN_ICON[c.label]?.startsWith("i:") ? <Icon name={CONCERN_ICON[c.label].slice(2)} className="size-5" /> : <BrandIcon name={CONCERN_ICON[c.label] ?? "cradle"} className="size-5" />}
+              <Reveal as="li" key={c.href} delay={(i % 6) * 40}>
+                <Link href={c.href} className="group flex flex-col items-center gap-3 text-center">
+                  <span className="relative grid size-[5.5rem] place-items-center overflow-hidden rounded-full text-ink/75 transition-[transform,box-shadow] duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_14px_28px_-16px_rgb(23_34_44/0.35)] sm:size-28 lg:size-[7.25rem]" style={{ backgroundColor: PASTELS[i % PASTELS.length] }}>
+                    {(photos[c.label] ?? null) ? <Image src={photos[c.label]!} alt="" fill sizes="116px" className="object-cover" /> : CONCERN_ICON[c.label]?.startsWith("i:") ? <Icon name={CONCERN_ICON[c.label].slice(2)} className="size-9 sm:size-10" strokeWidth={1.5} /> : <BrandIcon name={CONCERN_ICON[c.label] ?? "cradle"} className="size-9 sm:size-10" />}
                   </span>
-                  <span className="min-w-0 flex-1 text-[0.9375rem] leading-snug font-semibold text-ink sm:text-base">{c.label}</span>
-                  <Icon name="arrow" className="hidden size-4 shrink-0 -translate-x-1 text-brand-600 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 sm:block" />
+                  <span className="max-w-[12ch] text-[0.9375rem] leading-snug font-semibold text-ink group-hover:text-brand-700 sm:max-w-[14ch] sm:text-base">{c.label}</span>
                 </Link>
               </Reveal>
             ))}
+            <Reveal as="li" delay={(concerns.length % 6) * 40}>
+              <Link href="/services-2/" className="group flex flex-col items-center gap-3 text-center">
+                <span className="grid size-[5.5rem] place-items-center rounded-full bg-white text-brand-700 shadow-[inset_0_0_0_1.5px_var(--color-brand-200)] transition-[transform,box-shadow] duration-300 group-hover:-translate-y-1 group-hover:shadow-[inset_0_0_0_1.5px_var(--color-brand-500)] sm:size-28 lg:size-[7.25rem]">
+                  <Icon name="arrow" className="size-8" />
+                </span>
+                <span className="max-w-[12ch] text-[0.9375rem] leading-snug font-semibold text-brand-700 sm:text-base">All conditions</span>
+              </Link>
+            </Reveal>
           </ul>
           <p className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.9375rem] text-ink-soft">
             Not sure where to start?
@@ -145,13 +159,13 @@ export default function Home() {
             <span aria-hidden="true" className="hidden text-line sm:inline">|</span>
             <OpenChatButton className="inline-flex min-h-10 items-center gap-2 font-semibold text-brand-700 hover:text-brand-900">Ask Tulasi</OpenChatButton>
             <span aria-hidden="true" className="hidden text-line sm:inline">|</span>
-            <Link href="/services-2/" className="group/btn inline-flex items-center gap-1.5 font-semibold text-brand-700 hover:text-brand-900">All conditions &amp; treatments <Arrow className="size-4" /></Link>
+            <Link href="/services-2/" className="group/btn inline-flex items-center gap-1.5 font-semibold text-brand-700 hover:text-brand-900">All treatments <Arrow className="size-4" /></Link>
           </p>
         </div>
       </section>
 
       {/* ═════════════ Services ═════════════ */}
-      <section className={`${sectionPad} bg-mist`}>
+      <section className={`cv ${sectionPad} bg-mist`}>
         <div className="container-page">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionHeading title="One team, every kind of care" text="Psychiatrists, psychologists, social workers and paramedical staff working together, from a first consultation to residential rehabilitation." />
@@ -174,7 +188,7 @@ export default function Home() {
       </section>
 
       {/* ═════════════ Doctors marquee ═════════════ */}
-      <section className="py-14 sm:py-16 lg:py-20 overflow-hidden">
+      <section className="cv py-14 sm:py-16 lg:py-20 overflow-hidden">
         <div className="container-page">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionHeading title="Meet our doctors" text="Highly qualified and dedicated psychiatrists and psychologists. Choose a profile to read more or book." />
@@ -188,24 +202,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═════════════ First visit ═════════════ */}
-      <section aria-labelledby="first-visit" className={sectionPad}>
+      {/* ═════════════ From the first call to life after treatment (one section) ═════════════ */}
+      <section aria-labelledby="first-visit" className={`cv ${sectionPad} bg-mist`}>
         <div className="container-page">
-          <SectionHeading eyebrow="Your first visit" title="What to expect when you come to see us" text="Starting is often the hardest part. Here is how it works, so there are no surprises." id="first-visit" />
-          <ol className="mt-8 grid gap-4 md:grid-cols-3">
-            {[
-              ["Book or call", `Choose a doctor and a time online, or call ${phone.display}. If you are not sure who to see, we will help you choose.`],
-              ["Meet your specialist", "A first consultation with a psychiatrist or psychologist usually lasts 20 to 45 minutes. Bring any earlier reports and a list of current medicines."],
-              ["Agree a plan", "Your doctor explains what they found and suggests the next steps: therapy, medicines, follow-up visits, or admission if it is needed. You decide at your own pace."],
-            ].map(([t, d], i) => (
-              <Reveal as="li" key={t} delay={i * 70} className="rounded-[var(--radius-card)] bg-white p-6 shadow-[0_0_0_1px_var(--color-line)]">
-                <span className="grid size-9 place-items-center rounded-full bg-sage-50 font-display text-sm font-semibold text-sage-700 shadow-[inset_0_0_0_1px_var(--color-sage-100)]">{i + 1}</span>
-                <h3 className="mt-4 font-display text-lg font-semibold text-ink">{t}</h3>
-                <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-soft">{d}</p>
-              </Reveal>
-            ))}
-          </ol>
-          <p className="mt-6 flex items-start gap-3 text-[0.9375rem] leading-relaxed text-ink-soft">
+          <SectionHeading eyebrow="How it works" title="From your first call to life after treatment" text="Starting is often the hardest part. Here is how it works, so there are no surprises." id="first-visit" className="max-w-3xl" />
+          <div className="relative mt-10">
+            <LeafVine />
+            <ol className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+              {[
+                ["Book or call", `Choose a doctor and a time online, or call ${phone.display}. If you are not sure who to see, we will help you choose.`],
+                ["Meet your specialist", "A first consultation with a psychiatrist or psychologist usually lasts 20 to 45 minutes. Bring any earlier reports and a list of current medicines."],
+                ["Agree a plan", "Your doctor explains what they found and suggests the next steps: therapy, medicines, follow-up visits, or admission if it is needed. You decide at your own pace."],
+                ["Recover, with support", "Medicine and therapy, tailored to the person. Where needed: psychosocial rehabilitation, residential care and supported living, then continued support and day-care programmes after inpatient treatment."],
+              ].map(([t, d], i) => (
+                <Reveal as="li" key={t} delay={i * 70} className="relative">
+                  <span className="grid size-10 place-items-center rounded-full bg-white font-display text-sm font-semibold text-sage-700 shadow-[inset_0_0_0_1px_var(--color-sage-200)]">{i + 1}</span>
+                  <h3 className="mt-4 font-display text-lg font-semibold text-ink">{t}</h3>
+                  <p className="mt-1.5 max-w-[34ch] text-[0.9375rem] leading-relaxed text-ink-soft">{d}</p>
+                </Reveal>
+              ))}
+            </ol>
+          </div>
+          <p className="mt-10 flex items-start gap-3 text-[0.9375rem] leading-relaxed text-ink-soft">
             <Icon name="shield" className="mt-0.5 size-5 shrink-0 text-sage-600" />
             <span>
               Consultation fees depend on the doctor and are shown on each <Link href="/our-team/" className="font-semibold text-brand-700 underline underline-offset-2">doctor’s profile</Link>.{" "}
@@ -215,27 +233,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═════════════ How care works ═════════════ */}
-      <section className={`${sectionPad} bg-mist`}>
-        <div className="container-page">
-          <SectionHeading title="From the first conversation to life after treatment, we walk with you." className="max-w-3xl" />
-          <div className="relative mt-10">
-          <LeafVine />
-          <ol className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-            {STEPS.map((s, i) => (
-              <Reveal as="li" key={s.title} delay={i * 70} className="relative">
-                <span className="grid size-10 place-items-center rounded-full bg-white font-display text-sm font-semibold text-sage-700 shadow-[inset_0_0_0_1px_var(--color-sage-200)]">{i + 1}</span>
-                <h3 className="mt-4 font-display text-lg font-semibold text-ink">{s.title}</h3>
-                <p className="mt-1.5 max-w-[30ch] text-[0.9375rem] leading-relaxed text-ink-soft">{s.text}</p>
-              </Reveal>
-            ))}
-          </ol>
-          </div>
-        </div>
-      </section>
-
       {/* ═════════════ Patient voices ═════════════ */}
-      <section aria-labelledby="reviews-heading" className="py-14 sm:py-16 lg:py-20" style={{ background: "linear-gradient(135deg, #0f2847 0%, #0b1d40 50%, #102a5a 100%)" }}>
+      <section aria-labelledby="reviews-heading" className="cv py-14 sm:py-16 lg:py-20" style={{ background: "linear-gradient(135deg, #0f2847 0%, #0b1d40 50%, #102a5a 100%)" }}>
         <div className="container-page">
           {/* Header row */}
           <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
@@ -272,31 +271,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═════════════ Visit ═════════════ */}
-      <section aria-labelledby="visit-title" className={sectionPad}>
-        <div className="container-page grid items-center gap-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-14">
-          <Reveal as="header">
-            <p className="eyebrow mb-3">Visit us</p>
-            <h2 id="visit-title" className="text-[length:var(--text-h2)] leading-[1.15] font-semibold tracking-[-0.02em] text-ink">Care close to home, across Delhi-NCR</h2>
-            <p className="mt-4 max-w-[46ch] leading-relaxed text-ink-soft">Psychiatric hospital and rehabilitation centres in Delhi and Gurgaon, with treatment for patients from across India and abroad.</p>
-            <address className="mt-5 flex items-start gap-3 text-[0.9375rem] text-ink not-italic">
-              <Icon name="pin" className="mt-0.5 size-5 shrink-0 text-sage-600" /> {site.contact.address}
-            </address>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="/map-direction/" className="w-full sm:w-auto"><Icon name="pin" className="size-4" /> Map &amp; directions</ButtonLink>
-              <ButtonLink href="/international-patient-services/" variant="line" className="w-full sm:w-auto">International patients</ButtonLink>
-            </div>
-          </Reveal>
-          <Reveal variant="scale">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] bg-sage-50 shadow-[0_0_0_1px_rgb(23_34_44/0.06)]">
-              <Image src="/wp-content/uploads/2022/12/49-1024x768-1.webp" alt="The courtyard at Tulasi Healthcare" fill sizes="(min-width:1024px) 620px, 100vw" className="object-cover" />
-            </div>
-          </Reveal>
+      {/* ═════════════ Locations ═════════════ */}
+      <section id="locations" aria-labelledby="locations-title" className={`cv ${sectionPad}`}>
+        <div className="container-page">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <SectionHeading eyebrow="Our locations" title="Care close to home, across Delhi-NCR" text={`Tulasi Healthcare has ${locationSummary()}. Turn a card over for the address and directions.`} id="locations-title" className="max-w-3xl" />
+            <div className="hidden sm:block"><ButtonLink href="/locations/" variant="line">All locations <Arrow /></ButtonLink></div>
+          </div>
+          <ul className="mt-6 flex flex-wrap gap-2 text-sm font-semibold text-ink" aria-label="Our centres at a glance">
+            <li className="rounded-full bg-white px-4 py-2 shadow-[inset_0_0_0_1px_var(--color-line)]">{HOSPITALS.length} hospitals</li>
+            <li className="rounded-full bg-white px-4 py-2 shadow-[inset_0_0_0_1px_var(--color-line)]">{CLINICS.length} clinics</li>
+            <li className="rounded-full bg-white px-4 py-2 shadow-[inset_0_0_0_1px_var(--color-line)]">{CITIES.length} cities</li>
+          </ul>
+          <div className="mt-8"><LocationsShowcase /></div>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <ButtonLink href="/locations/" variant="line" className="w-full sm:hidden">All locations <Arrow /></ButtonLink>
+            <ButtonLink href="/international-patient-services/" variant="line" className="w-full sm:w-auto">International patients</ButtonLink>
+          </div>
         </div>
       </section>
 
       {/* ═════════════ FAQ ═════════════ */}
-      <section className={`${sectionPad} bg-mist`}>
+      <section className={`cv ${sectionPad} bg-mist`}>
         <div className="container-page grid gap-8 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:gap-16">
           <SectionHeading title="Questions we are often asked" text={faqIntro} />
           <Reveal className="divide-y divide-line rounded-[var(--radius-card)] bg-white px-5 shadow-[0_0_0_1px_var(--color-line)] sm:px-7">
@@ -317,7 +313,7 @@ export default function Home() {
       </section>
 
       {/* ═════════════ Closing step ═════════════ */}
-      <section className={sectionPad}>
+      <section className={`cv ${sectionPad}`}>
         <div className="container-page">
           <Reveal className="rounded-[2rem] bg-sage-50 px-6 py-12 text-center shadow-[inset_0_0_0_1px_var(--color-sage-100)] sm:px-12 sm:py-16">
             <h2 className="mx-auto max-w-[22ch] text-[length:var(--text-h2)] leading-[1.15] font-semibold tracking-[-0.02em] text-ink">You don’t have to do this alone</h2>
@@ -331,6 +327,7 @@ export default function Home() {
           </Reveal>
         </div>
       </section>
+      <FinderBar />
     </>
   );
 }

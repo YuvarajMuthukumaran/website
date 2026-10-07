@@ -28,7 +28,7 @@ type Props = { onClose: () => void; phone: { display: string; href: string }; do
 
 const STORE = "thc.chat.v1";
 const MAX_MESSAGE_CHARS = 2000; // same limit as the server (routes/chat.js)
-const GREETING = "Hi, I’m Tulasi, a supportive companion from Tulasi Healthcare. I’m here to listen and share some gentle tools, but I’m not a therapist or doctor and this isn’t an emergency service. If you’re ever in immediate danger, please call **Tele-MANAS 14416** (free, 24×7). What’s on your mind today?";
+const greeting = (phone: string) => `Hi, I’m Tulasi, a supportive companion from Tulasi Healthcare. I’m here to listen and share some gentle tools, but I’m not a therapist or doctor and this isn’t an emergency service. If you’re ever in immediate danger, please call us on **${phone}**. What’s on your mind today?`;
 const STARTERS = ["I’ve been feeling anxious lately", "I just need someone to talk to", "How do I know if I need a psychiatrist?", "I want to book an appointment"];
 const uid = () => Math.random().toString(36).slice(2);
 
@@ -309,7 +309,7 @@ export function ChatWidget({ onClose, phone, doctorSlugs = {}, doctorPhotos = {}
           <ul className="mt-5 space-y-3 text-sm text-ink-soft">
             <li className="flex gap-3"><Icon name="spark" className="mt-0.5 size-4 shrink-0 text-brand-600" /><span>I’m an AI assistant, <strong className="text-ink">not a doctor</strong>. I can’t diagnose or advise on medicines.</span></li>
             <li className="flex gap-3"><Icon name="shield" className="mt-0.5 size-4 shrink-0 text-brand-600" /><span>Please don’t share your name, phone number or medical history here. To book, use our secure booking form.</span></li>
-            <li className="flex gap-3"><Icon name="heart" className="mt-0.5 size-4 shrink-0 text-alert-600" /><span>If you are in crisis, call <a href="tel:14416" className="font-semibold text-alert-700 underline">Tele-MANAS 14416</a> (free, 24×7) or <a href={phone.href} className="font-semibold text-alert-700 underline">{phone.display}</a>.</span></li>
+            <li className="flex gap-3"><Icon name="heart" className="mt-0.5 size-4 shrink-0 text-alert-600" /><span>If you are in crisis, call us on <a href={phone.href} className="font-semibold text-alert-700 underline">{phone.display}</a>.</span></li>
           </ul>
           <p className="mt-5 rounded-2xl bg-mist p-4 text-xs leading-relaxed text-ink-soft">
             Consent (Digital Personal Data Protection Act, 2023): your messages are processed by our AI provider to generate replies and are not used to identify you. You can start a new chat at any time to clear this conversation. See our <Link href="/privacy-policy/" className="font-semibold text-brand-700 underline">Privacy Policy</Link>.
@@ -323,7 +323,7 @@ export function ChatWidget({ onClose, phone, doctorSlugs = {}, doctorPhotos = {}
           <div ref={list} role="log" aria-label="Conversation with Tulasi" className="flex-1 space-y-3 overflow-y-auto bg-mist/60 p-4">
             {/* Greeting: always the first bubble (not stored, not sent to the model). */}
             <div className="flex justify-start">
-              <div className="max-w-[88%] rounded-3xl rounded-bl-md bg-white px-4 py-2.5 text-[0.9375rem] text-ink shadow-[var(--shadow-soft)]">{bot(GREETING)}</div>
+              <div className="max-w-[88%] rounded-3xl rounded-bl-md bg-white px-4 py-2.5 text-[0.9375rem] text-ink shadow-[var(--shadow-soft)]">{bot(greeting(phone.display))}</div>
             </div>
             {msgs.length === 0 && (
               <div className="space-y-2 pt-1">
@@ -362,8 +362,7 @@ export function ChatWidget({ onClose, phone, doctorSlugs = {}, doctorPhotos = {}
                   )}
                   {m.crisis && (
                     <div className="mt-3 grid gap-2">
-                      <a href="tel:14416" className="flex min-h-11 items-center justify-center gap-2 rounded-full bg-alert-600 font-semibold text-white"><Icon name="phone" className="size-4" /> Call Tele-MANAS 14416</a>
-                      <a href={phone.href} className="flex min-h-11 items-center justify-center gap-2 rounded-full border border-alert-600 font-semibold text-alert-700"><Icon name="phone" className="size-4" /> Call Tulasi Healthcare</a>
+                      <a href={phone.href} className="flex min-h-11 items-center justify-center gap-2 rounded-full bg-alert-600 font-semibold text-white"><Icon name="phone" className="size-4" /> Call Tulasi Healthcare</a>
                     </div>
                   )}
                   {m.action === "book" && <Link href="/book-appointment/" onClick={onClose} className="mt-3 flex min-h-11 items-center justify-center gap-2 rounded-full bg-accent-600 font-semibold text-white"><Icon name="calendar" className="size-4" /> Book Appointment</Link>}
@@ -447,7 +446,7 @@ export function ChatWidget({ onClose, phone, doctorSlugs = {}, doctorPhotos = {}
               </motion.button>
             </div>
             <p className="mt-2 px-2 text-center text-[0.6875rem] text-ink-soft">
-              AI assistant, not a doctor. In crisis? Call <a href="tel:14416" className="font-semibold underline">14416</a>.
+              AI assistant, not a doctor. In crisis? Call <a href={phone.href} className="font-semibold underline">{phone.display}</a>.
             </p>
           </form>
         </>

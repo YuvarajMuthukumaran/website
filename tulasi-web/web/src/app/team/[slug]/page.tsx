@@ -9,7 +9,7 @@ import { getArchiveSeo, getDoctorBySlug, getDoctorFacts, getDoctors, getSite, re
 import { tidy } from "@/lib/html";
 import { breadcrumbSchema, descriptionFrom, doctorSchema, metadataFromArchive } from "@/lib/seo";
 import { Arrow, Breadcrumbs, ButtonLink, Icon, JsonLd, Reveal, Tag, btnClass } from "@/components/ui/primitives";
-import { PortraitCard, portraitOf } from "@/components/team";
+import { PortraitCard, pastelFor, portraitOf } from "@/components/team";
 import { TrackedLink } from "@/components/layout/TrackedLink";
 
 export const dynamicParams = false;
@@ -44,9 +44,9 @@ export default async function DoctorPage({ params }: PageProps<"/team/[slug]">) 
       <section className="border-b border-line bg-gradient-to-b from-mist to-white">
         <div className="container-page grid items-center gap-8 py-8 sm:py-10 lg:grid-cols-[minmax(0,340px)_1fr] lg:gap-14 lg:py-14">
           <Reveal variant="scale" className="mx-auto w-full max-w-[200px] sm:max-w-[280px] lg:max-w-none">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] bg-sage-50 shadow-[0_0_0_1px_rgb(23_34_44/0.05)]">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] shadow-[0_0_0_1px_rgb(23_34_44/0.05)]" style={{ backgroundColor: pastelFor(d.slug) }}>
               {portrait ? (
-                <Image src={portrait.src} alt={`${d.name}, ${d.designation ?? ""}`} fill priority sizes="(min-width:1024px) 340px, 300px" className={portrait.cutout ? "portrait-fade object-cover object-bottom" : "object-cover object-[50%_25%]"} />
+                <Image src={portrait.src} alt={`${d.name}, ${d.designation ?? ""}`} fill priority sizes="(min-width:1024px) 340px, 300px" className={portrait.cutout ? "object-cover object-bottom" : "object-cover object-[50%_25%]"} />
               ) : (
                 <span className="absolute inset-0 grid place-items-center font-display text-7xl font-semibold text-sage-300">{initials}</span>
               )}

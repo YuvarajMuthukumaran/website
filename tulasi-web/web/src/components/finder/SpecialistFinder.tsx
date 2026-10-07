@@ -186,10 +186,9 @@ export function SpecialistFinder({ doctors, phone }: { doctors: FinderDoctor[]; 
             <div className="mt-5 rounded-[var(--radius-card)] bg-alert-50 p-5 shadow-[inset_0_0_0_1px_var(--color-alert-100)]">
               <p className="leading-relaxed text-ink">You don’t have to go through this alone, and you don’t need to answer anything else first. Please reach out right now:</p>
               <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-                <a href="tel:14416" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-5 font-semibold text-alert-700 shadow-[inset_0_0_0_1px_var(--color-alert-100)] hover:bg-alert-100"><Icon name="phone" className="size-4" /> Tele-MANAS 14416 (free, 24×7)</a>
                 <a href={phone.href} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-5 font-semibold text-alert-700 shadow-[inset_0_0_0_1px_var(--color-alert-100)] hover:bg-alert-100"><Icon name="phone" className="size-4" /> Tulasi {phone.display}</a>
               </div>
-              <p className="mt-4 text-sm text-ink-soft">If you are in immediate danger, call 112 or go to the nearest emergency department.</p>
+              <p className="mt-4 text-sm text-ink-soft">If you are in immediate danger, go to the nearest emergency department.</p>
             </div>
           )}
 

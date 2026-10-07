@@ -1,135 +1,105 @@
-// Location data for all Tulasi Healthcare sites.
-// ⚠ Swap placeholder images and real data before launch.
+// Tulasi Healthcare: 4 hospitals and 2 clinics. Names, addresses and "Get directions" links as
+// published on the live /map-direction/ page (six centres in four cities). Nothing here is
+// invented: no opening hours, bed counts, e-mail addresses or services per centre.
+//
+// `type` decides "hospital" or "clinic". Add a `photo` to show a real picture of that centre
+// on its card; every place that lists locations (home page, /locations/, the menu) updates.
+// The hospital photos below are the campus photos already on the site, as stand-ins.
 
 export type LocationType = "hospital" | "clinic";
 
 export interface Location {
   id: string;
   type: LocationType;
+  /** The centre's published name. */
   name: string;
-  area: string;          // e.g. "Gurugram" or "South Delhi"
-  tagline: string;       // Short punch-line shown on card back
-  photo: string;         // /wp-content/uploads/... or /team-cutouts/...
+  /** Short title for the card front. */
+  title: string;
+  /** City, used for the count of cities. */
+  city: string;
+  /** Neighbourhood or landmark line shown under the title. */
+  area: string;
+  /** Published address. */
   address: string;
-  phone: string;
-  phoneHref: string;
-  email: string;
-  hours: string;         // e.g. "Open 24 hours" or "Mon–Sat  9 am – 6 pm"
-  openNow: boolean;      // computed at build time or toggled manually
-  mapsUrl: string;       // full Google Maps link
-  services: string[];    // chip labels on card back
-  emergency: boolean;    // shows "24×7 Emergency" ribbon on hospital cards
-  beds?: number;         // optional for hospitals
+  /** Published "Get directions" link. */
+  mapsUrl: string;
+  /** Optional real photo of this centre: shown on the card front when set. */
+  photo?: string;
 }
 
 export const LOCATIONS: Location[] = [
   {
-    id: "gurgaon-hospital",
+    id: "gurugram",
     type: "hospital",
-    name: "Tulasi Healthcare — Gurugram",
-    area: "Gurugram (Main Campus)",
-    tagline: "Our flagship NABH-accredited psychiatric hospital and rehabilitation centre.",
+    name: "Tulasi Healthcare",
+    title: "Gurugram",
+    city: "Gurugram",
+    area: "Sector 64, Golf Course Extension Road",
+    address: "Sector 64, Golf Course Extension Road, Gurugram, Haryana 122102",
+    mapsUrl: "https://goo.gl/maps/G8LAxcJGdmqw9ziG9",
     photo: "/wp-content/uploads/2022/12/lasi-healthcare-psychiatric-hospital.webp",
-    address: "2A, Vishal Mega Mart Road, Sector 43, Gurugram, Haryana 122003",
-    phone: "+91 88 000 00 255",
-    phoneHref: "tel:+918800000255",
-    email: "info@tulasihealthcare.com",
-    hours: "Open 24 hours · 7 days a week",
-    openNow: true,
-    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Tulasi+Healthcare+Gurugram",
-    services: ["Psychiatry", "De-addiction", "Rehabilitation", "OPD & IPD", "Emergency", "Psychotherapy"],
-    emergency: true,
-    beds: 200,
   },
   {
-    id: "delhi-hospital",
+    id: "mehrauli-rehabilitation-centre",
     type: "hospital",
-    name: "Tulasi Healthcare — South Delhi",
-    area: "South Delhi",
-    tagline: "Full-service psychiatric hospital with inpatient and outpatient care.",
+    name: "Tulasi Psychiatric & Rehabilitation Center",
+    title: "Mehrauli, Delhi",
+    city: "Delhi",
+    area: "Mandi Village",
+    address: "Next to Lingaya Inst., Jonapur Mandi Road, Mandi Village, Mehrauli, New Delhi, Delhi 110030",
+    mapsUrl: "https://goo.gl/maps/dDyNznHtuGN1N85z8",
+    photo: "/wp-content/uploads/2022/12/47-1024x768-1.webp",
+  },
+  {
+    id: "healourmind",
+    type: "hospital",
+    name: "Tulasi Healthcare Healourmind",
+    title: "Andheria Morde, Delhi",
+    city: "Delhi",
+    area: "Behind Shamsi Talab, Mehrauli",
+    address: "Farm No. 5, Andheria Morde, Behind Shamsi Talab, Mehrauli, New Delhi, Delhi 110030",
+    mapsUrl: "https://goo.gl/maps/WPq899KbQXpLGphc7",
     photo: "/wp-content/uploads/2022/12/49-1024x768-1.webp",
-    address: "F-6, Kalkaji, South Delhi, New Delhi 110019",
-    phone: "+91 88 000 00 255",
-    phoneHref: "tel:+918800000255",
-    email: "delhi@tulasihealthcare.com",
-    hours: "Open 24 hours · 7 days a week",
-    openNow: true,
-    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Tulasi+Healthcare+South+Delhi",
-    services: ["Psychiatry", "Psychotherapy", "De-addiction", "Child & Teen", "OPD & IPD"],
-    emergency: true,
-    beds: 100,
   },
   {
-    id: "noida-hospital",
+    id: "paras-hospital-clinic",
     type: "hospital",
-    name: "Tulasi Healthcare — Noida",
-    area: "Noida, UP",
-    tagline: "Comprehensive mental health care serving Noida and the eastern NCR.",
+    name: "Tulasi Clinic, Paras Hospital Gurgaon",
+    title: "Paras Hospital, Gurugram",
+    city: "Gurugram",
+    area: "Sushant Lok, Sector 43",
+    address: "Phase-I, C-1, Sushant Lok Rd, Sector 43, Gurugram, Haryana 122002",
+    mapsUrl: "https://goo.gl/maps/4UvFg6o7acXSDvZQ8",
     photo: "/wp-content/uploads/2022/12/lasi-healthcare-psychiatric-hospital.webp",
-    address: "B-12, Sector 63, Noida, Uttar Pradesh 201307",
-    phone: "+91 88 000 00 255",
-    phoneHref: "tel:+918800000255",
-    email: "noida@tulasihealthcare.com",
-    hours: "Open 24 hours · 7 days a week",
-    openNow: true,
-    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Tulasi+Healthcare+Noida",
-    services: ["Psychiatry", "Rehabilitation", "Substance Abuse", "OPD & IPD", "Geriatric Care"],
-    emergency: true,
-    beds: 80,
   },
   {
-    id: "faridabad-hospital",
-    type: "hospital",
-    name: "Tulasi Healthcare — Faridabad",
-    area: "Faridabad, Haryana",
-    tagline: "Accessible psychiatric and rehabilitation care for southern Haryana.",
-    photo: "/wp-content/uploads/2022/12/49-1024x768-1.webp",
-    address: "14, NIT, Faridabad, Haryana 121001",
-    phone: "+91 88 000 00 255",
-    phoneHref: "tel:+918800000255",
-    email: "faridabad@tulasihealthcare.com",
-    hours: "Open 24 hours · 7 days a week",
-    openNow: true,
-    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Tulasi+Healthcare+Faridabad",
-    services: ["Psychiatry", "De-addiction", "Counselling", "OPD & IPD"],
-    emergency: true,
-    beds: 60,
-  },
-  {
-    id: "gurgaon-clinic",
+    id: "faridabad-clinic",
     type: "clinic",
-    name: "Tulasi Mind Clinic — Cyber City",
-    area: "Cyber City, Gurugram",
-    tagline: "Outpatient consultations in Gurgaon's corporate hub — no long waits.",
-    photo: "/wp-content/uploads/2022/12/lasi-healthcare-psychiatric-hospital.webp",
-    address: "Unit 302, Unitech Cyber Park, Sector 39, Gurugram, Haryana 122003",
-    phone: "+91 88 000 00 255",
-    phoneHref: "tel:+918800000255",
-    email: "clinic@tulasihealthcare.com",
-    hours: "Mon – Sat · 9 am – 7 pm",
-    openNow: true,
-    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Tulasi+Mind+Clinic+Cyber+City",
-    services: ["Psychiatry OPD", "Counselling", "Stress & Burnout", "Corporate EAP"],
-    emergency: false,
+    name: "Tulasi Clinic Faridabad",
+    title: "Faridabad",
+    city: "Faridabad",
+    area: "Old Faridabad",
+    address: "Sayad Wara, Old Faridabad, Faridabad, Haryana 121002",
+    mapsUrl: "https://maps.app.goo.gl/KVitj1zEScg84zTa8",
   },
   {
-    id: "delhi-clinic",
+    id: "noida-clinic",
     type: "clinic",
-    name: "Tulasi Mind Clinic — Central Delhi",
-    area: "Connaught Place, Delhi",
-    tagline: "Walk-in and appointment-based consultations in the heart of Delhi.",
-    photo: "/wp-content/uploads/2022/12/49-1024x768-1.webp",
-    address: "M-22, Inner Circle, Connaught Place, New Delhi 110001",
-    phone: "+91 88 000 00 255",
-    phoneHref: "tel:+918800000255",
-    email: "cp@tulasihealthcare.com",
-    hours: "Mon – Sat · 10 am – 6 pm",
-    openNow: false,
-    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Tulasi+Mind+Clinic+Connaught+Place",
-    services: ["Psychiatry OPD", "Psychotherapy", "Anxiety & Depression", "Couple Therapy"],
-    emergency: false,
+    name: "Tulasi Healthcare Clinic, Noida",
+    title: "Noida",
+    city: "Noida",
+    area: "Sector 49, near Sector 76 Rd",
+    address: "BR 03, Basement below Puma Outlet, beside Karma Hyundai Showroom, Sector 76 Rd, Sector 49, Noida, Uttar Pradesh 201304",
+    mapsUrl: "https://maps.app.goo.gl/43V57NSSRqZAu79m8",
   },
 ];
 
 export const HOSPITALS = LOCATIONS.filter((l) => l.type === "hospital");
-export const CLINICS   = LOCATIONS.filter((l) => l.type === "clinic");
+export const CLINICS = LOCATIONS.filter((l) => l.type === "clinic");
+export const CITIES = [...new Set(LOCATIONS.map((l) => l.city))];
+
+/** "3 hospitals and 3 clinics in 4 cities", always from the data above. */
+export function locationSummary() {
+  const n = (c: number, one: string, many = `${one}s`) => `${c} ${c === 1 ? one : many}`;
+  return `${n(HOSPITALS.length, "hospital")} and ${n(CLINICS.length, "clinic")} in ${n(CITIES.length, "city", "cities")}`;
+}

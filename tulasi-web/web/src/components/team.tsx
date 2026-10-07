@@ -1,7 +1,7 @@
 // Team portraits: soft-tinted cards with the doctor's photo in colour, the name
 // and role underneath. Used by the home page, /our-team/, /team/ and profiles.
 //
-// Photos: if a background-removed cut-out exists at /team-cutouts/<slug>.webp it
+// Photos: if a background-removed cut-out exists at /team-portraits/<slug>.webp it
 // is used as-is on the tinted card; otherwise the original photo is shown and a
 // fade of the card colour covers the printed banner behind the doctor.
 import "server-only";
@@ -10,15 +10,23 @@ import path from "node:path";
 import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
-import { localPath, type Doctor } from "@/lib/content";
+import { getDoctors, localPath, type Doctor } from "@/lib/content";
 import { credentialsOf } from "@/lib/team-tags";
 import { Icon } from "@/components/ui/primitives";
 
-// Quiet tints (sage and pale blue) that sit well on white.
-export const PASTELS = ["#eef5f0", "#eaf1f8", "#f1f6ee", "#e8f0f5", "#eef4f1", "#ebf1f8"] as const;
+// Soft pastel backdrops (mint, sky, lavender, blush, butter, peach, aqua). Seven colours, so a
+// row that shows every second person still cycles through all of them. Every portrait is a
+// transparent cut-out (scraper/12-uniform-portraits.py), so the colour is the only background.
+export const PASTELS = ["#d9efdd", "#d6e8f7", "#e4ddf6", "#f9dedf", "#fbf0c6", "#fbe3d2", "#d3eeee"] as const;
+
+/** A person keeps the same colour everywhere (marquee, team page, cards, profile). */
+export function pastelFor(slug: string) {
+  const i = getDoctors().findIndex((d) => d.slug === slug);
+  return PASTELS[(i < 0 ? slug.length : i) % PASTELS.length];
+}
 
 export function portraitOf(d: Doctor) {
-  const cut = `/team-cutouts/${d.slug}.webp`;
+  const cut = `/team-portraits/${d.slug}.webp`;
   if (existsSync(path.join(process.cwd(), "public", cut))) return { src: cut, cutout: true };
   return d.photo ? { src: localPath(d.photo), cutout: false } : null;
 }
@@ -28,7 +36,8 @@ const roleLabel = (d: Doctor) =>
 
 export function PortraitCard({ d, index = 0, size = "md", tabbable = true, priority, className }: { d: Doctor; index?: number; size?: "sm" | "md" | "lg"; tabbable?: boolean; priority?: boolean; className?: string; overlay?: boolean }) {
   const p = portraitOf(d);
-  const bg = PASTELS[index % PASTELS.length];
+  const bg = pastelFor(d.slug);
+  void index;
   return (
     <Link
       href={`/team/${d.slug}/`}
