@@ -35,3 +35,5 @@ Third round, Indian people only (client request; Unsplash photos, free to use):
 - `schizophrenia-psychosis.webp`: https://unsplash.com/photos/photo-1601639362577-65e3e3b5316d
 - `alcohol-addiction.webp`: https://unsplash.com/photos/photo-1634320498259-852775e5e8b2
 `ocd.webp` (hands), `drug-addiction.webp` (pills) and `dementia-memory.webp` (puzzle head) carry no identifiable people.
+
+Alcohol addiction: back to the glass photo (client choice): https://unsplash.com/photos/photo-1617820915076-5f3163127e3d

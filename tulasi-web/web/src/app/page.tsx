@@ -131,8 +131,10 @@ export default function Home() {
 
 
       {/* ═════════════ Videos from Instagram ═════════════ */}
-      <section aria-label="Videos from Instagram" className="bg-mist py-10 sm:py-12 lg:py-14">
-        <div className="container-page">
+      <section aria-label="Videos from Instagram" className="relative overflow-hidden bg-gradient-to-b from-mist via-white to-mist py-10 sm:py-12 lg:py-14">
+        <div aria-hidden="true" className="pointer-events-none absolute -top-24 -left-24 size-80 rounded-full bg-[#e4ddf6] opacity-70 blur-3xl" />
+        <div aria-hidden="true" className="pointer-events-none absolute -right-24 bottom-0 size-80 rounded-full bg-[#d6e8f7] opacity-70 blur-3xl" />
+        <div className="container-page relative">
           <InstagramVideos />
         </div>
       </section>

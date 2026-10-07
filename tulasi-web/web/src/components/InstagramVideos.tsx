@@ -14,7 +14,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/ui/primitives";
 import { INSTAGRAM_HANDLE, INSTAGRAM_REELS, INSTAGRAM_URL, SHORT_VIDEOS } from "@/lib/social";
 
-type Item = { kind: "mp4"; src: string; poster?: string; title?: string } | { kind: "ig"; code: string };
+type Item = { kind: "mp4"; src: string; poster?: string; title?: string; duration?: string } | { kind: "ig"; code: string };
 
 const codeOf = (url: string) => url.match(/instagram\.com\/(?:reel|reels|p|tv)\/([A-Za-z0-9_-]+)/)?.[1] ?? null;
 const ITEMS: Item[] =
@@ -32,6 +32,7 @@ export function InstagramVideos() {
   const [active, setActive] = useState(0);
   const [sound, setSound] = useState(false);
   const [reduce, setReduce] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- reads the browser setting once on mount
@@ -95,6 +96,11 @@ export function InstagramVideos() {
     });
   }, [active, seen, near, sound, reduce]);
 
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- restart the progress line for the new video
+    setProgress(0);
+  }, [active]);
+
   const go = (i: number) => {
     const t = track.current;
     const el = t?.children[Math.max(0, Math.min(ITEMS.length - 1, i))] as HTMLElement | undefined;
@@ -142,6 +148,7 @@ export function InstagramVideos() {
                           playsInline
                           preload={Math.abs(i - active) <= 1 ? "auto" : "metadata"}
                           loop={ITEMS.length === 1}
+                          onTimeUpdate={(e) => i === active && setProgress(e.currentTarget.duration ? e.currentTarget.currentTime / e.currentTarget.duration : 0)}
                           onEnded={() => (i < ITEMS.length - 1 ? go(i + 1) : go(0))}
                           className="absolute inset-0 size-full object-cover"
                           aria-label={it.title ?? `Tulasi Healthcare video ${i + 1}`}
@@ -170,13 +177,19 @@ export function InstagramVideos() {
                         onClick={() => setSound((s) => !s)}
                         aria-pressed={sound}
                         aria-label={sound ? "Turn sound off" : "Turn sound on"}
-                        className="absolute right-3 bottom-3 z-10 grid size-10 place-items-center rounded-full bg-black/45 text-white backdrop-blur transition-colors hover:bg-black/60"
+                        className="absolute top-3 right-3 z-10 flex h-10 items-center gap-1.5 rounded-full bg-black/45 px-3 text-xs font-semibold text-white backdrop-blur transition-colors hover:bg-black/60"
                       >
                         <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                           <path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" fill="currentColor" stroke="none" />
                           {sound ? <path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" /> : <path d="M16 9.5l5 5M21 9.5l-5 5" />}
                         </svg>
+                        {sound ? "Sound on" : "Tap for sound"}
                       </button>
+                    )}
+                    {on && it.kind === "mp4" && (
+                      <span aria-hidden="true" className="absolute inset-x-4 bottom-4 z-10 h-1 overflow-hidden rounded-full bg-white/35">
+                        <span className="block h-full rounded-full bg-white" style={{ width: `${Math.round(progress * 100)}%`, transition: "width 250ms linear" }} />
+                      </span>
                     )}
                   </div>
                 </li>
@@ -188,16 +201,30 @@ export function InstagramVideos() {
             <button type="button" onClick={() => go(active - 1)} disabled={active === 0} aria-label="Previous video" className="grid size-11 place-items-center rounded-full bg-white text-ink shadow-[inset_0_0_0_1px_var(--color-line)] transition-colors hover:bg-brand-50 disabled:opacity-40">
               <Icon name="arrow" className="size-4 rotate-180" />
             </button>
-            <div className="flex items-center gap-2" role="group" aria-label="Choose a video">
-              {ITEMS.map((it, i) => (
-                <button key={it.kind === "mp4" ? it.src : it.code} type="button" onClick={() => go(i)} aria-label={`Video ${i + 1}`} aria-current={i === active} className={clsx("h-2 rounded-full transition-all duration-300", i === active ? "w-7 bg-brand-600" : "w-2 bg-ink/25 hover:bg-ink/40")} />
-              ))}
+            <div className={clsx("flex items-center", hasMp4 ? "gap-2.5" : "gap-2")} role="group" aria-label="Choose a video">
+              {ITEMS.map((it, i) =>
+                it.kind === "mp4" ? (
+                  <button
+                    key={it.src}
+                    type="button"
+                    onClick={() => go(i)}
+                    aria-label={`Video ${i + 1}${it.duration ? `, ${it.duration}` : ""}`}
+                    aria-current={i === active}
+                    className={clsx("relative aspect-[9/16] w-10 shrink-0 overflow-hidden rounded-lg bg-sage-50 bg-cover bg-center transition-all duration-300 sm:w-12", i === active ? "scale-110 opacity-100 ring-2 ring-brand-600 ring-offset-2" : "opacity-70 hover:opacity-100")}
+                    style={it.poster ? { backgroundImage: `url(${it.poster})` } : undefined}
+                  >
+                    {it.duration && <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent pt-3 pb-0.5 text-center text-[0.625rem] font-semibold text-white">{it.duration}</span>}
+                  </button>
+                ) : (
+                  <button key={it.code} type="button" onClick={() => go(i)} aria-label={`Video ${i + 1}`} aria-current={i === active} className={clsx("h-2 rounded-full transition-all duration-300", i === active ? "w-7 bg-brand-600" : "w-2 bg-ink/25 hover:bg-ink/40")} />
+                ),
+              )}
             </div>
             <button type="button" onClick={() => go(active + 1)} disabled={active === ITEMS.length - 1} aria-label="Next video" className="grid size-11 place-items-center rounded-full bg-white text-ink shadow-[inset_0_0_0_1px_var(--color-line)] transition-colors hover:bg-brand-50 disabled:opacity-40">
               <Icon name="arrow" className="size-4" />
             </button>
           </div>
-          {!hasMp4 && <p className="mt-3 text-center text-xs text-ink-soft">Tap a video to play it.</p>}
+          <p className="mt-4 text-center text-xs text-ink-soft">{hasMp4 ? `Video ${active + 1} of ${ITEMS.length}. Plays by itself, muted. Swipe or use the arrows for the next one.` : "Tap a video to play it."}</p>
         </div>
       ) : (
         <div className="mx-auto mt-8 max-w-3xl overflow-hidden rounded-[var(--radius-card)] bg-white shadow-[0_0_0_1px_var(--color-line)]">
