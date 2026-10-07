@@ -10,7 +10,7 @@ import type { Site } from "@/lib/content";
 import { CONCERNS, whatsappLink } from "@/lib/care";
 import { Icon } from "@/components/ui/primitives";
 import { track } from "@/lib/analytics";
-import { NavPanel, type TeamTeaser } from "./MegaMenus";
+import { NavPanel, roleInPlace, type TeamTeaser } from "./MegaMenus";
 
 export type { TeamTeaser };
 type Menu = Site["menu"];
@@ -215,7 +215,7 @@ function MobileMenu({ open, onClose, items, phone, pathname, logo }: { open: boo
                         <ul>
                           {g.links.map((l) => (
                             <li key={l.href ?? l.label}>
-                              <Link href={l.href ?? "#"} onClick={onClose} className="block rounded-lg py-2.5 text-[0.9375rem] leading-snug text-ink-soft hover:text-brand-700">{l.label}</Link>
+                              <Link href={l.href ?? "#"} onClick={onClose} className="block rounded-lg py-2.5 text-[0.9375rem] leading-snug text-ink-soft hover:text-brand-700">{roleInPlace(l.label)}</Link>
                             </li>
                           ))}
                         </ul>

@@ -207,6 +207,14 @@ function ConditionsPanel(p: PanelProps) {
 
 // ───────────────────────── Our Team ─────────────────────────
 
+/** "Best Psychiatrist in Delhi for Therapy ..." becomes "Psychiatrist in Delhi": role + place, nothing else. */
+export function roleInPlace(label: string) {
+  const m = label.match(/^(?:best\s+)?((?:child\s+)?(?:psychiatrist|psychologist|counsellor))\s+(?:in\s+([A-Za-z]+)|near\s+me)/i);
+  if (!m) return label;
+  const role = m[1].charAt(0).toUpperCase() + m[1].slice(1).toLowerCase();
+  return m[2] ? `${role} in ${m[2]}` : `${role} near me`;
+}
+
 function TeamPanel(p: PanelProps) {
   const groups = p.item.groups.filter((g) => g.links.length);
   return (
@@ -245,7 +253,7 @@ function TeamPanel(p: PanelProps) {
             {g.label && <Heading>{g.label}s by city</Heading>}
             <ul>
               {g.links.map((l) => (
-                <li key={l.href ?? l.label}><Link href={l.href ?? "#"} className={quietLink}>{l.label}</Link></li>
+                <li key={l.href ?? l.label}><Link href={l.href ?? "#"} className={quietLink}>{roleInPlace(l.label)}</Link></li>
               ))}
             </ul>
           </div>

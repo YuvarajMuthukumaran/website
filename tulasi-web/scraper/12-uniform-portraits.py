@@ -56,6 +56,11 @@ SOURCES = {
     "dr-suravi-das": f"{DOC}/Dr Suravi.png",
 }
 
+# Fifth batch: cards cropped from screenshots (pastel backdrop already, rounded corners and name label trimmed)
+CARDS5 = ['dr-ratnarakshit-ingole', 'ms-titiksha-agnihotri', 'dr-ram-chander-jiloha', 'dr-pavan-kumar-pardal', 'ms-husna-zahid-hussain']
+for _s in CARDS5:
+    SOURCES[_s] = f"{SUP2}/{_s}.png"
+
 TW, TH = 640, 800  # 4:5
 cascades = [
     cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml"),
@@ -80,7 +85,7 @@ CLEAN = {"dr-gorav-gupta": (0.62, 40, 1.0)}
 # Turban + black beard + black shirt on a dark backdrop: the face detector is off-centre here, so the
 # face box is given by hand (full-resolution x, y, w, h) and near-black pixels are kept only where they
 # are beard or shirt. Everything else that dark above the shoulders is backdrop.
-FACE_BOX = {"dr-ichpreet-singh": (365, 540, 330, 460), "ms-ira-gupta": (158, 150, 136, 150)}
+FACE_BOX = {"dr-ram-chander-jiloha": (340, 320, 350, 380), "dr-ichpreet-singh": (365, 540, 330, 460), "ms-ira-gupta": (158, 150, 136, 150)}
 KEEP_DARK = {"dr-ichpreet-singh": {"ellipse": (530, 760, 175, 195), "rect": (430, 820, 650, 1536), "ymax": 850}}
 
 
@@ -275,8 +280,8 @@ def portrait(img, alpha, face, slug=None):
     return out
 
 
-SUPPLIED = {"dr-kritika-soni", "ms-angshruta-mahanta", "inderjeet-singh", "dr-anu-yadav", "ms-ira-gupta", "ms-deliaka-ghanghass"}
-PREPARED = {"ms-ira-gupta", "ms-deliaka-ghanghass"}  # already cropped out of a screenshot of two cards: no corner trim or sparkle
+SUPPLIED = set(CARDS5) | {"dr-kritika-soni", "ms-angshruta-mahanta", "inderjeet-singh", "dr-anu-yadav", "ms-ira-gupta", "ms-deliaka-ghanghass"}
+PREPARED = set(CARDS5) | {"ms-ira-gupta", "ms-deliaka-ghanghass"}  # already cropped out of a screenshot of two cards: no corner trim or sparkle
 
 
 def clean_supplied(img, slug):
