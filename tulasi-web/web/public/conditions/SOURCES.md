@@ -15,3 +15,12 @@ All from Unsplash (free to use, no attribution required under the Unsplash Licen
 - `dementia-memory.webp`: https://unsplash.com/photos/photo-1593701805506-523fb08488d7
 
 Supplied by the client (replaced the Unsplash picks): `anxiety.webp`, `depression.webp`, `bipolar-disorder.webp`, `child-teen-mental-health.webp`, `adhd.webp`, `autism.webp`, `alcohol-addiction.webp`, `drug-addiction.webp`, `dementia-memory.webp`. `ocd.webp` and `schizophrenia-psychosis.webp` are still Unsplash photos.
+
+Second round (replaced the watermarked and dark picks; Unsplash photos, free to use, no attribution required):
+- `anxiety.webp`: https://unsplash.com/photos/photo-1688397548038-f71a418e2045
+- `depression.webp`: https://unsplash.com/photos/photo-1619961310018-db9c95762124
+- `ocd.webp`: https://unsplash.com/photos/photo-1591610160225-861405867ba3
+- `bipolar-disorder.webp`: https://unsplash.com/photos/photo-1483884105135-c06ea81a7a80
+- `schizophrenia-psychosis.webp`: https://unsplash.com/photos/photo-1592489427434-fd9696f768b0
+- `adhd.webp`: https://unsplash.com/photos/photo-1758612898181-d7c92f0e21d5
+- `alcohol-addiction.webp`: https://unsplash.com/photos/photo-1617820915076-5f3163127e3d
