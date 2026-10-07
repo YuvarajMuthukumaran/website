@@ -17,7 +17,7 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
-import { ApiError, endChatSession, startChatSession, streamChat, type ChatEvent } from "@/lib/api";
+import { ApiError, endChatSession, leadFirst, startChatSession, streamChat, type ChatEvent } from "@/lib/api";
 import { detectMood, type Mood } from "@/lib/mood";
 import { normalizeMarkdown, plainText } from "@/lib/markdown";
 import { Icon } from "@/components/ui/primitives";
@@ -169,7 +169,7 @@ export function ChatWidget({ onClose, phone, doctorSlugs = {}, doctorPhotos = {}
       if (e.functional) meta.functional = true;
       if (e.action) meta.action = e.action;
       if (e.quickReplies) meta.quickReplies = e.quickReplies;
-      if (e.doctors) meta.doctors = e.doctors;
+      if (e.doctors) meta.doctors = leadFirst(e.doctors);
       if (e.crisis || e.functional) instant = true;
       if (instant) {
         stop();

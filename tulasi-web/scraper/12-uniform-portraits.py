@@ -26,6 +26,7 @@ OUT = os.path.join(ROOT, "web", "public", "team-portraits")
 PSY = os.path.join(ROOT, "extracted_photos", "Psychologist Headshots")
 LEGACY = os.path.join(ROOT, "data", "portrait-sources", "legacy")  # earlier cut-outs of the small website photos (no new headshot yet)
 DOC = os.path.join(ROOT, "extracted_doctors", "Doctors Headshots")
+SUP2 = os.path.join(ROOT, "extracted_photos", "Supplied 2")  # second batch of headshots (named by slug)
 
 # slug -> original file ("Punya", "Dr Anubhav" and "Dr Naseem" have no profile on the site yet)
 SOURCES = {
@@ -39,9 +40,14 @@ SOURCES = {
     "mr-suparas-jain": f"{PSY}/Suparash.jpg",
     "surabhi-sengar": f"{PSY}/Surabi.jpg",
     "dr-alisha-nagar": f"{DOC}/Dr Alisha.png",
-    "dr-gorav-gupta": f"{DOC}/Dr Gorav Gupta.png",
+    "dr-gorav-gupta": f"{SUP2}/dr-gorav-gupta.webp",
     "dr-ichpreet-singh": f"{DOC}/dr ichpreet singh.png",
-    "dr-kritika-soni": f"{DOC}/Dr Kritika Soni.png",
+    "dr-kritika-soni": f"{SUP2}/dr-kritika-soni.webp",
+    "ms-angshruta-mahanta": f"{SUP2}/ms-angshruta-mahanta.webp",
+    "inderjeet-singh": f"{SUP2}/inderjeet-singh.webp",
+    "dr-anu-yadav": f"{SUP2}/dr-anu-yadav.webp",
+    "ms-ira-gupta": f"{SUP2}/ms-ira-gupta.png",
+    "ms-deliaka-ghanghass": f"{SUP2}/ms-deliaka-ghanghass.png",
     "dr-madhura-samudra": f"{DOC}/dr madhrua THC.png",
     "dr-pooja-sharma": f"{DOC}/Dr Pooja THC.png",
     "dr-poorva-gupta": f"{DOC}/Dr Poorva Gupta.png",
@@ -74,7 +80,7 @@ CLEAN = {"dr-gorav-gupta": (0.62, 40, 1.0)}
 # Turban + black beard + black shirt on a dark backdrop: the face detector is off-centre here, so the
 # face box is given by hand (full-resolution x, y, w, h) and near-black pixels are kept only where they
 # are beard or shirt. Everything else that dark above the shoulders is backdrop.
-FACE_BOX = {"dr-ichpreet-singh": (365, 540, 330, 460)}
+FACE_BOX = {"dr-ichpreet-singh": (365, 540, 330, 460), "ms-ira-gupta": (158, 150, 136, 150)}
 KEEP_DARK = {"dr-ichpreet-singh": {"ellipse": (530, 760, 175, 195), "rect": (430, 820, 650, 1536), "ymax": 850}}
 
 
@@ -101,8 +107,9 @@ def matte(img, slug=None):
     basis = np.stack([np.ones_like(xn), xn, yn, xn * xn, xn * yn, yn * yn], axis=-1)
     band = np.zeros((h, w), bool)
     band[: max(4, h // 18), :] = True
-    band[: int(h * 0.55), : max(4, w // 22)] = True
-    band[: int(h * 0.55), -max(4, w // 22):] = True
+    rows = 0.82 if slug in SUPPLIED else 0.55  # these backdrops fade towards the bottom, so sample further down the sides
+    band[: int(h * rows), : max(4, w // 22)] = True
+    band[: int(h * rows), -max(4, w // 22):] = True
     A = basis[band]
     B = lab[band]
     keep = np.ones(len(A), bool)
@@ -155,6 +162,8 @@ def matte(img, slug=None):
     cv2.ellipse(mask, (cx, y + int(fh * (0.05 if dark_bg else 0.1))), (int(fw * hx), int(fh * hy)), 0, 0, 360, cv2.GC_PR_FGD, -1)
     cv2.ellipse(mask, (cx, y + fh // 2), (int(fw * 0.42), int(fh * 0.58)), 0, 0, 360, cv2.GC_FGD, -1)
     cv2.rectangle(mask, (cx - fw // 3, y + fh // 2), (cx + fw // 3, min(h - 1, y + int(fh * 2.2))), cv2.GC_FGD, -1)  # neck and chest
+    if slug in SUPPLIED:  # backdrops that darken towards the bottom: the whole lower torso is certainly the person
+        cv2.rectangle(mask, (cx - int(fw * 0.9), y + int(fh * 1.75)), (cx + int(fw * 0.9), h - 1), cv2.GC_FGD, -1)
     bgd, fgd = np.zeros((1, 65), np.float64), np.zeros((1, 65), np.float64)
     cv2.grabCut(sm, mask, None, bgd, fgd, 7, cv2.GC_INIT_WITH_MASK)
     m = np.where((mask == cv2.GC_FGD) | (mask == cv2.GC_PR_FGD), 255, 0).astype(np.uint8)
@@ -207,6 +216,8 @@ def matte(img, slug=None):
                 if s3[i, cv2.CC_STAT_AREA] < h * w * 0.03 and s3[i, cv2.CC_STAT_TOP] > 0:
                     m[l3 == i] = 255
         m = cv2.morphologyEx(m, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
+    if dark_bg:
+        m = cv2.erode(m, np.ones((3, 3), np.uint8))  # drop the dark rim the black backdrop leaves round the hair
     # 3. snap the edge to the photo (hair strands), then soften
     guide = cv2.cvtColor(sm, cv2.COLOR_BGR2GRAY)
     try:
@@ -220,10 +231,12 @@ def matte(img, slug=None):
     return alpha, fr
 
 
-FACE_TOP, FACE_H = 0.16, 0.255  # where the face sits in the portrait, as fractions of its height
+FACE_TOP, FACE_H = 0.215, 0.225  # where the face sits in the portrait, as fractions of its height
 
 
-FACE_TOP_FOR = {"dr-ichpreet-singh": 0.31}  # tall turban: more headroom
+FACE_TOP_FOR = {"dr-ichpreet-singh": 0.31, "ms-ira-gupta": 0.27}  # tall turban: more headroom
+# These photos have the person small in the frame, so their heads came out smaller than everyone else's.
+FACE_H_FOR = {"ms-ira-gupta": 0.2, "dr-gorav-gupta": 0.275, "dr-sameer-guliani": 0.262, "dr-ratnarakshit-ingole": 0.26}
 
 
 def portrait(img, alpha, face, slug=None):
@@ -231,21 +244,63 @@ def portrait(img, alpha, face, slug=None):
     h, w = img.shape[:2]
     x, y, fw, fh = face
     ft = FACE_TOP_FOR.get(slug, FACE_TOP)
-    s = TH * FACE_H / fh                               # output px per source px
-    s = max(s, TH * (1 - ft) / max(1, h - y))            # zoom in if the photo has no more rows below
+    s = TH * FACE_H_FOR.get(slug, FACE_H) / fh         # output px per source px
+    s_need = TH * (1 - ft) / max(1, h - y)             # scale at which the photo's rows would just reach the bottom
+    if s_need > s:
+        s = max(s, s_need * 0.93)                      # zoom in when the photo is short; the small rest fades out below
+    need_rows = TH * (1 - ft) / s
+    deficit = int(np.ceil(need_rows - (h - y))) + 2
+    rgba = cv2.cvtColor(img, cv2.COLOR_BGR2BGRA)
+    rgba[:, :, 3] = alpha
+    pad_out = 0
+    if deficit > 0:                                    # a few rows short: pad transparently, then fade the bottom out softly
+        rgba = cv2.copyMakeBorder(rgba, 0, deficit, 0, 0, cv2.BORDER_CONSTANT, value=(0, 0, 0, 0))
+        h += deficit
+        pad_out = deficit * s
     crop_w, crop_h = TW / s, TH / s
     cx = x + fw / 2
     left = int(round(cx - crop_w / 2))
     top = int(round(y - TH * ft / s))
     cw, ch = int(round(crop_w)), int(round(crop_h))
-    rgba = cv2.cvtColor(img, cv2.COLOR_BGR2BGRA)
-    rgba[:, :, 3] = alpha
     canvas = np.zeros((ch, cw, 4), np.uint8)
     sx0, sy0 = max(0, left), max(0, top)
     sx1, sy1 = min(w, left + cw), min(h, top + ch)
     dx, dy = sx0 - left, sy0 - top
     canvas[dy : dy + (sy1 - sy0), dx : dx + (sx1 - sx0)] = rgba[sy0:sy1, sx0:sx1]
-    return cv2.resize(canvas, (TW, TH), interpolation=cv2.INTER_AREA if ch > TH else cv2.INTER_CUBIC)
+    out = cv2.resize(canvas, (TW, TH), interpolation=cv2.INTER_AREA if ch > TH else cv2.INTER_CUBIC)
+    if pad_out > 0:
+        fade = int(min(TH * 0.3, pad_out + TH * 0.05))
+        ramp = np.linspace(1.0, 0.0, fade, dtype=np.float32)[:, None]
+        out[TH - fade :, :, 3] = (out[TH - fade :, :, 3] * ramp).astype(np.uint8)
+    return out
+
+
+SUPPLIED = {"dr-kritika-soni", "ms-angshruta-mahanta", "inderjeet-singh", "dr-anu-yadav", "ms-ira-gupta", "ms-deliaka-ghanghass"}
+PREPARED = {"ms-ira-gupta", "ms-deliaka-ghanghass"}  # already cropped out of a screenshot of two cards: no corner trim or sparkle
+
+
+def clean_supplied(img, slug):
+    """The second batch are screenshots: sometimes rounded white corners, a baked-in name label (Dr Kritika Soni)
+    and a small faint sparkle watermark near the bottom right. Paint the sparkle out, trim corners and label."""
+    if slug in PREPARED:
+        return img
+    h, w = img.shape[:2]
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY).astype(np.float32)
+    local = cv2.GaussianBlur(gray, (0, 0), 9)
+    mask = np.zeros((h, w), np.uint8)
+    y0, y1, x0, x1 = int(h * 0.865), int(h * 0.945), int(w * 0.80), int(w * 0.92)
+    box = (gray - local)[y0:y1, x0:x1]
+    mask[y0:y1, x0:x1] = (box > 6).astype(np.uint8) * 255
+    mask = cv2.dilate(mask, np.ones((11, 11), np.uint8))
+    if mask.any():
+        img = cv2.inpaint(img, mask, 6, cv2.INPAINT_TELEA)
+    m = 0.045 if slug in ("inderjeet-singh", "dr-anu-yadav") else 0.0
+    if m:
+        mx, my = int(w * m), int(h * m)
+        img = img[my : h - my, mx : w - mx].copy()
+    if slug == "dr-kritika-soni":
+        img = img[: int(img.shape[0] * 0.82)]
+    return img
 
 
 def read(path):
@@ -256,6 +311,8 @@ def read(path):
     if img.ndim == 3 and img.shape[2] == 4:  # flatten any alpha onto white
         a = img[:, :, 3:4] / 255.0
         img = (img[:, :, :3] * a + 255 * (1 - a)).astype(np.uint8)
+    if os.path.dirname(path) == SUP2:
+        img = clean_supplied(img, os.path.splitext(os.path.basename(path))[0])
     return img
 
 
@@ -282,8 +339,16 @@ def legacy(slug):
     for i in range(1, nn):
         if ss[i, cv2.CC_STAT_AREA] < 400 and ss[i, cv2.CC_STAT_TOP] > 0:
             m[ll == i] = 255
+    # specks of the old banner stick to the top of the hair: open the head region with a round kernel, which
+    # removes thin protrusions but keeps the smooth mass of the hair
+    top_rows = int(m.shape[0] * 0.42)
+    head = cv2.morphologyEx(m[:top_rows], cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (15, 15)))
+    m[:top_rows] = head
+    nn, ll, ss, _ = cv2.connectedComponentsWithStats(m, 8)
+    if nn > 1:
+        m = np.where(ll == 1 + int(np.argmax(ss[1:, cv2.CC_STAT_AREA])), 255, 0).astype(np.uint8)
     m = cv2.erode(m, np.ones((3, 3), np.uint8))
-    alpha = cv2.GaussianBlur(m, (0, 0), 1.0)
+    alpha = cv2.GaussianBlur(m, (0, 0), 1.6)
     alpha = np.clip((alpha.astype(np.float32) - 60) * (255.0 / 150.0), 0, 255).astype(np.uint8)
     white = (bgr * (alpha[:, :, None] / 255.0) + 255 * (1 - alpha[:, :, None] / 255.0)).astype(np.uint8)
     H, W = white.shape[:2]

@@ -1,7 +1,8 @@
 // /book-appointment/ (new page): multi-step booking against the hospital's own database.
 import type { Metadata } from "next";
 import Link from "next/link";
-import { absoluteUrl, getDoctors, getSite, localPath } from "@/lib/content";
+import { absoluteUrl, getDoctors, getSite } from "@/lib/content";
+import { pastelFor, portraitOf } from "@/components/team";
 import { PageHero } from "@/components/PageHero";
 import { BookingForm } from "@/components/booking/BookingForm";
 import { Icon } from "@/components/ui/primitives";
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function BookAppointment() {
   const site = getSite();
-  const siteDoctors = getDoctors().map((d) => ({ slug: d.slug, name: d.name, designation: d.designation, photo: d.photo ? localPath(d.photo) : null }));
+  const siteDoctors = getDoctors().map((d) => ({ slug: d.slug, name: d.name, designation: d.designation, photo: portraitOf(d)?.src ?? null, tint: pastelFor(d.slug) }));
   return (
     <>
       <PageHero

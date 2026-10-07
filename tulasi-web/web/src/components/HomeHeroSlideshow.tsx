@@ -11,28 +11,27 @@ type HeroSlide = {
 
 const HERO_SLIDES: HeroSlide[] = [
   {
-    src: "/wp-content/uploads/2022/12/lasi-healthcare-psychiatric-hospital.webp",
-    alt: "Tulasi Healthcare psychiatric hospital and rehabilitation centre, Gurugram",
+    src: "/hero/gurugram.webp",
+    alt: "Tulasi Healthcare hospital building, Gurugram",
+    position: "50% 50%",
+  },
+  {
+    src: "/hero/mehrauli.webp",
+    alt: "Tulasi Healthcare centre and garden, Mehrauli, Delhi",
     position: "50% 50%",
   },
   {
     src: "/wp-content/uploads/2022/12/47-1024x768-1.webp",
-    alt: "Tulasi Healthcare hospital courtyard in Delhi-NCR",
+    alt: "Tulasi Healthcare hospital courtyard",
     position: "50% 50%",
-  },
-  {
-    src: "/wp-content/uploads/2022/12/49-1024x768-1.webp",
-    alt: "Tulasi Healthcare hospital building and campus",
-    position: "52% 50%",
   },
 ];
 
-const SLIDE_MS = 3600;
+const SLIDE_MS = 2600;
 
 export function HomeHeroSlideshow() {
   const [active, setActive] = useState(0);
   const [prev, setPrev] = useState<number | null>(null);
-  const [paused, setPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
@@ -49,16 +48,16 @@ export function HomeHeroSlideshow() {
   };
 
   useEffect(() => {
-    if (paused || reducedMotion || HERO_SLIDES.length < 2) return;
+    if (reducedMotion || HERO_SLIDES.length < 2) return;
     const id = window.setTimeout(() => {
       setPrev(active);
       setActive((active + 1) % HERO_SLIDES.length);
     }, SLIDE_MS);
     return () => window.clearTimeout(id);
-  }, [active, paused, reducedMotion]);
+  }, [active, reducedMotion]);
 
   return (
-    <div className="home-hero-slideshow" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+    <div className="home-hero-slideshow">
       {HERO_SLIDES.map((slide, index) => (
         <Image
           key={slide.src}

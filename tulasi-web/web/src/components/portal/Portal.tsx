@@ -4,7 +4,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ApiError, cancelMyAppointment, fetchMe, logout, myAppointments, type Appointment } from "@/lib/api";
+import { ApiError, cancelMyAppointment, fetchMe, logout, myAppointments, type Appointment, type PatientUser } from "@/lib/api";
 import { Icon } from "@/components/ui/primitives";
 
 const today = () => new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata" }).format(new Date());
@@ -15,7 +15,7 @@ const pretty = (a: Appointment) => {
 
 export function Portal() {
   const router = useRouter();
-  const [user, setUser] = useState<{ phone: string } | null>(null);
+  const [user, setUser] = useState<PatientUser | null>(null);
   const [list, setList] = useState<Appointment[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [cancelling, setCancelling] = useState<string | null>(null);
@@ -70,7 +70,7 @@ export function Portal() {
         <div>
           <p className="eyebrow">Patient portal</p>
           <h1 className="mt-2 font-display text-[length:var(--text-h2)] font-bold text-ink">My appointments</h1>
-          {user && <p className="mt-1 text-sm text-ink-soft">Signed in as +91 {user.phone}</p>}
+          {user && <p className="mt-1 text-sm text-ink-soft">Signed in as {user.email ?? `+91 ${user.phone}`}</p>}
         </div>
         <div className="flex gap-2">
           <Link href="/book-appointment/" className="inline-flex min-h-12 items-center gap-2 rounded-full bg-accent-600 px-5 font-semibold text-white hover:bg-accent-700"><Icon name="calendar" /> New booking</Link>

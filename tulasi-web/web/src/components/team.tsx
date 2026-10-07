@@ -10,7 +10,7 @@ import path from "node:path";
 import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
-import { getDoctors, localPath, type Doctor } from "@/lib/content";
+import { getDoctorsUnsorted, localPath, type Doctor } from "@/lib/content";
 import { credentialsOf } from "@/lib/team-tags";
 import { Icon } from "@/components/ui/primitives";
 
@@ -21,7 +21,7 @@ export const PASTELS = ["#d9efdd", "#d6e8f7", "#e4ddf6", "#f9dedf", "#fbf0c6", "
 
 /** A person keeps the same colour everywhere (marquee, team page, cards, profile). */
 export function pastelFor(slug: string) {
-  const i = getDoctors().findIndex((d) => d.slug === slug);
+  const i = getDoctorsUnsorted().findIndex((d) => d.slug === slug);
   return PASTELS[(i < 0 ? slug.length : i) % PASTELS.length];
 }
 

@@ -37,7 +37,7 @@ export const LOCATIONS: Location[] = [
     area: "Sector 64, Golf Course Extension Road",
     address: "Sector 64, Golf Course Extension Road, Gurugram, Haryana 122102",
     mapsUrl: "https://goo.gl/maps/G8LAxcJGdmqw9ziG9",
-    photo: "/wp-content/uploads/2022/12/lasi-healthcare-psychiatric-hospital.webp",
+    photo: "/hero/gurugram.webp",
   },
   {
     id: "mehrauli-rehabilitation-centre",
@@ -48,7 +48,7 @@ export const LOCATIONS: Location[] = [
     area: "Mandi Village",
     address: "Next to Lingaya Inst., Jonapur Mandi Road, Mandi Village, Mehrauli, New Delhi, Delhi 110030",
     mapsUrl: "https://goo.gl/maps/dDyNznHtuGN1N85z8",
-    photo: "/wp-content/uploads/2022/12/47-1024x768-1.webp",
+    photo: "/hero/mehrauli.webp",
   },
   {
     id: "healourmind",

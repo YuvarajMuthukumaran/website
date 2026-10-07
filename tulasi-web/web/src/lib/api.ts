@@ -13,12 +13,19 @@ export class ApiError extends Error {
   }
 }
 
+// The site uses trailing slashes (next.config trailingSlash), and Next answers an API path without one with a
+// redirect that some browsers refuse to follow for fetch(). Always ask for the slash form directly.
+const apiUrl = (path: string) => {
+  const [p, q] = path.split("?");
+  return `${API_BASE}/api${p.endsWith("/") ? p : `${p}/`}${q ? `?${q}` : ""}`;
+};
+
 async function call<T>(path: string, init: RequestInit & { auth?: boolean } = {}, retry?: RetryOptions): Promise<T> {
   const { auth, ...rest } = init;
   let res: Response;
   try {
     res = await fetchWithRetry(
-      `${API_BASE}/api${path}`,
+      apiUrl(path),
       {
         ...rest,
         headers: { ...(rest.body ? { "Content-Type": "application/json" } : {}), ...rest.headers },
@@ -37,17 +44,25 @@ async function call<T>(path: string, init: RequestInit & { auth?: boolean } = {}
 
 // ───────────── Doctors & booking ─────────────
 export type ApiDoctor = { _id: string; name: string; role?: string; specialties?: string[]; focus?: string; photo?: string };
-export const fetchDoctors = (specialty?: string) => call<{ doctors: ApiDoctor[] }>(`/doctors${specialty ? `?specialty=${encodeURIComponent(specialty)}` : ""}`);
+/** Dr Gorav Gupta is always listed first; everyone else keeps the order the server gave. */
+export const leadFirst = <T extends { name: string }>(list: T[]) => {
+  const lead = (x: T) => /gorav\s+gupta/i.test(x.name);
+  return [...list.filter(lead), ...list.filter((x) => !lead(x))];
+};
+export const fetchDoctors = (specialty?: string) =>
+  call<{ doctors: ApiDoctor[] }>(`/doctors${specialty ? `?specialty=${encodeURIComponent(specialty)}` : ""}`).then((r) => ({ ...r, doctors: leadFirst(r.doctors) }));
 export const fetchSpecialties = () => call<{ specialties: string[] }>("/doctors/specialties");
 export const fetchSlots = (doctorId: string, date: string) => call<{ slots: string[] }>(`/appointments/slots?${new URLSearchParams({ doctorId, date })}`);
 export type Appointment = { _id: string; doctorId: string; doctorName: string; date: string; time: string; status: "booked" | "cancelled" };
-export const createAppointment = (body: { doctorId: string; patientName: string; patientPhone: string; date: string; time: string }) =>
-  call<{ ok: true; appointment: Appointment }>("/appointments", { method: "POST", body: JSON.stringify(body) });
+// `code` is the 6-digit code e-mailed to `patientEmail` (see requestOtp). Booking also signs the patient in (session cookie).
+export const createAppointment = (body: { doctorId: string; patientName: string; patientEmail: string; code: string; date: string; time: string }) =>
+  call<{ ok: true; appointment: Appointment }>("/appointments", { method: "POST", body: JSON.stringify(body), auth: true });
 
 // ───────────── Patient login & portal ─────────────
-export const requestOtp = (phone: string) => call<{ ok: true; devCode?: string }>("/auth/otp/request", { method: "POST", body: JSON.stringify({ phone }), auth: true });
-export const verifyOtp = (phone: string, code: string) => call<{ ok: true; user: { phone: string } }>("/auth/otp/verify", { method: "POST", body: JSON.stringify({ phone, code }), auth: true });
-export const fetchMe = () => call<{ user: { phone: string } }>("/auth/me", { auth: true });
+export type PatientUser = { email?: string; phone?: string };
+export const requestOtp = (email: string) => call<{ ok: true; devCode?: string }>("/auth/otp/request", { method: "POST", body: JSON.stringify({ email }), auth: true });
+export const verifyOtp = (email: string, code: string) => call<{ ok: true; user: PatientUser }>("/auth/otp/verify", { method: "POST", body: JSON.stringify({ email, code }), auth: true });
+export const fetchMe = () => call<{ user: PatientUser }>("/auth/me", { auth: true });
 export const logout = () => call<{ ok: true }>("/auth/logout", { method: "POST", auth: true });
 export const myAppointments = () => call<{ appointments: Appointment[] }>("/me/appointments", { auth: true });
 export const cancelMyAppointment = (id: string) => call<{ ok: true }>(`/me/appointments/${encodeURIComponent(id)}/cancel`, { method: "PATCH", auth: true });
@@ -55,18 +70,19 @@ export const cancelMyAppointment = (id: string) => call<{ ok: true }>(`/me/appoi
 // ───────────── Guided matching ─────────────
 export type MatchInput = { concern: string; who: "self" | "child" | "elder" | "loved"; support: "therapy" | "medication" | "unsure" };
 export type MatchResult = { relaxed: boolean; matches: { name: string; role: string; focus: string | null; photo: string | null; reasons: string[] }[]; fallback?: "call" };
-export const matchDoctors = (input: MatchInput) => call<MatchResult>("/match", { method: "POST", body: JSON.stringify(input) });
+export const matchDoctors = (input: MatchInput) =>
+  call<MatchResult>("/match", { method: "POST", body: JSON.stringify(input) }).then((r) => ({ ...r, matches: leadFirst(r.matches) }));
 
 // ───────────── Chat ─────────────
 export const startChatSession = (history?: { role: string; text: string }[], retry?: RetryOptions) =>
   call<{ sessionId: string; crisisResources: unknown }>("/session", { method: "POST", body: JSON.stringify({ channel: "website", ...(history?.length ? { history } : {}) }) }, retry);
-export const endChatSession = (id: string) => fetch(`${API_BASE}/api/session/${encodeURIComponent(id)}`, { method: "DELETE" }).catch(() => {});
+export const endChatSession = (id: string) => fetch(apiUrl(`/session/${encodeURIComponent(id)}`), { method: "DELETE" }).catch(() => {});
 
 export type ChatEvent = { text?: string; crisis?: boolean; error?: boolean; functional?: boolean; action?: "book" | "portal"; quickReplies?: string[]; doctors?: { name: string; role?: string; photo?: string | null }[] };
 
 /** Streams one reply (SSE over POST). Resolves when the stream ends. */
 export async function streamChat(sessionId: string, message: string, onEvent: (e: ChatEvent) => void, signal?: AbortSignal, retry?: RetryOptions) {
-  const res = await fetchWithRetry(`${API_BASE}/api/chat`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ sessionId, message }), signal }, retry);
+  const res = await fetchWithRetry(apiUrl("/chat"), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ sessionId, message }), signal }, retry);
   if (res.status === 404) throw new ApiError("session-expired", 404);
   if (!res.ok || !res.body) {
     const data = await res.json().catch(() => ({}));

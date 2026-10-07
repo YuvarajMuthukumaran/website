@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Site } from "@/lib/content";
 import { Icon } from "@/components/ui/primitives";
 import { whatsappLink } from "@/lib/care";
+import { APP_LINKS } from "@/lib/apps";
 import { ConsentSettingsButton } from "./Consent";
 import { TrackedLink } from "./TrackedLink";
 
@@ -42,13 +43,43 @@ const COMPANY = [
 ];
 
 
+function StoreBadge({ href, store }: { href: string; store: "google" | "apple" }) {
+  const google = store === "google";
+  const inner = (
+    <>
+      {google ? (
+        <svg viewBox="0 0 24 24" className="size-7 shrink-0" aria-hidden="true">
+          <path fill="#00A0FF" d="M3.6 2.2 13.4 12 3.6 21.8c-.4-.2-.6-.6-.6-1.2V3.4c0-.6.2-1 .6-1.2z" />
+          <path fill="#00E06B" d="M13.4 12 16.8 8.6 5.2 2c-.6-.3-1.200-.1-1.600.2z" />
+          <path fill="#FFC800" d="m16.8 15.400 3.500-2c.8-.5.8-2.300 0-2.800l-3.500-2-3.400 3.400z" />
+          <path fill="#FF3A44" d="M13.4 12 3.600 21.800c.4.300 1 .5 1.600.2l11.600-6.600z" />
+        </svg>
+      ) : (
+        <svg viewBox="0 0 24 24" className="size-7 shrink-0" fill="currentColor" aria-hidden="true">
+          <path d="M16.4 12.700c0-2.500 2-3.700 2.100-3.800-1.100-1.700-2.900-1.900-3.500-1.900-1.500-.2-2.900.9-3.700.9-.8 0-1.900-.9-3.100-.8-1.600 0-3 .9-3.900 2.300-1.700 2.900-.4 7.100 1.200 9.400.8 1.100 1.700 2.400 3 2.300 1.200 0 1.700-.8 3.100-.8 1.500 0 1.900.8 3.200.7 1.300 0 2.100-1.100 2.900-2.300.9-1.300 1.300-2.600 1.300-2.700 0 0-2.500-1-2.600-3.800zM14 5.300c.7-.8 1.100-1.900 1-3-1 0-2.100.7-2.800 1.500-.6.700-1.200 1.900-1 3 1.100.1 2.100-.6 2.800-1.500z" />
+        </svg>
+      )}
+      <span className="flex flex-col text-left leading-none">
+        <span className="text-[0.625rem] tracking-wide uppercase">{google ? "Get it on" : "Download on the"}</span>
+        <span className="mt-1 text-[1.0625rem] font-semibold tracking-tight">{google ? "Google Play" : "App Store"}</span>
+      </span>
+    </>
+  );
+  const cls = "inline-flex h-12 items-center gap-3 rounded-lg border border-white/40 bg-black px-4 text-white";
+  return href ? (
+    <a href={href} target="_blank" rel="noopener" className={`${cls} transition-colors hover:border-white`} aria-label={google ? "Get Tulasi Healthcare on Google Play" : "Download Tulasi Healthcare on the App Store"}>{inner}</a>
+  ) : (
+    <span className={`${cls} cursor-default opacity-90`} title="Coming soon" aria-label={google ? "Google Play, coming soon" : "App Store, coming soon"}>{inner}</span>
+  );
+}
+
 const colHead = "text-[0.8125rem] font-semibold tracking-[0.08em] text-white uppercase";
 const colLink = "text-[0.9375rem] text-white/72 transition-colors hover:text-white";
 
 export function Footer({ site }: { site: Site }) {
   const year = new Date().getFullYear();
   return (
-    <footer className="cv mt-6 rounded-t-[2rem] bg-[#173f2e] text-white">
+    <footer className="cv mt-6 rounded-t-[2rem] bg-brand-900 text-white">
       <div className="container-page pt-12 pb-8 lg:pt-16">
         {/* brand */}
         <div className="flex flex-col items-center text-center">
@@ -60,7 +91,7 @@ export function Footer({ site }: { site: Site }) {
           <ul className="mt-6 flex gap-3" aria-label="Social media">
             {site.social.map((s) => (
               <li key={s}>
-                <a href={s} target="_blank" rel="noopener" className="grid size-10 place-items-center rounded-md border border-white/55 text-white transition-colors hover:bg-white hover:text-[#173f2e]" aria-label={`Tulasi Healthcare on ${socialName(s)}`}>
+                <a href={s} target="_blank" rel="noopener" className="grid size-10 place-items-center rounded-md border border-white/55 text-white transition-colors hover:bg-white hover:text-brand-900" aria-label={`Tulasi Healthcare on ${socialName(s)}`}>
                   <svg viewBox="0 0 24 24" className="size-[18px]" fill="currentColor" aria-hidden="true">
                     <path d={GLYPH[socialName(s)] ?? GLYPH.Facebook} fillRule="evenodd" />
                   </svg>
@@ -68,6 +99,10 @@ export function Footer({ site }: { site: Site }) {
               </li>
             ))}
           </ul>
+          <div className="mt-6 flex flex-wrap justify-center gap-3" aria-label="Get the app">
+            <StoreBadge store="google" href={APP_LINKS.googlePlay} />
+            <StoreBadge store="apple" href={APP_LINKS.appStore} />
+          </div>
         </div>
 
         {/* links */}
@@ -133,7 +168,7 @@ export function Footer({ site }: { site: Site }) {
             <Icon name="heart" className="mt-0.5 size-5 shrink-0 text-white/80" />
             <span><strong className="font-semibold">In crisis or thinking of harming yourself?</strong> You are not alone. Help is available right now.</span>
           </p>
-          <a href={site.contact.phoneHref} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-[#173f2e] hover:bg-white/90">
+          <a href={site.contact.phoneHref} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-brand-900 hover:bg-white/90">
             <Icon name="phone" className="size-4" /> Call {site.contact.phoneDisplay}
           </a>
         </div>

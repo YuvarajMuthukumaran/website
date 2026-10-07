@@ -173,7 +173,13 @@ export const getSite = () => all().site;
 export const getHome = () => all().home;
 export const getPosts = () => all().posts;
 export const getPages = () => all().pages;
-export const getDoctors = () => all().doctors;
+/** Dr Gorav Gupta always leads every list of doctors (team, booking, finder, chat). */
+export const LEAD_DOCTOR = "dr-gorav-gupta";
+export const getDoctorsUnsorted = () => all().doctors;
+export const getDoctors = () => {
+  const list = all().doctors;
+  return [...list.filter((d) => d.slug === LEAD_DOCTOR), ...list.filter((d) => d.slug !== LEAD_DOCTOR)];
+};
 export const getTags = () => all().tags;
 export const getCategories = () => all().categories;
 export const getAuthors = () => all().authors;
