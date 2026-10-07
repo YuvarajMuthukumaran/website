@@ -98,16 +98,16 @@ export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { displ
           <Image src={logo.src} alt={logo.alt || "Tulasi Healthcare"} width={44} height={44} priority className="h-10 w-10 object-contain" />
           <span className="flex flex-col leading-none">
             <span className="font-display text-[1.0625rem] font-semibold tracking-[-0.015em] text-ink">Tulasi Healthcare</span>
-            <span className="mt-1 hidden text-[0.6875rem] font-medium tracking-[0.04em] text-ink-soft sm:block">Psychiatric hospital &amp; mental health care</span>
+            <span className="mt-1 hidden text-[0.6875rem] font-medium tracking-[0.04em] text-ink-soft 2xl:block">Psychiatric hospital &amp; mental health care</span>
           </span>
         </Link>
 
-        <nav aria-label="Main" className="ml-4 hidden flex-1 lg:flex xl:ml-8">
+        <nav aria-label="Main" className="ml-4 hidden flex-1 xl:flex 2xl:ml-8">
           <ul className="flex w-full items-center">
             {items.map((item, i) => {
               const hasPanel = item.groups.some((g) => g.links.length);
               const active = item.href && (pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href)));
-              const base = "whitespace-nowrap rounded-full px-3 py-2 2xl:px-3.5 text-[0.9375rem] font-medium transition-colors duration-200";
+              const base = "whitespace-nowrap rounded-full px-2.5 py-2 2xl:px-3.5 text-[0.9375rem] font-medium transition-colors duration-200";
               return (
                 <li key={item.label} className={item.label === "About Us" ? "ml-auto" : undefined} onMouseEnter={() => hasPanel && enter(i)} onMouseLeave={leave}>
                   <div className="flex items-center">
@@ -134,18 +134,18 @@ export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { displ
         </nav>
 
         <div className="flex items-center gap-2">
-          <a href={phone.href} onClick={() => track("call_click", { location: "header" })} className="hidden size-11 place-items-center rounded-full text-brand-600 shadow-[inset_0_0_0_1px_var(--color-line)] transition-colors hover:bg-brand-50 lg:grid" aria-label={`Call us on ${phone.display}`}>
+          <a href={phone.href} onClick={() => track("call_click", { location: "header" })} className="hidden size-11 place-items-center rounded-full text-brand-600 shadow-[inset_0_0_0_1px_var(--color-line)] transition-colors hover:bg-brand-50 2xl:grid" aria-label={`Call us on ${phone.display}`}>
             <Icon name="phone" className="size-[1.15rem]" />
           </a>
-          <a href={whatsappLink(phone.href)} target="_blank" rel="noopener" onClick={() => track("whatsapp_click", { location: "header" })} className="hidden size-11 place-items-center rounded-full bg-[#25a244] text-white transition-colors hover:bg-[#1f8c3b] lg:grid" aria-label="Message us on WhatsApp">
+          <a href={whatsappLink(phone.href)} target="_blank" rel="noopener" onClick={() => track("whatsapp_click", { location: "header" })} className="hidden size-11 place-items-center rounded-full bg-[#25a244] text-white transition-colors hover:bg-[#1f8c3b] xl:grid" aria-label="Message us on WhatsApp">
             <svg viewBox="0 0 24 24" className="size-[1.3rem]" fill="currentColor" aria-hidden="true">
               <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.200s.9 2.500 1.100 2.700c.1.2 1.900 2.900 4.600 4 1.700.7 2.300.7 3.200.6.5-.1 1.500-.6 1.700-1.200.2-.6.2-1.100.1-1.200-.1-.1-.2-.2-.5-.3z" />
             </svg>
           </a>
-          <Link href="/book-appointment/" className="hidden min-h-11 items-center gap-2 whitespace-nowrap rounded-full bg-brand-600 px-5 text-[0.9375rem] font-semibold text-white transition-colors duration-300 hover:bg-brand-700 lg:inline-flex">
+          <Link href="/book-appointment/" className="hidden min-h-11 items-center gap-2 whitespace-nowrap rounded-full bg-brand-600 px-5 text-[0.9375rem] font-semibold text-white transition-colors duration-300 hover:bg-brand-700 xl:inline-flex">
             Book appointment
           </Link>
-          <button type="button" className="grid size-11 place-items-center rounded-full text-ink hover:bg-mist lg:hidden" aria-expanded={mobile} aria-controls="mobile-menu" onClick={() => setMobile(true)}>
+          <button type="button" className="grid size-11 place-items-center rounded-full text-ink hover:bg-mist xl:hidden" aria-expanded={mobile} aria-controls="mobile-menu" onClick={() => setMobile(true)}>
             <Icon name="menu" className="size-6" />
             <span className="sr-only">Open menu</span>
           </button>
@@ -153,7 +153,7 @@ export function Header({ menu, phone, logo, team }: { menu: Menu; phone: { displ
       </div>
 
       {/* Full-width dropdown panels (see MegaMenus.tsx). They hang from the header, so they span the page. */}
-      <div className="hidden lg:block">
+      <div className="hidden xl:block">
         {items.map((item, i) =>
           item.groups.some((g) => g.links.length) && (built.includes(i) || open === i) ? (
             <NavPanel key={item.label} id={`menu-panel-${i}`} item={item} open={open === i} phone={phone} team={item.label === "Our Team" ? team : undefined} onEnter={() => enter(i)} onLeave={leave} />
