@@ -1022,3 +1022,7 @@ details.acc > summary::-webkit-details-marker { display: none; }
   .bubble:hover .bubble-ring, .bubble:focus-visible .bubble-ring { transform: none; }
   .bubble:hover .bubble-ring::after, .bubble-pulse::before { animation: none; }
 }
+
+/* The centre hub of the conditions circles gently grows and shrinks until someone touches it. */
+@keyframes hub-nudge { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+@media (prefers-reduced-motion: reduce) { .animate-\[hub-nudge_2\.6s_ease-in-out_infinite\] { animation: none; } }

@@ -21,6 +21,7 @@ import { PASTELS } from "@/components/team";
 import { CITIES, CLINICS, HOSPITALS, locationSummary } from "@/lib/locations";
 import { HomeHeroSlideshow } from "@/components/HomeHeroSlideshow";
 import { InstagramVideos } from "@/components/InstagramVideos";
+import { ConditionsRadial } from "@/components/ConditionsRadial";
 import { StatValue } from "@/components/StatValue";
 import { TrustPromise } from "@/components/TrustPromise";
 import { CONCERN_ICON, CONCERNS, PATHWAYS, type Pathway } from "@/lib/care";
@@ -79,8 +80,6 @@ const REVIEW_FLOATERS: { e: string; left: string; size: string; dur: string; del
 ];
 
 type BubbleConcern = { label: string; href: string };
-/** Angles (degrees) of the seven circles on the oval, mirrored left and right so no label touches a neighbour. */
-const ORBIT_DEG = [-90, -50, 10, 62, 118, 170, 230];
 
 /** One condition as a round photo with its name below. */
 function Bubble({ c, photo, size }: { c: BubbleConcern; photo?: string | null; size: string }) {
@@ -213,35 +212,28 @@ export default function Home() {
       {/* ═════════════ What would you like help with ═════════════ */}
       <section id="help" className={sectionPad}>
         <div className="container-page">
-          <SectionHeading title="What would you like help with?" text="Choose what feels closest. Each page explains how we treat it." />
-          {/* Phones and tablets: a tidy grid of circles. */}
-          <ul className="mt-10 grid grid-cols-3 gap-x-3 gap-y-8 sm:grid-cols-4 lg:hidden">
-            {concerns.map((c, i) => (
-              <Reveal as="li" key={c.href} delay={(i % 4) * 40}>
-                <Bubble c={c} photo={photos[c.label]} size="size-[5.5rem] sm:size-28" />
-              </Reveal>
-            ))}
-            <Reveal as="li" delay={(concerns.length % 4) * 40}>
-              <AllBubble size="size-[5.5rem] sm:size-28" />
-            </Reveal>
-          </ul>
-
-          {/* Laptops: the circles sit on an oval around "All conditions". */}
-          <div className="relative mx-auto mt-6 hidden h-[35rem] max-w-5xl lg:block">
-            <div aria-hidden="true" className="absolute top-1/2 left-1/2 h-[68%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] border border-dashed border-brand-200" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              <AllBubble size="size-40" center />
+          <div className="lg:grid lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:items-center lg:gap-12">
+            <div>
+              <SectionHeading title="What would you like help with?" text="Choose what feels closest. Each page explains how we treat it." />
+              <p className="mt-4 hidden max-w-[34ch] text-[0.9375rem] leading-relaxed text-ink-soft lg:block">Touch the centre circle and the ways we can help open up around it. Pick the one nearest to how you feel; you can always change your mind.</p>
             </div>
-            <ul>
-              {concerns.map((c, i) => {
-                const a = (ORBIT_DEG[i] ?? -90 + (i * 360) / concerns.length) * (Math.PI / 180);
-                return (
-                  <li key={c.href} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: `${50 + 40 * Math.cos(a)}%`, top: `${50 + 36 * Math.sin(a)}%` }}>
-                    <Bubble c={c} photo={photos[c.label]} size="size-[7.25rem]" />
-                  </li>
-                );
-              })}
+
+            {/* Phones and tablets: a tidy grid of circles. */}
+            <ul className="mt-10 grid grid-cols-3 gap-x-3 gap-y-8 sm:grid-cols-4 lg:hidden">
+              {concerns.map((c, i) => (
+                <Reveal as="li" key={c.href} delay={(i % 4) * 40}>
+                  <Bubble c={c} photo={photos[c.label]} size="size-[5.5rem] sm:size-28" />
+                </Reveal>
+              ))}
+              <Reveal as="li" delay={(concerns.length % 4) * 40}>
+                <AllBubble size="size-[5.5rem] sm:size-28" />
+              </Reveal>
             </ul>
+
+            {/* Laptops: the centre circle opens the spokes around it. */}
+            <div className="hidden lg:block">
+              <ConditionsRadial items={concerns.map((c) => ({ label: c.label, href: c.href, photo: photos[c.label] ?? null }))} />
+            </div>
           </div>
           <div className="mt-12 rounded-[1.5rem] bg-gradient-to-r from-sage-50 via-white to-brand-50 p-5 shadow-[inset_0_0_0_1px_var(--color-sage-100)] sm:p-7 lg:flex lg:items-center lg:justify-between lg:gap-10">
             <div className="lg:max-w-xs">

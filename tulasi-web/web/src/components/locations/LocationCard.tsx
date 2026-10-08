@@ -12,7 +12,7 @@ import type { Location } from "@/lib/locations";
 export function LocationCard({ loc, tint, phone }: { loc: Location; tint: string; phone: { display: string; href: string } }) {
   const [flipped, setFlipped] = useState(false);
   const isHospital = loc.type === "hospital";
-  const label = isHospital ? "Hospital" : "Clinic";
+  const label = loc.badge ?? (isHospital ? "Hospital" : "Clinic");
 
   return (
     <div id={loc.id} className={`lc-wrap${flipped ? " lc-flipped" : ""}`}>
