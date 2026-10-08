@@ -21,7 +21,7 @@ import { PASTELS } from "@/components/team";
 import { CITIES, CLINICS, HOSPITALS, locationSummary } from "@/lib/locations";
 import { HomeHeroSlideshow } from "@/components/HomeHeroSlideshow";
 import { InstagramVideos } from "@/components/InstagramVideos";
-import { ConditionsRadial } from "@/components/ConditionsRadial";
+import { ConditionsExplorer } from "@/components/ConditionsExplorer";
 import { StatValue } from "@/components/StatValue";
 import { TrustPromise } from "@/components/TrustPromise";
 import { CONCERN_ICON, CONCERNS, PATHWAYS, type Pathway } from "@/lib/care";
@@ -79,35 +79,6 @@ const REVIEW_FLOATERS: { e: string; left: string; size: string; dur: string; del
   { e: "⭐", left: "93%", size: "1.2rem", dur: "19s", delay: "5s" },
 ];
 
-type BubbleConcern = { label: string; href: string };
-
-/** One condition as a round photo with its name below. */
-function Bubble({ c, photo, size }: { c: BubbleConcern; photo?: string | null; size: string }) {
-  return (
-    <Link href={c.href} className="bubble group flex flex-col items-center gap-3 text-center">
-      <span className={`bubble-ring relative grid ${size} place-items-center rounded-full bg-sage-50 text-ink/75 shadow-[0_0_0_4px_#fff,0_0_0_5px_var(--color-line)] group-hover:shadow-[0_0_0_4px_#fff,0_0_0_5px_var(--color-brand-300),0_18px_32px_-14px_rgb(23_34_44/0.5)]`}>
-        <span className="absolute inset-0 overflow-hidden rounded-full">
-          {photo ? <Image src={photo} alt="" fill sizes="120px" className="bubble-img object-cover" /> : <Icon name="heart" className="m-auto size-9" />}
-        </span>
-      </span>
-      <span className="bubble-label max-w-[11ch] text-[0.9375rem] leading-snug font-semibold text-ink group-hover:text-brand-700 sm:max-w-[14ch] sm:text-base lg:max-w-[12ch]">{c.label}</span>
-    </Link>
-  );
-}
-
-function AllBubble({ size, center }: { size: string; center?: boolean }) {
-  return (
-    <Link href="/conditions/" className="bubble group flex flex-col items-center gap-3 text-center">
-      <span className={`bubble-ring bubble-pulse relative grid ${size} place-items-center rounded-full bg-brand-600 text-white shadow-[0_0_0_5px_#fff,0_0_0_6px_var(--color-brand-200)] group-hover:bg-brand-700`}>
-        <span className="grid justify-items-center gap-1">
-          <span className={`font-display font-semibold tracking-[-0.02em] ${center ? "text-4xl" : "text-2xl"}`}>A–Z</span>
-          {center && <span className="max-w-[12ch] text-xs leading-tight text-white/85">Browse or search</span>}
-        </span>
-      </span>
-      <span className="bubble-label text-[0.9375rem] leading-snug font-semibold text-brand-700 sm:text-base">All conditions</span>
-    </Link>
-  );
-}
 
 export default function Home() {
   const h = getHome();
@@ -212,29 +183,8 @@ export default function Home() {
       {/* ═════════════ What would you like help with ═════════════ */}
       <section id="help" className={sectionPad}>
         <div className="container-page">
-          <div className="lg:grid lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:items-center lg:gap-12">
-            <div>
-              <SectionHeading title="What would you like help with?" text="Choose what feels closest. Each page explains how we treat it." />
-              <p className="mt-4 hidden max-w-[34ch] text-[0.9375rem] leading-relaxed text-ink-soft lg:block">Touch the centre circle and the ways we can help open up around it. Pick the one nearest to how you feel; you can always change your mind.</p>
-            </div>
-
-            {/* Phones and tablets: a tidy grid of circles. */}
-            <ul className="mt-10 grid grid-cols-3 gap-x-3 gap-y-8 sm:grid-cols-4 lg:hidden">
-              {concerns.map((c, i) => (
-                <Reveal as="li" key={c.href} delay={(i % 4) * 40}>
-                  <Bubble c={c} photo={photos[c.label]} size="size-[5.5rem] sm:size-28" />
-                </Reveal>
-              ))}
-              <Reveal as="li" delay={(concerns.length % 4) * 40}>
-                <AllBubble size="size-[5.5rem] sm:size-28" />
-              </Reveal>
-            </ul>
-
-            {/* Laptops: the centre circle opens the spokes around it. */}
-            <div className="hidden lg:block">
-              <ConditionsRadial items={concerns.map((c) => ({ label: c.label, href: c.href, photo: photos[c.label] ?? null }))} />
-            </div>
-          </div>
+          <SectionHeading title="What would you like help with?" text="Choose what feels closest. Point at a circle, or tap it, to see how we can help." />
+          <ConditionsExplorer items={concerns.map((c) => ({ label: c.label, href: c.href, photo: photos[c.label] ?? null }))} />
           <div className="mt-12 rounded-[1.5rem] bg-gradient-to-r from-sage-50 via-white to-brand-50 p-5 shadow-[inset_0_0_0_1px_var(--color-sage-100)] sm:p-7 lg:flex lg:items-center lg:justify-between lg:gap-10">
             <div className="lg:max-w-xs">
               <p className="font-display text-[1.375rem] leading-snug font-semibold tracking-[-0.015em] text-ink">Not sure where to start?</p>

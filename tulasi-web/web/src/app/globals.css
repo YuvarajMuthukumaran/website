@@ -1026,3 +1026,10 @@ details.acc > summary::-webkit-details-marker { display: none; }
 /* The centre hub of the conditions circles gently grows and shrinks until someone touches it. */
 @keyframes hub-nudge { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
 @media (prefers-reduced-motion: reduce) { .animate-\[hub-nudge_2\.6s_ease-in-out_infinite\] { animation: none; } }
+
+/* Conditions picker: the ring that fills round the active circle, and the text that rises into the big panel. */
+@keyframes ce-ring { from { stroke-dashoffset: 302; } to { stroke-dashoffset: 0; } }
+.ce-ring { animation-name: ce-ring; animation-timing-function: linear; animation-fill-mode: forwards; }
+@keyframes ce-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.ce-rise { animation: ce-rise 600ms var(--ease-calm) both; }
+@media (prefers-reduced-motion: reduce) { .ce-ring { animation: none; } .ce-rise { animation: none; } }
