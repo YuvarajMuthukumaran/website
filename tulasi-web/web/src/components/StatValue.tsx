@@ -1,12 +1,14 @@
 "use client";
-// A statistic that counts up to its figure whenever it scrolls into view ("50,000+" climbs from 0 and
-// settles on the figure). It always ends on exactly the figure it was given and never pretends to be a
-// live feed. Words such as "NABH" are shown as they are. The real text is in the markup for screen
+// A statistic that counts up to its figure whenever it scrolls into view. Big figures ("50,000+") start just
+// below it (49,500) and tick up like a live counter; small ones climb from 0. It always ends on exactly the
+// figure it was given, so it never claims more than the figure shown. Words such as "NABH" are shown as they are. The real text is in the markup for screen
 // readers and for people who prefer less motion, who see the final figure straight away.
 import { useEffect, useRef, useState } from "react";
 
 const FORMAT = new Intl.NumberFormat("en-IN");
 const DURATION = 2800;
+const LIVE_DURATION = 7000; // the 500-step tick up to a big figure
+const LIVE_GAP = 500;
 
 export function StatValue({ value }: { value: string }) {
   const m = value.match(/^([\d,]+)(\+?)$/);
@@ -24,14 +26,16 @@ export function StatValue({ value }: { value: string }) {
     const run = () => {
       stop();
       const start = performance.now();
+      const from = target >= 10000 ? target - LIVE_GAP : 0;
+      const duration = from ? LIVE_DURATION : DURATION;
       const tick = (now: number) => {
-        const t = Math.min(1, (now - start) / DURATION);
-        const eased = 1 - Math.pow(1 - t, 4); // fast at first, then slowing to the figure
-        setShown(Math.round(target * eased));
+        const t = Math.min(1, (now - start) / duration);
+        const eased = from ? 1 - Math.pow(1 - t, 2) : 1 - Math.pow(1 - t, 4); // steady, then slowing to the figure
+        setShown(from + Math.round((target - from) * eased));
         if (t < 1) raf = requestAnimationFrame(tick);
         else setShown(null);
       };
-      setShown(0);
+      setShown(from);
       raf = requestAnimationFrame(tick);
     };
     const io = new IntersectionObserver(
