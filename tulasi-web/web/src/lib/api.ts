@@ -55,7 +55,7 @@ export const fetchSpecialties = () => call<{ specialties: string[] }>("/doctors/
 export const fetchSlots = (doctorId: string, date: string) => call<{ slots: string[] }>(`/appointments/slots?${new URLSearchParams({ doctorId, date })}`);
 export type Appointment = { _id: string; doctorId: string; doctorName: string; date: string; time: string; status: "booked" | "cancelled" };
 // `code` is the 6-digit code e-mailed to `patientEmail` (see requestOtp). Booking also signs the patient in (session cookie).
-export const createAppointment = (body: { doctorId: string; patientName: string; patientEmail: string; code: string; date: string; time: string }) =>
+export const createAppointment = (body: { doctorId: string; patientName: string; patientPhone: string; patientEmail: string; code: string; date: string; time: string }) =>
   call<{ ok: true; appointment: Appointment }>("/appointments", { method: "POST", body: JSON.stringify(body), auth: true });
 
 // ───────────── Patient login & portal ─────────────

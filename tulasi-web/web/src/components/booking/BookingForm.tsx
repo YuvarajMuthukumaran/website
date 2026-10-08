@@ -39,6 +39,7 @@ export function BookingForm({ siteDoctors, clinicPhone }: { siteDoctors: SiteDoc
   const [step, setStep] = useState(0);
   const [specialties, setSpecialties] = useState<string[] | null>(null);
   const [service, setService] = useState<string | null>(null);
+  const [kind, setKind] = useState<"all" | "psychiatrist" | "psychologist">("all");
   const [doctors, setDoctors] = useState<ApiDoctor[] | null>(null);
   const [doctor, setDoctor] = useState<ApiDoctor | null>(null);
   const [date, setDate] = useState(istDate(1));
@@ -47,6 +48,7 @@ export function BookingForm({ siteDoctors, clinicPhone }: { siteDoctors: SiteDoc
   const [openByDay, setOpenByDay] = useState<Record<string, number> | null>(null);
   const [time, setTime] = useState<string | null>(null);
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [codeSent, setCodeSent] = useState(false);
@@ -68,6 +70,8 @@ export function BookingForm({ siteDoctors, clinicPhone }: { siteDoctors: SiteDoc
 
   const site = useMemo(() => new Map(siteDoctors.map((d) => [norm(d.name), d])), [siteDoctors]);
   const siteFor = (d: ApiDoctor) => site.get(norm(d.name));
+  // A psychiatrist is a medical doctor; everyone else on the list (clinical and rehabilitation psychologists, counsellors) is grouped as a psychologist.
+  const kindOf = (d: ApiDoctor): "psychiatrist" | "psychologist" => (/psychiatrist/i.test(`${d.role ?? ""} ${siteFor(d)?.designation ?? ""}`) ? "psychiatrist" : "psychologist");
   const dates = useMemo(() => Array.from({ length: 14 }, (_, i) => istDate(i)), []);
 
   useEffect(() => {
@@ -147,6 +151,9 @@ export function BookingForm({ siteDoctors, clinicPhone }: { siteDoctors: SiteDoc
 
   const emailOk = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(email.trim());
   const nameOk = name.trim().length >= 2;
+  // Indian mobile number: ten digits, with or without +91 or a leading 0.
+  const phoneDigits = phone.replace(/\D/g, "").replace(/^(91|0)(?=\d{10}$)/, "");
+  const phoneOk = /^[6-9]\d{9}$/.test(phoneDigits);
 
   async function sendCode() {
     if (!emailOk || sending) return;
@@ -168,12 +175,13 @@ export function BookingForm({ siteDoctors, clinicPhone }: { siteDoctors: SiteDoc
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!doctor || !time || !nameOk || !emailOk || code.length !== 6 || !agree) return;
+    if (!doctor || !time || !nameOk || !phoneOk || !emailOk || code.length !== 6 || !agree) return;
     setSubmitting(true);
     setError(null);
     try {
-      const { appointment } = await createAppointment({ doctorId: doctor._id, patientName: name.trim(), patientEmail: email.trim(), code, date, time });
+      const { appointment } = await createAppointment({ doctorId: doctor._id, patientName: name.trim(), patientPhone: phoneDigits, patientEmail: email.trim(), code, date, time });
       // Routing hint for the portal (the real session is the API's httpOnly cookie, set by the booking).
+      // eslint-disable-next-line react-hooks/immutability -- a plain routing hint cookie, set from an event handler
       document.cookie = "thc_signed_in=1; path=/; max-age=604800; SameSite=Lax";
       setDone(appointment);
       track("booking_complete", { doctor: doctor.name });
@@ -266,7 +274,7 @@ export function BookingForm({ siteDoctors, clinicPhone }: { siteDoctors: SiteDoc
                 <div className="mt-7 grid gap-3 sm:grid-cols-2">
                   {[ANY, ...(specialties ?? [])].map((s) => (
                     <label key={s} className={clsx("group flex min-h-16 cursor-pointer items-center gap-3 rounded-2xl border px-4 py-3 font-medium transition-[border-color,background-color,box-shadow] duration-200", service === s ? "border-brand-600 bg-brand-50 text-brand-900 shadow-[0_0_0_3px_var(--color-brand-100)]" : "border-line hover:border-brand-300 hover:bg-mist")}>
-                      <input type="radio" name="service" value={s} checked={service === s} onChange={() => { setService(s); setDoctor(null); go(1); }} className="sr-only" />
+                      <input type="radio" name="service" value={s} checked={service === s} readOnly onClick={() => { setService(s); setDoctor(null); go(1); }} className="sr-only" />
                       <span className={clsx("grid size-5 shrink-0 place-items-center rounded-full border-2 transition-colors", service === s ? "border-brand-600" : "border-line group-hover:border-brand-300")}>
                         <span className={clsx("size-2.5 rounded-full bg-brand-600 transition-transform", service === s ? "scale-100" : "scale-0")} />
                       </span>
@@ -282,26 +290,83 @@ export function BookingForm({ siteDoctors, clinicPhone }: { siteDoctors: SiteDoc
               <fieldset>
                 <legend className="font-display text-[1.65rem] leading-tight font-semibold tracking-[-0.02em] text-ink">Choose your specialist</legend>
                 <p className="mt-2 text-ink-soft">{serviceLabel}. Pick whoever feels right; you can go back and change it.</p>
-                <div className="mt-7 grid gap-3 sm:grid-cols-2">
-                  {doctors?.map((d) => {
-                    const s = siteFor(d);
-                    const on = doctor?._id === d._id;
-                    return (
-                      <label key={d._id} className={clsx("flex cursor-pointer items-center gap-4 rounded-2xl border p-3 transition-[border-color,background-color,box-shadow] duration-200", on ? "border-brand-600 bg-brand-50 shadow-[0_0_0_3px_var(--color-brand-100)]" : "border-line hover:border-brand-300 hover:bg-mist")}>
-                        <input type="radio" name="doctor" className="sr-only" checked={on} onChange={() => { setDoctor(d); go(2); }} />
-                        <span className="relative size-[4.5rem] shrink-0 overflow-hidden rounded-2xl" style={{ backgroundColor: s?.tint ?? "#eef2f7" }}>
-                          {s?.photo && <Image src={s.photo} alt="" fill sizes="72px" className="object-cover object-top" />}
-                        </span>
-                        <span className="min-w-0">
-                          <span className="block font-semibold text-ink">{d.name}</span>
-                          <span className="mt-0.5 line-clamp-2 block text-sm leading-snug text-ink-soft">{s?.designation ?? d.role}</span>
-                        </span>
-                      </label>
-                    );
-                  })}
-                  {!doctors && Array.from({ length: 4 }, (_, i) => <span key={i} className="h-24 animate-pulse rounded-2xl bg-mist" />)}
-                  {doctors?.length === 0 && <p className="text-ink-soft">No specialists found for this service. Please choose “General consultation”.</p>}
+
+                {/* What the two kinds of specialist do */}
+                <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                  <div className="rounded-2xl bg-brand-50 p-4 shadow-[inset_0_0_0_1px_var(--color-brand-100)]">
+                    <p className="flex items-center gap-2 font-display text-base font-semibold text-brand-800"><span className="grid size-8 place-items-center rounded-full bg-white text-brand-700"><Icon name="shield" className="size-4" /></span> Psychiatrist</p>
+                    <p className="mt-2 text-sm leading-relaxed text-ink-soft">A medical doctor who specialises in mental health. Diagnoses conditions, prescribes medicines when they are needed, and can arrange tests or admission.</p>
+                  </div>
+                  <div className="rounded-2xl bg-sage-50 p-4 shadow-[inset_0_0_0_1px_var(--color-sage-100)]">
+                    <p className="flex items-center gap-2 font-display text-base font-semibold text-sage-700"><span className="grid size-8 place-items-center rounded-full bg-white text-sage-700"><Icon name="heart" className="size-4" /></span> Psychologist</p>
+                    <p className="mt-2 text-sm leading-relaxed text-ink-soft">Trained in talking therapies, counselling and psychological testing. Helps you work through thoughts, feelings and behaviour. Does not prescribe medicines.</p>
+                  </div>
                 </div>
+
+                {/* Not sure? Start with a psychiatrist */}
+                <div className="mt-4 flex flex-col gap-3 rounded-2xl bg-gradient-to-r from-sage-50 via-white to-brand-50 p-4 shadow-[inset_0_0_0_1px_var(--color-sage-100)] sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <p className="font-display text-base font-semibold text-ink">Don’t know which one to choose?</p>
+                    <p className="mt-0.5 text-sm leading-relaxed text-ink-soft">Start with a psychiatrist. They look at the whole picture, treat you if medicines help, and refer you to a psychologist if therapy is the better fit.</p>
+                  </div>
+                  <button type="button" onClick={() => setKind("psychiatrist")} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-brand-600 px-5 text-sm font-semibold text-white transition-colors hover:bg-brand-700">Show psychiatrists <Icon name="arrow" className="size-4" /></button>
+                </div>
+
+                {/* Filter */}
+                {doctors && doctors.length > 0 && (
+                  <div className="mt-6 inline-flex rounded-full bg-mist p-1" role="group" aria-label="Show specialists">
+                    {([
+                      ["all", "All"],
+                      ["psychiatrist", "Psychiatrists"],
+                      ["psychologist", "Psychologists"],
+                    ] as const).map(([k, label]) => {
+                      const n = k === "all" ? doctors.length : doctors.filter((d) => kindOf(d) === k).length;
+                      return (
+                        <button key={k} type="button" aria-pressed={kind === k} onClick={() => setKind(k)} className={clsx("min-h-10 rounded-full px-4 text-sm font-semibold transition-colors", kind === k ? "bg-white text-brand-700 shadow-[0_1px_3px_rgb(23_34_44/0.12)]" : "text-ink-soft hover:text-ink")}>
+                          {label} <span className="text-xs opacity-60">{n}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {doctors && (["psychiatrist", "psychologist"] as const).filter((g) => kind === "all" || kind === g).map((g) => {
+                  const list = doctors.filter((d) => kindOf(d) === g);
+                  if (list.length === 0) return null;
+                  return (
+                    <section key={g} className="mt-6" aria-label={g === "psychiatrist" ? "Psychiatrists" : "Psychologists"}>
+                      <div className="mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                        <h3 className="font-display text-lg font-semibold text-ink">{g === "psychiatrist" ? "Psychiatrists" : "Psychologists and therapists"}</h3>
+                        <span className="text-sm text-ink-soft">{g === "psychiatrist" ? "Medical doctors: diagnosis and medicines" : "Talk therapy, counselling and assessments"}</span>
+                        {g === "psychiatrist" && <span className="rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-semibold text-brand-700">Best place to start</span>}
+                      </div>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        {list.map((d) => {
+                          const s = siteFor(d);
+                          const on = doctor?._id === d._id;
+                          return (
+                            <label key={d._id} className={clsx("group relative flex cursor-pointer items-center gap-4 rounded-2xl border p-3 transition-[border-color,background-color,box-shadow,transform] duration-200 hover:-translate-y-0.5", on ? "border-brand-600 bg-brand-50 shadow-[0_0_0_3px_var(--color-brand-100)]" : "border-line bg-white hover:border-brand-300 hover:shadow-[0_14px_28px_-20px_rgb(23_34_44/0.45)]")}>
+                              <input type="radio" name="doctor" className="sr-only" checked={on} readOnly onClick={() => { setDoctor(d); go(2); }} />
+                              <span className="relative size-[4.5rem] shrink-0 overflow-hidden rounded-2xl" style={{ backgroundColor: s?.tint ?? "#eef2f7" }}>
+                                {s?.photo && <Image src={s.photo} alt="" fill sizes="72px" className="object-cover object-top transition-transform duration-500 group-hover:scale-105" />}
+                              </span>
+                              <span className="min-w-0 flex-1">
+                                <span className="block font-semibold text-ink">{d.name}</span>
+                                <span className="mt-0.5 line-clamp-2 block text-sm leading-snug text-ink-soft">{s?.designation ?? d.role}</span>
+                                <span className={clsx("mt-1.5 inline-block rounded-full px-2 py-0.5 text-[0.6875rem] font-semibold", g === "psychiatrist" ? "bg-brand-50 text-brand-700" : "bg-sage-50 text-sage-700")}>{g === "psychiatrist" ? "Psychiatrist" : "Psychologist"}</span>
+                              </span>
+                              <span aria-hidden="true" className="grid size-8 shrink-0 place-items-center rounded-full bg-mist text-brand-700 opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:bg-brand-600 group-hover:text-white group-hover:opacity-100">
+                                <Icon name="arrow" className="size-4" />
+                              </span>
+                            </label>
+                          );
+                        })}
+                      </div>
+                    </section>
+                  );
+                })}
+                {!doctors && <div className="mt-6 grid gap-3 sm:grid-cols-2">{Array.from({ length: 4 }, (_, i) => <span key={i} className="h-24 animate-pulse rounded-2xl bg-mist" />)}</div>}
+                {doctors?.length === 0 && <p className="mt-6 text-ink-soft">No specialists found for this service. Please choose “General consultation”.</p>}
                 <div className="mt-8"><button type="button" onClick={() => go(0)} className="min-h-12 rounded-full px-5 font-semibold text-brand-700 hover:bg-brand-50">Back</button></div>
               </fieldset>
             )}
@@ -353,11 +418,19 @@ export function BookingForm({ siteDoctors, clinicPhone }: { siteDoctors: SiteDoc
             {step === 3 && doctor && time && (
               <form onSubmit={submit} noValidate>
                 <p className="font-display text-[1.65rem] leading-tight font-semibold tracking-[-0.02em] text-ink">Your details</p>
-                <p className="mt-2 text-ink-soft">We’ll e-mail a 6-digit code to confirm it’s you, then send your confirmation to the same address.</p>
+                <p className="mt-2 text-ink-soft">We’ll e-mail a 6-digit code to confirm it’s you, then send your confirmation to the same address. Your mobile number is only so we can reach you.</p>
                 <div className="mt-7 grid gap-5">
                   <div>
                     <label htmlFor="b-name" className="text-sm font-semibold text-ink">Patient’s full name</label>
                     <input id="b-name" autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} required aria-invalid={!!name && !nameOk} className={field} />
+                  </div>
+                  <div>
+                    <label htmlFor="b-phone" className="text-sm font-semibold text-ink">Mobile number</label>
+                    <div className="flex items-stretch gap-2">
+                      <span className="mt-2 grid min-h-14 shrink-0 place-items-center rounded-2xl bg-mist px-4 text-base font-medium text-ink-soft shadow-[inset_0_0_0_1px_var(--color-line)]" aria-hidden="true">+91</span>
+                      <input id="b-phone" type="tel" inputMode="numeric" autoComplete="tel-national" value={phone} onChange={(e) => setPhone(e.target.value.replace(/[^\d\s-]/g, "").slice(0, 14))} required aria-invalid={!!phone && !phoneOk} placeholder="98765 43210" className={field} />
+                    </div>
+                    <p className={clsx("mt-1.5 text-xs", phone && !phoneOk ? "text-alert-700" : "text-ink-soft")}>{phone && !phoneOk ? "Please enter a valid 10-digit mobile number." : "So our team can reach you about this appointment. No code is sent to this number."}</p>
                   </div>
                   <div>
                     <label htmlFor="b-email" className="text-sm font-semibold text-ink">E-mail address</label>
@@ -384,7 +457,7 @@ export function BookingForm({ siteDoctors, clinicPhone }: { siteDoctors: SiteDoc
                 </label>
                 <div className="mt-8 flex justify-between gap-3">
                   <button type="button" onClick={() => go(2)} className="min-h-12 rounded-full px-5 font-semibold text-brand-700 hover:bg-brand-50">Back</button>
-                  <button type="submit" disabled={!nameOk || !emailOk || code.length !== 6 || !agree || submitting} className="inline-flex min-h-12 items-center gap-2 rounded-full bg-brand-600 px-8 font-semibold text-white hover:bg-brand-700 disabled:opacity-40">
+                  <button type="submit" disabled={!nameOk || !phoneOk || !emailOk || code.length !== 6 || !agree || submitting} className="inline-flex min-h-12 items-center gap-2 rounded-full bg-brand-600 px-8 font-semibold text-white hover:bg-brand-700 disabled:opacity-40">
                     {submitting ? "Booking…" : <>Confirm booking <Icon name="check" className="size-4" /></>}
                   </button>
                 </div>

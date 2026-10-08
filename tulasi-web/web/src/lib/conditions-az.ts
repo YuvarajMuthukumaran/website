@@ -7,6 +7,7 @@ export type AZCondition = { label: string; href?: string; also?: string[] };
 
 export const AZ_CONDITIONS: AZCondition[] = [
   { label: "ADHD (attention deficit hyperactivity disorder)", href: "/adhd-treatment/", also: ["attention", "hyperactive", "restless child"] },
+  { label: "Addiction (all types)", href: "/addiction-treatment/", also: ["de-addiction", "rehab", "substance use", "nasha"] },
   { label: "Agoraphobia", also: ["fear of crowds", "fear of leaving home"] },
   { label: "Alcohol addiction", href: "/deaddiction-centre/alcohol-addiction/", also: ["alcoholism", "drinking", "daaru", "alcohol use disorder"] },
   { label: "Alcohol-related liver disease", href: "/liver-cirrhosis/", also: ["cirrhosis", "alcoholic hepatitis", "fatty liver"] },
@@ -27,6 +28,7 @@ export const AZ_CONDITIONS: AZCondition[] = [
   { label: "Cocaine addiction", href: "/deaddiction-centre/cocaine-addiction/", also: ["coke"] },
   { label: "Cognitive behavioural therapy (CBT)", href: "/cbt-behavioural-therapy/", also: ["therapy", "talking therapy"] },
   { label: "Conduct problems in children", href: "/child-psychiatry-hospital-services/", also: ["lying", "stealing", "defiant"] },
+  { label: "Coming out stress", href: "/lgbtq-support/", also: ["lgbtq", "family pressure"] },
   { label: "Dementia", href: "/treatment-of-dementia/", also: ["memory", "elderly", "old age", "forgetfulness"] },
   { label: "Depression", href: "/depression/", also: ["low mood", "sadness", "hopelessness"] },
   { label: "Digital and gaming addiction", href: "/digital-and-gaming-addiction/", also: ["gaming", "mobile addiction", "screen time", "internet addiction"] },
@@ -38,8 +40,10 @@ export const AZ_CONDITIONS: AZCondition[] = [
   { label: "Gaming addiction", href: "/digital-and-gaming-addiction/", also: ["video games"] },
   { label: "Generalised anxiety disorder", href: "/anxiety/", also: ["gad", "constant worry"] },
   { label: "Grief and loss", also: ["bereavement", "mourning"] },
+  { label: "Gender identity concerns", href: "/lgbtq-support/", also: ["transgender", "gender dysphoria", "identity"] },
   { label: "Heroin addiction", href: "/deaddiction-centre/heroin-addiction/", also: ["smack", "brown sugar"] },
   { label: "Insomnia and sleep problems", also: ["cannot sleep", "poor sleep", "sleeplessness"] },
+  { label: "LGBTQ+ mental health support", href: "/lgbtq-support/", also: ["gay", "lesbian", "bisexual", "transgender", "queer", "coming out", "gender identity", "sexual orientation", "pride"] },
   { label: "Learning difficulties", href: "/iq-testing/", also: ["dyslexia", "school performance", "iq test"] },
   { label: "Liver cirrhosis", href: "/liver-cirrhosis/" },
   { label: "Marriage and relationship problems", href: "/marriage-counselling/", also: ["couple", "conflict", "divorce"] },

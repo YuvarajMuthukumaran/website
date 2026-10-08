@@ -46,7 +46,7 @@ function ReviewCard({ review, priority }: { review: Review; priority?: boolean }
   );
 }
 
-const REVIEWS: Review[] = [
+export const REVIEWS: Review[] = [
   {
     size: "large",
     rating: 5,

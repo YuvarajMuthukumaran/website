@@ -19,9 +19,7 @@ export const CONCERNS: { label: string; href: string; specialty: string; who: Wh
   { label: "OCD", href: "/obsessive-compulsive-disorder-treatment/", specialty: "ocd", who: ["self", "child", "loved"] },
   { label: "Bipolar disorder", href: "/bipolar-disorder-treatment-delhi-gurgaon/", specialty: "bipolar", who: ["self", "loved"] },
   { label: "Schizophrenia & psychosis", href: "/schizophrenia-treatment-delhi-gurgaon-ncr/", specialty: "schizophrenia", who: ["self", "loved", "elder"] },
-  { label: "Alcohol addiction", href: "/deaddiction-centre/alcohol-addiction/", specialty: "addiction", who: ["self", "loved", "elder"] },
-  { label: "Drug addiction", href: "/drug-addiction-treatment-in-delhi-gurgaon-and-ncr/", specialty: "addiction", who: ["self", "loved", "child"] },
-  { label: "Gaming & digital addiction", href: "/digital-and-gaming-addiction/", specialty: "addiction", who: ["child", "self", "loved"] },
+  { label: "Addiction", href: "/addiction-treatment/", specialty: "addiction", who: ["self", "loved", "child", "elder"] },
   { label: "ADHD", href: "/adhd-treatment/", specialty: "adhd", who: ["child", "self"] },
   { label: "Autism", href: "/autism-care-centre/", specialty: "autism", who: ["child"] },
   { label: "Child & teen mental health", href: "/child-psychiatry-hospital-services/", specialty: "child_adolescent", who: ["child"] },
@@ -29,6 +27,7 @@ export const CONCERNS: { label: string; href: string; specialty: string; who: Wh
   { label: "Personality disorders", href: "/treatment-of-personality-disorders/", specialty: "personality_disorder", who: ["self", "loved"] },
   { label: "Relationships & marriage", href: "/marriage-counselling/", specialty: "relationship", who: ["self", "loved"] },
   { label: "Sexual health", href: "/sexologist-in-delhi/", specialty: "sexual_disorder", who: ["self", "loved"] },
+  { label: "LGBTQ+ support", href: "/lgbtq-support/", specialty: "stress", who: ["self", "loved", "child"] },
   { label: "Stress & burnout", href: "/counsellor-near-me/", specialty: "stress", who: ["self", "loved"] },
 ];
 
@@ -39,9 +38,8 @@ export const CONCERN_ICON: Record<string, string> = {
   OCD: "link",
   "Bipolar disorder": "balance",
   "Schizophrenia & psychosis": "waves",
-  "Alcohol addiction": "sprout",
-  "Drug addiction": "sunrise",
-  "Gaming & digital addiction": "sprout",
+  Addiction: "sprout",
+  "LGBTQ+ support": "family",
   ADHD: "i:spark",
   Autism: "child",
   "Child & teen mental health": "cradle",
@@ -55,7 +53,7 @@ export const CONCERN_ICON: Record<string, string> = {
 export type Pathway = { title: string; href: string; text: string; icon: "stethoscope" | "clipboard" | "talk" | "home" | "leaf" | "child" | "elder" | "wave" | "briefcase" };
 
 export const PATHWAYS: Pathway[] = [
-  { title: "Psychiatry", href: "/best-psychiatrist-in-delhi/", icon: "stethoscope", text: "Personalized mental health care from psychiatrists with decades of experience." },
+  { title: "OPD consultation", href: "/book-appointment/", icon: "stethoscope", text: "See a psychiatrist or psychologist without being admitted: assessment, medicines, therapy and follow-up visits, booked online or by phone." },
   { title: "Psychological assessment & testing", href: "/psychological-services/", icon: "clipboard", text: "Psychometric testing, neuropsychological and developmental assessments, with a written report and feedback." },
   { title: "Therapy & counselling", href: "/psychologist-in-delhi/", icon: "talk", text: "RCI-registered psychologists for therapy, counselling, emotional well-being and mental health support." },
   { title: "Inpatient & rehabilitation", href: "/rehabilitation-centre/", icon: "home", text: "Residential treatment and psychosocial rehabilitation by a highly trained team of professionals." },

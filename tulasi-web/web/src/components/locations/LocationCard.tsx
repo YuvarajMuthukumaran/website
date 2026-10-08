@@ -31,7 +31,14 @@ export function LocationCard({ loc, tint, phone }: { loc: Location; tint: string
         </div>
 
         {/* BACK */}
-        <div className="lc-face lc-back" inert={!flipped}>
+        <div
+          className="lc-face lc-back cursor-pointer"
+          inert={!flipped}
+          // a tap anywhere on the card turns it back, except on its Directions, Call and Book links
+          onClick={(e) => {
+            if (!(e.target as HTMLElement).closest("a")) setFlipped(false);
+          }}
+        >
           <p className="lc-back-label">{label}</p>
           <h3 className="lc-back-name">{loc.name}</h3>
           <address className="lc-address">

@@ -10,9 +10,9 @@ type HeroSlide = {
 };
 
 const HERO_SLIDES: HeroSlide[] = [
-  { src: "/hero/hero-family-1.webp", alt: "A family laughing together on the sofa at home", position: "50% 45%" },
-  { src: "/hero/hero-family-2.webp", alt: "A smartly dressed family of four together", position: "50% 30%" },
+  { src: "/hero/hero-family-first.webp", alt: "A father and mother laughing with their baby", position: "50% 40%" },
   { src: "/hero/hero-family-3.webp", alt: "A mother holding her baby", position: "50% 40%" },
+  { src: "/hero/hero-family-2.webp", alt: "A smartly dressed family of four together", position: "50% 30%" },
 ];
 
 const SLIDE_MS = 3200;

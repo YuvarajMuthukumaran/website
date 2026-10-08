@@ -37,3 +37,5 @@ Third round, Indian people only (client request; Unsplash photos, free to use):
 `ocd.webp` (hands), `drug-addiction.webp` (pills) and `dementia-memory.webp` (puzzle head) carry no identifiable people.
 
 Alcohol addiction: back to the glass photo (client choice): https://unsplash.com/photos/photo-1617820915076-5f3163127e3d
+
+Oct 2026 changes: `bipolar-disorder.webp` is the painting supplied by the client; `addiction.webp` is the pills photo reused for the combined Addiction tile; `lgbtq-support.webp`: https://unsplash.com/photos/photo-1581687493559-12ae042b94fc (rainbow glow and a hand holding a heart).

@@ -39,13 +39,14 @@ const O: Record<string, Option> = {
   child: { id: "child_adolescent", label: "Behaviour, school or emotions", hint: "Tantrums, anger, learning, withdrawn" },
   examStress: { id: "stress", label: "Exam or school stress", hint: "Pressure, fear of failing, bullying" },
   dementia: { id: "geriatric_dementia", label: "Memory loss or dementia", hint: "Forgetting, confusion, getting lost" },
+  lgbtq: { id: "stress", label: "LGBTQ+ support", hint: "Identity, coming out, family acceptance" },
   elderSleep: { id: "stress", label: "Poor sleep or restlessness", hint: "Not sleeping, agitation, worry" },
 };
 const OPTIONS: Record<Who, Option[]> = {
-  self: [O.anxiety, O.depression, O.stress, O.ptsd, O.ocd, O.bipolar, O.relationship, O.addiction, O.gaming, O.adhd, O.sexual, O.personality, O.psychosis],
+  self: [O.anxiety, O.depression, O.stress, O.ptsd, O.ocd, O.bipolar, O.relationship, O.addiction, O.gaming, O.adhd, O.sexual, O.lgbtq, O.personality, O.psychosis],
   child: [O.anxiety, O.depression, O.child, O.adhd, O.autism, O.examStress, O.gaming, O.ocd, O.ptsd, O.addiction],
   elder: [O.dementia, O.depression, O.anxiety, O.elderSleep, O.psychosis, O.bipolar, O.addiction],
-  loved: [O.depression, O.anxiety, O.addiction, O.bipolar, O.psychosis, O.stress, O.ptsd, O.ocd, O.relationship, O.gaming, O.personality],
+  loved: [O.depression, O.anxiety, O.addiction, O.bipolar, O.psychosis, O.stress, O.ptsd, O.ocd, O.relationship, O.lgbtq, O.gaming, O.personality],
 };
 
 const SUPPORT: { id: MatchInput["support"]; label: string; hint: string }[] = [
